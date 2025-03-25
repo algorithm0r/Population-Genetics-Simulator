@@ -1,6 +1,6 @@
 class RealGene {
     constructor(gene) {
-        this.value = gene ? gene.value : generateNormalSample(0,PARAMS.initialVariation);
+        this.value = gene ? gene.value : generateNormalSample(PARAMS.initialMean,PARAMS.initialVariation);
     }
 
     mutate() {

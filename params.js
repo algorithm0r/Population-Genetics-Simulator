@@ -7,18 +7,17 @@ var PARAMS = {
     numRows: 8,
     numCols: 8,
 
-    // Environment dynamics
-    targetMin: -35,
-    targetMax: 35,
-    targetStep: 5,
-    targetPeriod: 1000,
+    // environmental patterns
+    spatialVariance: 5,
+    temporalVariance: 0.005,
+    temporalPeriod: 1,
 
     // population
     numOrganisms: 100,
+    initialMean: 0,
     initialVariation: 1,
     maxOffspring: 5,
     targetValue: 0,
-    targetVariance: 5,
     reproductionVariance: 2,
     populationSoftCap: 100, 
 
@@ -37,12 +36,13 @@ var PARAMS = {
     epoch: 150000,
 
     // graphs
-    histogramWidth: 5,
+    histogramWidth: 10,
     graphHeight: 100,
     graphWidth: 400,
 
     // database
     db: "populationGeneticsDB",
-    collection: "test"
+    collection: "test",
+    ip: 'https://73.19.38.112:8888'
 };
 

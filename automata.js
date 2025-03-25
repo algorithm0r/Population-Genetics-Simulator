@@ -16,78 +16,24 @@ class Automata {
     }
 
     initializeAutomata() {
-        var environmentPattern = document.getElementById('environmentPattern').value;
-        var environmentDynamics = document.getElementById('environmentDynamics').value;
-    
-        // Generate target dynamics based on parameters
-        let targetDynamics = [];
-        let min = PARAMS.targetMin;
-        let max = PARAMS.targetMax;
-        let step = PARAMS.targetStep;
-        let period = PARAMS.targetPeriod;
-        
-        if (environmentDynamics === "cyclic") {
-            // Generate a cyclic pattern: min to max, then back to min
-            for (let val = 0; val <= max; val += step) {
-                targetDynamics.push(val);
-            }
-            for (let val = max - step; val > min; val -= step) {
-                targetDynamics.push(val);
-            }
-            for (let val = min; val < 0; val += step) {
-                targetDynamics.push(val);
-            }
-        } else if (environmentDynamics === "directional") {
-            // Generate a continuous directional pattern from min to max
-            for (let val = min; val <= max; val += step) {
-                targetDynamics.push(val);
-            }
-        } else {
-            // No dynamics - just use a single value
-            targetDynamics.push(0);
-        }
-    
-        let target = {};
-        target = {
-            dynamics: targetDynamics,
-            changePeriod: environmentDynamics === "none" ? 0 : period,
-            type: environmentDynamics,
-            startIndex: 0
-        };
-    
-        // Initialize current and next grids
-        this.grid = [];
-    
-        // Create grid and populate cells
+        const spatialSettings = PARAMS.environmentPatterns?.spatial ||
+            { type: 'gradient', parameters: { gradientStrength: 0 } };
+        const temporalSettings = PARAMS.environmentPatterns?.temporal ||
+            { type: 'cycling', parameters: { cycleAmplitude: 5, cyclePeriod: 1000 } };
+
+        const spatialPattern = createPattern(spatialSettings.type, spatialSettings.parameters);
+        const temporalPattern = createPattern(temporalSettings.type, temporalSettings.parameters);
+
         for (let i = 0; i < this.rows; i++) {
             const row = [];
             for (let j = 0; j < this.cols; j++) {
-                // Create a new target object for each cell
-                let cellTarget = Object.assign({}, target);
-                
-                // Set startIndex based on pattern
-                switch (environmentPattern) {
-                    case "random":
-                        cellTarget.startIndex = randomInt(targetDynamics.length);
-                        break;
-                    case "uniform":
-                        cellTarget.startIndex = 0;
-                        break;
-                    case "gradient":
-                        cellTarget.startIndex = (i - j + targetDynamics.length) % targetDynamics.length;
-                        break;
-                    case "patches":
-                        let ii = Math.floor(i / this.cols * 2);
-                        let jj = Math.floor(j / this.rows * 2);
-                        let val = ii - jj;
-                        cellTarget.startIndex = (val * (PARAMS.numCols - 1) + targetDynamics.length) % targetDynamics.length;
-                        if(ii === jj && ii === 1) {  
-                            cellTarget.startIndex = (2 * PARAMS.numCols - 2 + targetDynamics.length) % targetDynamics.length;
-                        }
-                        break;
-                }
-                
-                row.push(new Population(i, j, i === 0 && j === 0, cellTarget));
+                const position = {row: i, col: j};
+                row.push(new Population(
+                    i, j, 
+                    i === 0 && j === 0,
+                    spatialPattern,
+                    temporalPattern
+                ));
             }
             this.grid.push(row);
         }

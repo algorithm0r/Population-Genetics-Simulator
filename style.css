@@ -114,3 +114,57 @@ body {
     background-color: #dc3545; /* Bootstrap danger color */
     border: 1px solid black;
 }
+
+.pattern-controls {
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    background-color: #f9f9f9;
+}
+
+.pattern-params {
+    margin-top: 5px;
+    padding-left: 10px;
+}
+
+.pattern-description {
+    font-size: 0.75em;
+    font-style: italic;
+    margin: 2px 0;
+    color: #666;
+}
+
+.parameter-control {
+    margin: 3px 0;
+    display: flex;
+    align-items: center;
+}
+
+.parameter-control label {
+    font-size: 0.85em;
+    flex: 1;
+    margin-right: 5px;
+}
+
+.parameter-control input {
+    width: 70px;
+    padding: 2px;
+    font-size: 0.85em;
+}
+
+/* Additional compact styles for the parameter section */
+.parameter-section h3 {
+    font-size: 0.9em;
+    margin: 3px 0;
+}
+
+.parameter-section h4 {
+    font-size: 0.85em;
+    margin: 2px 0;
+}
+
+/* Make the containers more compact */
+#spatialPatternParams, #temporalPatternParams {
+    border-top: 1px dotted #ccc;
+    padding-top: 3px;
+}

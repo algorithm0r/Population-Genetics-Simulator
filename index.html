@@ -1,14 +1,17 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>Population Genetics Simulator</title>
-    <link rel="stylesheet" type="text/css" href="./style.css"></link>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    </link>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.js"></script>
     <script type="text/javascript" src="./assetmanager.js"></script>
     <script type="text/javascript" src="./histogram.js"></script>
     <script type="text/javascript" src="./graph.js"></script>
     <script type="text/javascript" src="./gameengine.js"></script>
+    <script type="text/javascript" src="./environmentalPatterns.js"></script>
     <script type="text/javascript" src="./util.js"></script>
     <script type="text/javascript" src="./params.js"></script>
     <script type="text/javascript" src="./gene.js"></script>
@@ -18,6 +21,7 @@
     <script type="text/javascript" src="./datamanager.js"></script>
     <script type="text/javascript" src="./main.js"></script>
 </head>
+
 <body>
     <canvas id="gameWorld" width="1200" height="800"></canvas>
     <div id="controlPanel">
@@ -28,9 +32,36 @@
                 <h3>Environmental Parameters</h3>
                 <label for="numRows">Number of Rows:</label>
                 <input type="number" id="numRows" value="8" /><br />
-
+            
                 <label for="numCols">Number of Columns:</label>
                 <input type="number" id="numCols" value="8" /><br />
+            
+                <!-- Spatial Environment Pattern -->
+                <div class="pattern-controls">
+                    <label for="environmentPattern">Spatial Pattern:</label>
+                    <select id="environmentPattern" onchange="updateEnvironmentUI()">
+                        <option value="uniform" selected>Uniform</option>
+                        <option value="gradient">Gradient</option>
+                    </select>
+                    
+                    <div id="spatialPatternParams" class="pattern-params"></div>
+                </div>
+            
+                <!-- Temporal Environment Pattern -->
+                <div class="pattern-controls">
+                    <label for="environmentDynamics">Temporal Pattern:</label>
+                    <select id="environmentDynamics" onchange="updateEnvironmentUI()">
+                        <option value="static">Static</option>
+                        <option value="linear" selected>Linear</option>
+                        <option value="cycling">Cycling</option>
+                    </select>
+                    
+                    <div id="temporalPatternParams" class="pattern-params"></div>
+                </div>
+            </div>
+
+            <div class="parameter-section">
+                <h3>Population Parameters</h3>
 
                 <label for="numOrganisms">Initial Population Size:</label>
                 <input type="number" id="numOrganisms" value="100" /><br />
@@ -38,42 +69,13 @@
                 <label for="initialVariation">Initial Genetic Variation (std dev):</label>
                 <input type="number" id="initialVariation" value="1" /><br />
 
-                <label for="environmentPattern">Environment Pattern:</label>
-                <select id="environmentPattern">
-                    <option value="random">Random</option>
-                    <option value="uniform">Uniform</option>
-                    <option value="gradient" selected>Gradient</option>
-                    <option value="patches">Patches</option>
-                </select><br />
-                <label for="environmentDynamics">Environment Dynamics:</label>
-                <select id="environmentDynamics">
-                    <option value="none">Static</option>
-                    <option value="cyclic" selected>Cyclic</option>
-                    <option value="directional">Directional</option>
-                </select><br />
-                <label for="targetMin">Min Target Value:</label>
-                <input type="number" id="targetMin" value="-35" step="5" /><br />
-
-                <label for="targetMax">Max Target Value:</label>
-                <input type="number" id="targetMax" value="35" step="5" /><br />
-
-                <label for="targetStep">Target Step Size:</label>
-                <input type="number" id="targetStep" value="5" step="1" min="1" /><br />
-
-                <label for="targetPeriod">Target Change Period:</label>
-                <input type="number" id="targetPeriod" value="1000" step="100" min="1" /><br />
-            </div>
-
-            <div class="parameter-section">
-                <h3>Population Parameters</h3>
-
                 <label for="maxOffspring">Max Offspring:</label>
                 <input type="number" id="maxOffspring" value="5" /><br />
 
                 <label for="targetVariance">Optimum Step Size:</label>
                 <input type="number" id="targetVariance" value="5" /><br />
 
-                <label for="reproductionVariance">Stability Selection Variance:</label>
+                <label for="reproductionVariance">Stabilizing Selection Variance:</label>
                 <input type="number" id="reproductionVariance" value="2" /><br />
 
                 <label for="populationSoftCap">Carrying Capacity (soft cap):</label>
@@ -117,6 +119,7 @@
             <input type="checkbox" id="drawVisuals" checked />
             <label for="drawVisuals">Draw Simulation</label>
         </div>
-    </div>  
+    </div>
 </body>
+
 </html>

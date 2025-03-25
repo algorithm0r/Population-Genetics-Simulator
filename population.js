@@ -1,13 +1,12 @@
 class Population {
-    constructor(row, col, populated, target) {
+    constructor(row, col, populated, spatialPattern, temporalPattern) {
         this.row = row;
         this.col = col;
 
-        this.targetChangePeriod = target.changePeriod;
-        this.targetDynamics = target.dynamics;
-        this.targetIndex = target.startIndex;
-        this.targetType = target.type;
-        this.target = this.targetDynamics[this.targetIndex];
+        this.spatialPattern = spatialPattern;
+        this.temporalPattern = temporalPattern;
+
+        this.target = this.calculateTarget(0);
 
         // Two separate arrays for current and next population
         this.currentPopulation = [];
@@ -42,22 +41,11 @@ class Population {
         return totalGenotype / this.currentPopulation.length;
     }
 
-    currentTarget() {
-        if (this.targetChangePeriod !== 0 && gameEngine.automata.generation % this.targetChangePeriod === 0) {
-            if (this.targetType === "cyclic") {
-                // Cyclic pattern - wrap around the array
-                this.targetIndex = (this.targetIndex + 1) % this.targetDynamics.length;
-            } else if (this.targetType === "directional") {
-                // Directional pattern - increment, reset when reaching the end
-                this.targetIndex = (this.targetIndex + 1);
-                if (this.targetIndex >= this.targetDynamics.length) {
-                    this.targetIndex = 0; // Reset to start
-                }
-            }
-        }
-        return this.targetDynamics[this.targetIndex];
+    calculateTarget(time) {
+        let position = {row : this.row, col: this.col};
+        return this.spatialPattern.getValue(position) + 
+               this.temporalPattern.getValue(position, time);
     }
-
     // Advances to the next generation with potential migration
     nextGeneration() {
         if (gameEngine.click) {
@@ -66,7 +54,7 @@ class Population {
             }
         }
 
-        this.target = this.currentTarget();
+        this.target = this.calculateTarget(gameEngine.automata.generation);
         const variance = PARAMS.reproductionVariance;
         const maxOffspring = PARAMS.maxOffspring;
         const offspringPenalty = this.currentPopulation.length / PARAMS.populationSoftCap;
