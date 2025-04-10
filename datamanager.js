@@ -174,7 +174,7 @@ class DataManager {
         let phenotypeVariance = phenotypeValues.reduce((acc, val) => acc + (val - phenotypeMean) ** 2, 0) / totalPhenotypeCount;
         let phenotypeStdDev = Math.sqrt(phenotypeVariance);
 
-        let heritability = genotypeVariance / phenotypeVariance;
+        let heritability = genotypeVariance / (genotypeVariance + phenotypeVariance);
 
         // Update time series data
         this.organismPopulation.push(organismPop);

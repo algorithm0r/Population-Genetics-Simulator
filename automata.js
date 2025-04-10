@@ -30,7 +30,8 @@ class Automata {
                 const position = {row: i, col: j};
                 row.push(new Population(
                     i, j, 
-                    i === 0 && j === 0,
+                    // i === 0 && j === 0,
+                    true,
                     spatialPattern,
                     temporalPattern
                 ));

@@ -42,11 +42,14 @@ class Population {
     }
 
     calculateTarget(time) {
-        let position = {row : this.row, col: this.col};
-        return this.spatialPattern.getValue(position) + 
-               this.temporalPattern.getValue(position, time);
+        let position = { row: this.row, col: this.col };
+        return this.spatialPattern.getValue(position) +
+            this.temporalPattern.getValue(position, time);
     }
     // Advances to the next generation with potential migration
+    // Modify the Population class's nextGeneration method
+
+    // Current method split into two methods:
     nextGeneration() {
         if (gameEngine.click) {
             if (gameEngine.click.row === this.row && gameEngine.click.col === this.col) {
@@ -59,10 +62,25 @@ class Population {
         const maxOffspring = PARAMS.maxOffspring;
         const offspringPenalty = this.currentPopulation.length / PARAMS.populationSoftCap;
 
-        if (gameEngine.automata.generation % PARAMS.reportingPeriod === 0) this.populationTimeSeries.push(this.currentPopulation.length);
+        if (gameEngine.automata.generation % PARAMS.reportingPeriod === 0) {
+            this.populationTimeSeries.push(this.currentPopulation.length);
+        }
+
+        // Choose reproduction method based on PARAMS
+        if (PARAMS.sexualReproduction) {
+            this.sexualReproduction(variance, maxOffspring, offspringPenalty);
+        } else {
+            this.asexualReproduction(variance, maxOffspring, offspringPenalty);
+        }
+
+        [this.currentPopulation, this.nextPopulation] = [this.nextPopulation, []];
+    }
+
+    // Original reproduction logic moved to a separate method
+    asexualReproduction(variance, maxOffspring, offspringPenalty) {
         this.currentPopulation.forEach(org => {
             let distance = Math.abs(org.phenotype - this.target);
-            org.adapt(this.target)
+            org.adapt(this.target);
             let expectedOffspring = Math.max(maxOffspring * Math.max(0, Math.pow(Math.E, -distance / variance)) - offspringPenalty, 0);
 
             const integerOffspring = Math.floor(expectedOffspring);
@@ -83,10 +101,124 @@ class Population {
             if (Math.random() >= PARAMS.deathChancePerGeneration) {
                 this.migrate(org, PARAMS.adultMigrationChance);
             }
+        });
+    }
 
+    // New method for sexual reproduction
+    sexualReproduction(variance, maxOffspring, offspringPenalty) {
+        // Calculate expected offspring for each organism
+        const organismData = this.currentPopulation.map(org => {
+            let distance = Math.abs(org.phenotype - this.target);
+            org.adapt(this.target);
+            let expectedOffspring = Math.max(maxOffspring * Math.max(0, Math.pow(Math.E, -distance / variance)) - offspringPenalty, 0);
+
+            return {
+                organism: org,
+                expectedOffspring: expectedOffspring,
+                remainingOffspring: expectedOffspring
+            };
         });
 
-        [this.currentPopulation, this.nextPopulation] = [this.nextPopulation, []];
+        // Process organisms with ≥ 0.5 offspring
+        let potentialParents = organismData.filter(data => data.remainingOffspring >= 0.5);
+
+        // While we have at least 2 potential parents
+        while (potentialParents.length >= 2) {
+            // Select two random parents from the potential parents
+            const parentIndices = [
+                Math.floor(Math.random() * potentialParents.length),
+                Math.floor(Math.random() * (potentialParents.length - 1))
+            ];
+
+            // Adjust second index if it's >= first index
+            if (parentIndices[1] >= parentIndices[0]) parentIndices[1]++;
+
+            const parents = [
+                potentialParents[parentIndices[0]],
+                potentialParents[parentIndices[1]]
+            ];
+
+            // Create offspring through sexual reproduction
+            const offspring = this.createOffspringSexually(
+                parents[0].organism,
+                parents[1].organism
+            );
+
+            // Deduct 0.5 offspring from each parent
+            parents.forEach(parent => {
+                parent.remainingOffspring -= 0.5;
+            });
+
+            // Migrate the offspring
+            this.migrate(offspring, PARAMS.offspringMigrationChance);
+
+            // Update the list of potential parents
+            potentialParents = organismData.filter(data => data.remainingOffspring >= 0.5);
+        }
+
+        // Process organisms with < 0.5 offspring probabilistically
+        const lowOffspringOrganisms = organismData.filter(data =>
+            data.remainingOffspring > 0 && data.remainingOffspring < 0.5
+        );
+
+        for (const orgData of lowOffspringOrganisms) {
+            // Probability proportional to remaining offspring / 0.5
+            if (Math.random() < orgData.remainingOffspring / 0.5) {
+                // Find a mate for this organism
+                const potentialMates = organismData.filter(data =>
+                    data !== orgData && data.remainingOffspring > 0
+                );
+
+                if (potentialMates.length > 0) {
+                    const mateIndex = Math.floor(Math.random() * potentialMates.length);
+                    const mate = potentialMates[mateIndex];
+
+                    // Create offspring
+                    const offspring = this.createOffspringSexually(
+                        orgData.organism,
+                        mate.organism
+                    );
+
+                    // Set remaining offspring to 0 for both parents
+                    orgData.remainingOffspring = 0;
+                    mate.remainingOffspring = Math.max(0, mate.remainingOffspring - 0.5);
+
+                    // Migrate the offspring
+                    this.migrate(offspring, PARAMS.offspringMigrationChance);
+                }
+            }
+        }
+
+        // Handle organism survival
+        this.currentPopulation.forEach(org => {
+            if (Math.random() >= PARAMS.deathChancePerGeneration) {
+                this.migrate(org, PARAMS.adultMigrationChance);
+            }
+        });
+    }
+
+    // Helper method for creating offspring through sexual reproduction
+    createOffspringSexually(parent1, parent2) {
+        // Create a new organism with no parent (blank slate)
+        const offspring = new Organism();
+
+        // For each gene, randomly select from either parent
+        for (let i = 0; i < offspring.genes.length; i++) {
+            // Randomly choose which parent to inherit from
+            const selectedParent = Math.random() < 0.5 ? parent1 : parent2;
+
+            // Copy the gene value from the selected parent
+            offspring.genes[i].value = selectedParent.genes[i].value;
+        }
+
+        // Update phenotype based on genes
+        offspring.genotype = offspring.updatePhenotype();
+        offspring.phenotype = offspring.genotype;
+
+        // Apply mutations
+        offspring.mutate();
+
+        return offspring;
     }
 
     // Handles migration by placing offspring in neighboring cells within the global grid
@@ -127,18 +259,24 @@ class Population {
 
         // Function to map values to colors on a gradient
         const getColorForValue = (value) => {
-            value = Math.max(-10 * PARAMS.targetVariance, Math.min(10 * PARAMS.targetVariance, value));
-            if (value < 0) {
-                const intensity = (50 + value) / 50;
-                const red = Math.floor(255 * intensity);
-                const green = Math.floor(255 * intensity);
-                return `rgb(${red}, ${green}, 255)`;
-            } else {
-                const intensity = (50 - value) / 50;
-                const green = Math.floor(255 * intensity);
-                const blue = Math.floor(255 * intensity);
-                return `rgb(255, ${green}, ${blue})`;
-            }
+            // Normalize the value to a position on the color wheel (0-360 degrees)
+            // We can set the period of the cycle based on PARAMS.targetVariance
+            const period = 300; // Complete color cycle every 6*targetVariance units
+            
+            // Convert value to an angle (0-360) for the hue in HSL
+            // Using modulo to ensure it wraps around properly
+            const hue = ((value % period) / period * 360 + 360) % 360;
+            
+            // Set saturation and lightness for vibrant but distinguishable colors
+            const saturation = 85; // High saturation for vivid colors
+            const lightness = 60;  // Medium lightness for good contrast
+            
+            // Additional visual cue for magnitude - slight variation in lightness
+            // This helps distinguish the same hue in different cycles
+            const magnitudeFactor = Math.min(Math.abs(value) / (50 * PARAMS.targetVariance), 1);
+            const adjustedLightness = lightness - (magnitudeFactor * 15);
+            
+            return `hsl(${hue}, ${saturation}%, ${adjustedLightness}%)`;
         };
 
         // Calculate phenotype quartiles
@@ -174,7 +312,7 @@ class Population {
 
         const chunkHeight = (cellHeight - 2 * margin) / 5;
 
-         if (this.drawState === 0) {
+        if (this.drawState === 0) {
             if (hasPop) {
                 // Draw genotype quartiles
                 genotypeColors.forEach((color, i) => {

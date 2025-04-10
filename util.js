@@ -77,6 +77,7 @@ function loadParameters() {
     PARAMS.adultMigrationChance = parseFloat(document.getElementById("adultMigrationChance").value);
     PARAMS.adaptiveStepSize = parseFloat(document.getElementById("adaptiveStepSize").value);
     PARAMS.targetObservationalNoise = parseFloat(document.getElementById("targetObservationalNoise").value);
+    PARAMS.sexualReproduction = document.getElementById('sexualReproduction').checked;
     
     // Environment dynamics parameters
     const spatialType = document.getElementById('environmentPattern').value;

@@ -30,6 +30,7 @@ var PARAMS = {
     deathChancePerGeneration: 0.2,
     offspringMigrationChance: 0.0001, 
     adultMigrationChance: 0.0001,
+    sexualReproduction: false,
 
     // data gathering
     reportingPeriod: 50,

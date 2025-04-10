@@ -27,8 +27,8 @@ class Organism {
         let difference = target + this.cueNoise - this.phenotype;
         let sign = Math.sign(difference);
 
-        // let step = sign*Math.min(generateNormalSample(PARAMS.adaptiveStepSize, PARAMS.adaptiveStepSize), difference);
-        let step = sign*generateNormalSample(PARAMS.adaptiveStepSize, PARAMS.adaptiveStepSize);
+        let step = sign*Math.min(generateNormalSample(PARAMS.adaptiveStepSize, PARAMS.adaptiveStepSize), Math.abs(difference));
+        // let step = sign*generateNormalSample(PARAMS.adaptiveStepSize, PARAMS.adaptiveStepSize);
 
         this.phenotype += step;
     }
