@@ -70,45 +70,45 @@
                 <input type="number" id="initialVariation" value="1" /><br />
 
                 <label for="maxOffspring">Max Offspring:</label>
-                <input type="number" id="maxOffspring" value="5" /><br />
+                <input type="number" id="maxOffspring" value="4" /><br />
 
                 <label for="targetVariance">Optimum Step Size:</label>
                 <input type="number" id="targetVariance" value="5" /><br />
 
                 <label for="reproductionVariance">Stabilizing Selection Variance:</label>
-                <input type="number" id="reproductionVariance" value="2" /><br />
+                <input type="number" id="reproductionVariance" value="5" /><br />
 
                 <label for="populationSoftCap">Carrying Capacity (soft cap):</label>
-                <input type="number" id="populationSoftCap" value="100" /><br />
+                <input type="number" id="populationSoftCap" value="40" /><br />
             </div>
 
             <div class="parameter-section">
                 <h3>Organism Parameters</h3>
-                <label for="numLocii">Number of Locii:</label>
+                <label for="numLocii">Number of Loci:</label>
                 <input type="number" id="numLocii" value="100" /><br />
 
                 <label for="mutationRate">Mutation Rate:</label>
                 <input type="number" id="mutationRate" value="0.05" step="0.01" /><br />
 
                 <label for="mutationRange">Mutation Effect Size (std dev):</label>
-                <input type="number" id="mutationRange" value="0.025" step="0.005" /><br />
+                <input type="number" id="mutationRange" value="0.01" step="0.01" /><br />
 
                 <label for="deathChancePerGeneration">Death Chance Per Generation:</label>
                 <input type="number" id="deathChancePerGeneration" value="0.2" step="0.01" /><br />
 
                 <label for="offspringMigrationChance">Offspring Migration Rate:</label>
-                <input type="number" id="offspringMigrationChance" value="0.0001" step="0.0001" /><br />
+                <input type="number" id="offspringMigrationChance" value="0.001" step="0.001" /><br />
 
                 <label for="adultMigrationChance">Adult Migration Rate:</label>
-                <input type="number" id="adultMigrationChance" value="0.0001" step="0.0001" /><br />
+                <input type="number" id="adultMigrationChance" value="0.001" step="0.001" /><br />
 
                 <label for="targetObservationalNoise">Environmental Cue Noise:</label>
-                <input type="number" id="targetObservationalNoise" value="0.1" step="0.01" /><br />
+                <input type="number" id="targetObservationalNoise" value="0" step="0.01" /><br />
 
                 <label for="adaptiveStepSize">Plasticity Effect Size:</label>
-                <input type="number" id="adaptiveStepSize" value="0.5" step="0.1" /><br />
+                <input type="number" id="adaptiveStepSize" value="0" step="0.001" /><br />
 
-                <input type="checkbox" id="sexualReproduction" />
+                <input type="checkbox" id="sexualReproduction" checked/>
                 <label for="sexualReproduction">Sexual Reproduction</label><br />
             </div>
 

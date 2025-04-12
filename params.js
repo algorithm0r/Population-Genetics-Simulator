@@ -47,3 +47,69 @@ var PARAMS = {
     ip: 'https://73.19.38.112:8888'
 };
 
+function loadParameters() {
+    PARAMS.numRows = parseInt(document.getElementById("numRows").value);
+    PARAMS.numCols = parseInt(document.getElementById("numCols").value);
+
+    // Population parameters
+    // PARAMS.numOrganisms = parseInt(document.getElementById("numOrganisms").value);
+    PARAMS.maxOffspring = parseInt(document.getElementById("maxOffspring").value);
+    PARAMS.targetVariance = parseFloat(document.getElementById("targetVariance").value);
+    PARAMS.initialVariation = parseFloat(document.getElementById("initialVariation").value);
+    PARAMS.reproductionVariance = parseFloat(document.getElementById("reproductionVariance").value);
+    PARAMS.populationSoftCap = parseInt(document.getElementById("populationSoftCap").value);
+
+    // Organism parameters
+    PARAMS.numLocii = parseInt(document.getElementById("numLocii").value);
+    PARAMS.mutationRate = parseFloat(document.getElementById("mutationRate").value);
+    PARAMS.mutationRange = parseFloat(document.getElementById("mutationRange").value);
+    PARAMS.deathChancePerGeneration = parseFloat(document.getElementById("deathChancePerGeneration").value);
+    PARAMS.offspringMigrationChance = parseFloat(document.getElementById("offspringMigrationChance").value);
+    PARAMS.adultMigrationChance = parseFloat(document.getElementById("adultMigrationChance").value);
+    PARAMS.adaptiveStepSize = parseFloat(document.getElementById("adaptiveStepSize").value);
+    PARAMS.targetObservationalNoise = parseFloat(document.getElementById("targetObservationalNoise").value);
+    PARAMS.sexualReproduction = document.getElementById('sexualReproduction').checked;
+    
+    // Environment dynamics parameters
+    const spatialType = document.getElementById('environmentPattern').value;
+    const temporalType = document.getElementById('environmentDynamics').value;
+    
+    // Environment parameters from dynamic fields
+    PARAMS.environmentPatterns = {
+        spatial: {
+            type: spatialType,
+            parameters: {}
+        },
+        temporal: {
+            type: temporalType,
+            parameters: {}
+        }
+    };
+    
+    // Read spatial parameters
+    if (PatternMetadata[spatialType]) {
+        for (const paramName of Object.keys(PatternMetadata[spatialType].parameters)) {
+            const inputId = `spatial_${paramName}`;
+            const input = document.getElementById(inputId);
+            if (input) {
+                PARAMS.environmentPatterns.spatial.parameters[paramName] = 
+                    parseFloat(input.value);
+            }
+        }
+    }
+    
+    // Read temporal parameters
+    if (PatternMetadata[temporalType]) {
+        for (const paramName of Object.keys(PatternMetadata[temporalType].parameters)) {
+            const inputId = `temporal_${paramName}`;
+            const input = document.getElementById(inputId);
+            if (input) {
+                PARAMS.environmentPatterns.temporal.parameters[paramName] = 
+                    parseFloat(input.value);
+            }
+        }
+    }
+
+    console.log(PARAMS);
+}
+

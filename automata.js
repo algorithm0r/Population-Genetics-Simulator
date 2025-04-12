@@ -27,9 +27,9 @@ class Automata {
         for (let i = 0; i < this.rows; i++) {
             const row = [];
             for (let j = 0; j < this.cols; j++) {
-                const position = {row: i, col: j};
+                const position = { row: i, col: j };
                 row.push(new Population(
-                    i, j, 
+                    i, j,
                     // i === 0 && j === 0,
                     true,
                     spatialPattern,
@@ -56,34 +56,35 @@ class Automata {
 
     // Draw the entire grid of populations
     draw(ctx) {
-        const cellWidth = PARAMS.pixelDimension / this.cols;
-        const cellHeight = PARAMS.pixelDimension / this.rows;
+        if (document.getElementById("drawVisuals").checked) {
+            const cellWidth = PARAMS.pixelDimension / this.cols;
+            const cellHeight = PARAMS.pixelDimension / this.rows;
 
-        for (let i = 0; i < this.rows; i++) {
-            for (let j = 0; j < this.cols; j++) {
-                const population = this.grid[i][j];
-                const x = j * cellWidth;
-                const y = i * cellHeight;
+            for (let i = 0; i < this.rows; i++) {
+                for (let j = 0; j < this.cols; j++) {
+                    const population = this.grid[i][j];
+                    const x = j * cellWidth;
+                    const y = i * cellHeight;
 
-                // Set up a clipping region for each cell
-                ctx.save();
-                ctx.beginPath();
+                    // Set up a clipping region for each cell
+                    ctx.save();
+                    ctx.beginPath();
 
-                ctx.rect(x, y, cellWidth, cellHeight);
-                ctx.clip();
+                    ctx.rect(x, y, cellWidth, cellHeight);
+                    ctx.clip();
 
-                // Draw the population within the clipping region
-                population.draw(ctx);
+                    // Draw the population within the clipping region
+                    population.draw(ctx);
 
-                ctx.lineWidth = 3;
-                // Outline each cell for visibility
-                ctx.strokeStyle = 'black';
-                ctx.strokeRect(x, y, cellWidth, cellHeight);
+                    ctx.lineWidth = 3;
+                    // Outline each cell for visibility
+                    ctx.strokeStyle = 'black';
+                    ctx.strokeRect(x, y, cellWidth, cellHeight);
 
-                ctx.restore();
+                    ctx.restore();
+                }
             }
         }
-
         ctx.clearRect(800, 700, 800, 200);
         ctx.font = "12px Arial";
         ctx.fillStyle = "#000000";

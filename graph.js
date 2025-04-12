@@ -1,9 +1,10 @@
 class Graph {
-    constructor(x, y, data, label, min, max) {
+    constructor(x, y, data, label, min, max, resize = true) {
         this.x = x;
         this.y = y;
         this.data = data;
         this.label = label;
+        this.resize = resize;
 
         this.xSize = PARAMS.graphWidth;
         this.ySize = PARAMS.graphHeight;
@@ -15,8 +16,17 @@ class Graph {
     update() {
     }
     draw(ctx) {
-        this.updateMinAndMax();
+        if(this.resize) this.updateMinAndMax();
         if (!document.getElementById("graphs").checked) return;
+
+        // Save the current context state
+        this.ctx.save();
+            
+        // Create a clipping region that matches your graph boundaries
+        this.ctx.beginPath();
+        this.ctx.rect(this.x, this.y, this.xSize, this.ySize);
+        this.ctx.clip();
+
         if (this.data[0].length > 1) {
             for (var j = 0; j < this.data.length; j++) {
                 var data = this.data[j];
@@ -50,6 +60,9 @@ class Graph {
                 this.ctx.fillText(value, this.x + this.xSize - 5, yPos + 10);
             }
         }
+
+        this.ctx.restore();
+
         var firstTick = 0;
         firstTick = this.data[0].length > this.xSize ? this.data[0].length - this.xSize : 0;
         this.ctx.fillStyle = "#000000";

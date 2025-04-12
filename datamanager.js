@@ -5,6 +5,7 @@ class DataManager {
         // population data
         this.organismPopulation = [];
         this.biomePopulation = [];
+        this.targets = [];
         this.meanGeneValues = [];
         this.upperStdDevGeneValues = [];
         this.lowerStdDevGeneValues = [];
@@ -31,10 +32,10 @@ class DataManager {
 
         // Initialize the Histogram instance for visualization
         gameEngine.addGraph(new Graph(800, 0, [this.organismPopulation], "Organisms", 0, 0));
-        gameEngine.addGraph(new Graph(800, 115, [this.biomePopulation], "Populated Biomes", 0, 64));
+        gameEngine.addGraph(new Graph(800, 115, [this.meanGenotypeValues, this.meanPhenotypeValues, this.targets], "Target", -2, 2));
 
         let options = {
-            label: "Genetic Distribution"
+            label: "Genetic Distribution (Gene Level)"
         };
         gameEngine.addGraph(new Histogram(800, 230, this.geneticHistogramData, options));
         gameEngine.addGraph(new Graph(800, 230, [this.meanGeneValues, this.upperStdDevGeneValues, this.lowerStdDevGeneValues], "", -PARAMS.histogramWidth, PARAMS.histogramWidth));
@@ -43,15 +44,15 @@ class DataManager {
             label: "Genotype Distribution (Organism Level)"
         };
         gameEngine.addGraph(new Histogram(800, 345, this.genotypeHistogramData, genotypeOptions));
-        gameEngine.addGraph(new Graph(800, 345, [this.meanGenotypeValues, this.upperStdDevGenotypeValues, this.lowerStdDevGenotypeValues], "", -PARAMS.histogramWidth, PARAMS.histogramWidth));
+        gameEngine.addGraph(new Graph(800, 345, [this.meanGenotypeValues, this.upperStdDevGenotypeValues, this.lowerStdDevGenotypeValues], "", -3, 3, false));
 
         let phenotypeOptions = {
             label: "Phenotypic Distribution"
         };
         gameEngine.addGraph(new Histogram(800, 460, this.phenotypeHistogramData, phenotypeOptions));
-        gameEngine.addGraph(new Graph(800, 460, [this.meanPhenotypeValues, this.upperStdDevPhenotypeValues, this.lowerStdDevPhenotypeValues], "", -PARAMS.histogramWidth, PARAMS.histogramWidth));
+        gameEngine.addGraph(new Graph(800, 460, [this.meanPhenotypeValues, this.upperStdDevPhenotypeValues, this.lowerStdDevPhenotypeValues], "", -3, 3, false));
 
-        gameEngine.addGraph(new Graph(800, 575, [this.genotypicVarianceValues, this.phenotypicVarianceValues, this.heritabilityValues], "Genotypic/Phenotypic Variance (σ²) and Heritability (h²)", 0, 0));
+        gameEngine.addGraph(new Graph(800, 575, [this.genotypicVarianceValues, this.phenotypicVarianceValues, this.heritabilityValues], "Genotypic/Phenotypic Variance (σ²) and Heritability (h²)", 0, 4, false));
         
         const cellWidth = PARAMS.pixelDimension / PARAMS.numCols;
         const cellHeight = PARAMS.pixelDimension / PARAMS.numRows;
@@ -175,10 +176,12 @@ class DataManager {
         let phenotypeStdDev = Math.sqrt(phenotypeVariance);
 
         let heritability = genotypeVariance / (genotypeVariance + phenotypeVariance);
+        let target = this.automata.grid[0][0].target;
 
         // Update time series data
         this.organismPopulation.push(organismPop);
         this.biomePopulation.push(biomePop);
+        this.targets.push(target - target);
 
         // Gene level
         this.geneticHistogramData.push(geneHistogram);
@@ -188,15 +191,15 @@ class DataManager {
 
         // Genotype level
         this.genotypeHistogramData.push(genotypeHistogram);
-        this.meanGenotypeValues.push(genotypeMean);
-        this.upperStdDevGenotypeValues.push(genotypeMean + genotypeStdDev);
-        this.lowerStdDevGenotypeValues.push(genotypeMean - genotypeStdDev);
+        this.meanGenotypeValues.push(genotypeMean - target);
+        this.upperStdDevGenotypeValues.push(genotypeMean + genotypeStdDev - target);
+        this.lowerStdDevGenotypeValues.push(genotypeMean - genotypeStdDev - target);
 
         // Phenotype level
         this.phenotypeHistogramData.push(phenotypeHistogram);
-        this.meanPhenotypeValues.push(phenotypeMean);
-        this.upperStdDevPhenotypeValues.push(phenotypeMean + phenotypeStdDev);
-        this.lowerStdDevPhenotypeValues.push(phenotypeMean - phenotypeStdDev);
+        this.meanPhenotypeValues.push(phenotypeMean - target);
+        this.upperStdDevPhenotypeValues.push(phenotypeMean + phenotypeStdDev - target);
+        this.lowerStdDevPhenotypeValues.push(phenotypeMean - phenotypeStdDev - target);
 
         this.genotypicVarianceValues.push(genotypeVariance);
         this.phenotypicVarianceValues.push(phenotypeVariance);
