@@ -94,4 +94,27 @@ level helps at any tested rate. This is the paper's money figure.
 Figure: `results/etac.svg` (+ `results/etac.svg.etac.csv`). Regenerate:
 `node fig-etac.mjs results/etac.svg results/pstrength.jsonl results/pilot1x.jsonl results/bracket1.jsonl`
 
-## F5 — Cyclical environments + 200k-gen metastability probe (pending: batch `cyclic`)
+## F5 — Cycles don't rescue plasticity here; peak rate governs; ηc(0.5) confirmed stable (2026-08-27)
+
+Batch `cyclic` (238 runs, 19 bins; amplitude {10,25,50} × period {500,2k,10k} × step {0,0.5},
+plus the 200k-gen probe).
+
+- **Metastability probe:** p0.5 @ linear rate 40 survives **200,000 generations** with
+  lag stabilized (−0.48), 0/12 extinct — ηc(0.5) ∈ (40,60) is real, not an epoch artifact.
+- **Cyclic governing rule:** survival tracks each arm's ηc against the cycle's **peak
+  rate** 2πa/T. p0's transition bin (a10/T2000, peak ≈ 31/10k ≈ ηc) sits at 57.5%
+  extinction with huge TTE variance — exactly the tipping-point signature; slower/
+  gentler cycles (a10/a25 @ T10k) survive, everything faster dies.
+- **Slide-33 hypothesis ("plasticity buffers cycles") REFUTED in this regime:** the
+  plasticity arm is worse or equal in every tested condition (e.g. a10/T2000: p0 57%
+  extinct vs p0.5 100% @1,500 gens; a10/T10k: p0 0% vs p0.5 15%). Because plasticity
+  slashes ηc, it loses under oscillation too.
+- **Registered prediction for the follow-up (2026-08-27, not yet run):** a buffer
+  regime should exist where amplitude ≤ plastic reach (~2.5) and the cycle is too fast
+  for genetic tracking (e.g. a ∈ {1,2}, T ∈ {50–500}) — there plasticity absorbs the
+  whole oscillation within lifetimes and should WIN. That would give the paper its
+  boundary-conditions answer ("when does plasticity buffer vs. doom") rather than a
+  blanket negative.
+
+Regenerate: `node gen-settings.mjs cyclic settings/cyclic.json && node launch.mjs settings/cyclic.json cyclic`;
+table: `node agg.mjs results/cyclic.jsonl`.

@@ -13,7 +13,11 @@ if (!IN || !fs.existsSync(IN)) { console.error('usage: node agg.mjs <results.jso
 const runs = fs.readFileSync(IN, 'utf8').split('\n').filter(l => l.trim()).map(l => JSON.parse(l));
 
 // bin key: (adaptiveStepSize, rate) from stored cfg
-const rateOf = r => r.cfg.environmentPatterns?.temporal?.parameters?.changeRate ?? 0;
+const rateOf = r => {
+    const t = r.cfg.environmentPatterns?.temporal;
+    if (t?.type === 'cycling') return `a${t.parameters.cycleAmplitude}T${t.parameters.cyclePeriod}`;
+    return t?.parameters?.changeRate ?? 0;
+};
 const plasOf = r => {
     const o = r.cfg.overrides ?? {};
     if (o.plasticityModel === 'linear') return `lin${o.reactionNormSlope}`;   // linear-norm arms are their own labels

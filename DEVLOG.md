@@ -4,6 +4,43 @@ Backward-looking, append-only. Newest entry on top. Never edit past entries.
 
 <!-- append new entries below this line -->
 
+## 2026-08-27 (close) — Five findings; Phase 1–2 experiments largely done in one day
+
+**Done:** Continued the autonomous run through four coordinator batches (~1,300 seeded
+runs total). All findings in `headless/FINDINGS.md` with regeneration commands:
+- **F3 (linvar):** plasticity FORM decides everything — slope-1 linear norms are
+  unkillable to rate 400 (genotype in free-fall, fitness pinned); slope-0.5 linear is
+  *worse than no plasticity* (ηc≈130 vs 280); bounded step-plasticity worst (ηc≈50).
+  Cost-free linear-norm harm contradicts Chevin's net-benefit prediction in a
+  finite-population norm model. Registered prediction was half wrong (informatively).
+- **F4 (pstrength, 1,068 pooled runs):** ηc falls **monotonically** with step
+  plasticity: 273 → 119 (step 0.1!) → 70 → 50 → 50 → 32. First dose hurts most.
+  Money figure: `headless/results/etac.svg` (sent to Chris).
+- **F5 (cyclic + probe):** ηc(0.5) confirmed stable at 200k generations (not an epoch
+  artifact). Under cycles, survival is governed by each arm's ηc vs the cycle's peak
+  rate 2πa/T (p0's transition bin lands exactly where that predicts); **slide-33's
+  "plasticity buffers cycles" is refuted for amplitudes > plastic reach** — registered
+  prediction logged that a buffer regime exists at amplitude ≤ reach (~2.5) with fast
+  cycles; that's the boundary-conditions experiment for the paper.
+
+Multi-run architecture (coordinator/workers/dashboard) built, proven across 4 batches,
+committed. Known gap logged: killed workers leave phantom dispatch counts (batch still
+converges; fix = heartbeat-based claim reclaim). Machine etiquette: 11 workers
+saturated the box; 6 is the polite ceiling while Chris works.
+
+**Changed:** headless/{coordinator,worker,dashboard,launch,gen-settings,agg,fig-etac,
+FINDINGS}.mjs/md; organism.js + params.js (flag-gated linear-norm variant, default
+behavior unchanged, smoke 7/7); DEVPLAN/STATUS; LITERATURE.md finalized at container
+level.
+
+**State:** all batch processes torn down; results (~35 MB JSONL) in headless/results/
+(gitignored, regenerable); sim core browser behavior unchanged; nothing pushed.
+
+**Next:** small-amplitude cyclic sweep (the registered buffer-regime prediction), selDiff
+estimator calibration, then Phase 3 spatial factorial — the paper's differentiator.
+And: Chris to eyeball the browser sim + decide on re-engaging Jobran (the mechanism
+correction and F1–F5 are exactly the material for that email).
+
 ## 2026-08-27 (later) — Headless infrastructure, literature check, and the shielding result replicated
 
 **Done:**

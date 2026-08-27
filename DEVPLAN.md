@@ -76,16 +76,17 @@ mechanism traces distinguish lag-of-mean vs. variance-erosion.
     adjudicate the helps/neutral/harms disagreement, quantify ηc reduction, extend to space.
 - [ ] Verification debts: read Nunney 2016 full text; published Vinton 2022; Scheiner XIV/XVI; re-check citers of Vinton 2022 at writing time
 
-### 1. Controls (institute-feedback list, Apr 2025) [ PLANNED ]
-- [ ] **Drift control**: softCap sweep (realized N ≈650 → ~6.5k → ~65k) — is variance collapse drift?
-- [ ] **Plasticity-form control**: linear/scaling reaction norm (Chevin/Scheiner-style) — does cost-free shielding harm persist? *(Prediction registered 2026-08-27: it will NOT — plasticity form is likely the decisive knob. Falsifiable.)*
+### 1. Controls (institute-feedback list, Apr 2025) [ TESTING ]
+- [x] ~~Drift control~~ — largely mooted by F2 (variance never depletes; the killer is the frozen mean). One large-N confirmation figure still worth having.
+- [x] **Plasticity-form control** (2026-08-27, F3): linear norms implemented flag-gated; prediction half-refuted — slope-1 unkillable, slope-0.5 *worse than nothing*. Form + reach are the knobs.
 - [ ] **Shielding-separation control**: force selection on genotype with plasticity active (separates "phenotype optimal" from "selection removed")
 - [ ] Burn-in phase + edges-off toggle (Jobran's Feb 2025 requests) as PARAMS/UI options
 
-### 2. Headline experiments [ PLANNED ]
-- [ ] ηc(plasticity strength) curve with Chevin 2010 analytic prediction overlaid — the money figure (logistic fit of P(extinct) vs rate, CIs, ≥20 seeds)
-- [ ] Mechanism figure: variance + lag + selection-differential trajectories ± plasticity
-- [ ] Directional vs cyclical change (slide-33 hypothesis: plasticity buffers cycles, dooms trends) — amplitude × period × plasticity
+### 2. Headline experiments [ TESTING ]
+- [x] ηc(plasticity strength) curve (2026-08-27, F4): monotonic 273→119→70→50→50→32; `headless/results/etac.svg`. Chevin analytic overlay still to add.
+- [ ] Mechanism figure: variance + lag + selection-differential trajectories ± plasticity (needs selDiff estimator calibration first — see FINDINGS F2 caveat)
+- [x] Directional vs cyclical (2026-08-27, F5): slide-33 refuted for amplitude > reach; peak-rate rule governs.
+- [ ] **Small-amplitude cyclic sweep** — registered prediction: plasticity buffers when amplitude ≤ plastic reach (~2.5) and cycles are too fast for genetic tracking (a∈{1,2}, T∈{50–500}). The boundary-conditions experiment.
 - [ ] Cue-noise sweep (connects to Ashander 2016 / King & Hadfield 2019 cue-reliability axis)
 
 ### 3. Spatial differentiator [ PLANNED ]
