@@ -11,3 +11,6 @@ Desktop.ini
 .env
 .tokens.json
 *.pem
+
+# editor
+.vscode/
