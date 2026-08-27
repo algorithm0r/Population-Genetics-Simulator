@@ -169,3 +169,42 @@ zero adaptive value, separating migration's two channels for free.
 **Prerequisite shipped:** `worldEdges: "island"` option (edge hops cancelled; default
 torus unchanged; smoke 8/8) — gradient worlds need it (wrap seam), torus stays right
 for the uniform control.
+
+## F8 — Migration rescues genetics, not shielded populations; the channel is demographic, not relocation (2026-08-28)
+
+Batch `spatial1` (99 runs, 9 bins; 1×24 island strip, gradient 2/cell vs uniform
+control; arms locally super-critical: p0@r320, p0.5@r80; migration {0, 0.1}).
+**Horizon-censored at 20k generations — de-censoring batch `spatial2` (50k) running;
+survivor-fate numbers below are provisional.**
+
+| arm | no migration | mig 0.1 uniform | mig 0.1 gradient |
+|---|---|---|---|
+| genetics only (p0, r320) | 1.00 extinct (TTE ~2.5k) | **0.00** | 0.12 |
+| shielded (p0.5, r80) | 1.00 (TTE ~2.7k) | 0.36 (survivor lag −3.6, growing) | **0.82** (survivor lag −8, growing) |
+
+- **Registered predictions revised by the data.** Migration DOES rescue bare genetics
+  from super-critical change — but through the **demographic/gene-flow channel**
+  (Chris's uniform control proves it: rescue is complete where relocation is
+  impossible), not the Pease escalator. Range shift is negligible: occupancy centroid
+  moves at ~2% of the match-front speed. Mechanistically closed with `realizedResp`:
+  gene flow restores the genetic response to **exactly the required rate**
+  (0.035 vs 0.032/gen needed), and gradient-world survivors carry varGeno ≈ 10 —
+  the classic gene-flow-pumps-variance mechanism (Polechová 2009/2025) live in the ABM.
+- **Shielding largely disables the rescue**: realizedResp stuck at ~60% of required
+  (0.005–0.007 vs 0.008), lags accelerating in all surviving reps — the migration
+  "rescue" under plasticity looks like slow death (spatial2 decides).
+- **The gradient inverts across plasticity**: mild cost for bare genetics (0.12 vs 0 —
+  swamping by locally-maladapted immigrants) but severe under shielding (0.82 vs 0.36)
+  — swamping still hurts when sorting can't help, because shielding flattens the
+  fitness differences that would sort immigrants.
+- Sanity: p0@r80 tracks in place on the gradient (0/10, lag −0.11, centroid static).
+
+Frame against: Pease/Lande/Bull 1989 + Polechová/Barton/Marion 2009 (the known rescue,
+here reproduced and mechanistically measured) and Am Nat 2019 (plasticity-helps-shifts —
+our fixed bounded plasticity does the opposite). Regenerate:
+`node gen-settings.mjs spatial1 settings/spatial1.json && node launch.mjs settings/spatial1.json spatial1`;
+table: `node agg.mjs results/spatial1.jsonl`. Note: two shielded-migration bins were
+deliberately capped at n≈11–17 (precision on a censored estimate is wasted compute;
+spatial2 supersedes them).
+
+## F9 — De-censoring (pending: batch `spatial2`, 50k generations, migration arms ×12 seeds)
