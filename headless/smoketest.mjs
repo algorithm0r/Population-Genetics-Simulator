@@ -41,6 +41,17 @@ check('plasticity off: phenotype tracks genotype exactly', drift === 0, `max|mp-
 const doomed = runOne({ seed: 7, epoch: 20000, reportEvery: 100, overrides: { ...SINGLE_CELL, adaptiveStepSize: 0.5 }, environmentPatterns: FAST_ENV });
 check('1 unit/gen change: extinct', !doomed.survived, `extinctAt=${doomed.extinctAt}`);
 
+// linear reaction-norm variant, slope 1, static env: every ADULT sits exactly on the
+// target; the population mean phenotype still carries newborns (born at genotype,
+// selected once before first adapt — the model's ordering), so the correct invariant
+// is that compensation pulls the phenotype mean strictly toward the target relative
+// to the genotype mean.
+const lin = runOne({ seed: 7, epoch: 500, reportEvery: 100, overrides: { ...SINGLE_CELL, plasticityModel: 'linear', reactionNormSlope: 1, adaptiveStepSize: 0 }, environmentPatterns: STATIC_ENV });
+const last = lin.series.at(-1);
+check('linear norm slope 1: |meanPheno| < |meanGeno| (compensation toward target)',
+    Math.abs(last.meanPheno) < Math.abs(last.meanGeno) && Math.abs(last.meanGeno) > 0.05,
+    `meanPheno=${last.meanPheno.toFixed(3)} meanGeno=${last.meanGeno.toFixed(3)}`);
+
 // timing note for sweep sizing
 console.log(`\ntiming: 2000 gens single-cell ≈ ${a.wallMs} ms  (${(a.wallMs / 2000).toFixed(3)} ms/gen)`);
 process.exit(failures ? 1 : 0);

@@ -24,6 +24,15 @@ class Organism {
     }
     
     adapt(target) {
+        // Linear reaction-norm variant (Chevin/Nunney-style control, added 2026-08-27):
+        // instant partial compensation toward the observed optimum, recomputed from the
+        // genotype each generation — unbounded reach, no accumulation. Default remains
+        // the original bounded step model ("step"); browser behavior unchanged.
+        if (PARAMS.plasticityModel === "linear") {
+            this.phenotype = this.genotype + PARAMS.reactionNormSlope * (target + this.cueNoise - this.genotype);
+            return;
+        }
+
         let difference = target + this.cueNoise - this.phenotype;
         let sign = Math.sign(difference);
 

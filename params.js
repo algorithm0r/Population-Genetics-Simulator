@@ -27,6 +27,8 @@ var PARAMS = {
     mutationRange: 0.025,
     targetObservationalNoise: 0.1,
     adaptiveStepSize: 0.5,
+    plasticityModel: "step",     // "step" (bounded within-lifetime acclimation, original) | "linear" (instant reaction norm, Chevin-style control)
+    reactionNormSlope: 0.5,      // linear model only: fraction of the observed offset compensated
     deathChancePerGeneration: 0.2,
     offspringMigrationChance: 0.0001, 
     adultMigrationChance: 0.0001,

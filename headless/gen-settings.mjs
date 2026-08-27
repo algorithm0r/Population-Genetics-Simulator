@@ -41,6 +41,26 @@ const EXPERIMENTS = {
             out.push({ id: `brk_p0_r${rate}`, meta: { plasticity: 0, rate }, config: { epoch: 50000, reportEvery: 250, overrides: { ...BASE, adaptiveStepSize: 0 }, environmentPatterns: env(rate) } });
         return out;
     },
+    // Linear reaction-norm control (Phase 1's decisive knob). Registered prediction
+    // (2026-08-27, before running): the shielding extinction DISAPPEARS — unbounded
+    // instant norms track like Chevin/Scheiner predict; harm requires bounded reach.
+    // Slopes 0.5 and 1.0 (1.0 = full compensation = maximal shielding of adults),
+    // same rate axis as pilot1x plus the p0.5-lethal low rates.
+    linvar() {
+        const out = [];
+        for (const slope of [0.5, 1.0])
+            for (const rate of [0, 100, 160, 200, 240, 300, 400])
+                out.push({
+                    id: `lin_b${slope}_r${rate}`,
+                    meta: { plasticity: `lin${slope}`, rate },
+                    config: {
+                        epoch: 50000, reportEvery: 250,
+                        overrides: { ...BASE, plasticityModel: 'linear', reactionNormSlope: slope, adaptiveStepSize: 0 },
+                        environmentPatterns: env(rate),
+                    },
+                });
+        return out;
+    },
     // Plasticity-strength resolution at fixed rates (for the eta_c(plasticity) curve later)
     pstrength() {
         const out = [];
