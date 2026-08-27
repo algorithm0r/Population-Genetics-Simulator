@@ -89,13 +89,17 @@ function snapshot(automata) {
     const ws = orgs.map(o => Math.max(P.maxOffspring * Math.exp(-Math.abs(o.p - o.t) / P.reproductionVariance), 0));
     const mw = mean(ws);
     const covGW = orgs.reduce((a, o, i) => a + (o.g - mg) * (ws[i] - mw), 0) / orgs.length;
+    // lags as mean per-organism deviation from the organism's OWN cell target — correct
+    // on spatial gradients (identical to mg - target on a 1×1 grid)
+    const gLag = mean(orgs.map(o => o.g - o.t)), pLag = mean(orgs.map(o => o.p - o.t));
     return {
         n: orgs.length,
         target,
         meanGeno: mg, varGeno: variance(gs, mg),
         meanPheno: mp, varPheno: variance(ps, mp),
-        genoLag: mg - target, phenoLag: mp - target,
+        genoLag: gLag, phenoLag: pLag,
         selDiffGeno: mw > 0 ? covGW / mw : 0,
+        cellsOccupied: automata.grid.flat().filter(c => c.currentPopulation.length > 0).length,
     };
 }
 

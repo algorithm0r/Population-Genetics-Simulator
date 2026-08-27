@@ -1,0 +1,138 @@
+[
+ {
+  "id": "sp_p0_m0.001",
+  "meta": {
+   "plasticity": 0,
+   "rate": "m0.001"
+  },
+  "config": {
+   "epoch": 20000,
+   "reportEvery": 500,
+   "overrides": {
+    "numRows": 4,
+    "numCols": 4,
+    "offspringMigrationChance": 0.001,
+    "adultMigrationChance": 0.001,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 5
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sp_p0_m0.05",
+  "meta": {
+   "plasticity": 0,
+   "rate": "m0.05"
+  },
+  "config": {
+   "epoch": 20000,
+   "reportEvery": 500,
+   "overrides": {
+    "numRows": 4,
+    "numCols": 4,
+    "offspringMigrationChance": 0.05,
+    "adultMigrationChance": 0.05,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 5
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sp_p0.5_m0.001",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "m0.001"
+  },
+  "config": {
+   "epoch": 20000,
+   "reportEvery": 500,
+   "overrides": {
+    "numRows": 4,
+    "numCols": 4,
+    "offspringMigrationChance": 0.001,
+    "adultMigrationChance": 0.001,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 5
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sp_p0.5_m0.05",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "m0.05"
+  },
+  "config": {
+   "epoch": 20000,
+   "reportEvery": 500,
+   "overrides": {
+    "numRows": 4,
+    "numCols": 4,
+    "offspringMigrationChance": 0.05,
+    "adultMigrationChance": 0.05,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 5
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 200
+     }
+    }
+   }
+  }
+ }
+]

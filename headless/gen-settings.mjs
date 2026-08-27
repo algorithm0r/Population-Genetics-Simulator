@@ -61,6 +61,32 @@ const EXPERIMENTS = {
                 });
         return out;
     },
+    // Spatial FEASIBILITY probe (not the Phase 3 factorial — that design belongs with
+    // Jobran). 4×4 torus, spatial gradient 5 (targets −15..+15 across the diagonal),
+    // uniform linear trend → range-shift geometry (an organism's matching cell walks
+    // down-gradient over time). Scopes runtime + whether migration changes outcomes.
+    spatialprobe() {
+        const out = [];
+        for (const p of [0, 0.5])
+            for (const mig of [0.001, 0.05])
+                out.push({
+                    id: `sp_p${p}_m${mig}`,
+                    meta: { plasticity: p, rate: `m${mig}` },
+                    config: {
+                        epoch: 20000, reportEvery: 500,
+                        overrides: {
+                            numRows: 4, numCols: 4,
+                            offspringMigrationChance: mig, adultMigrationChance: mig,
+                            targetObservationalNoise: 0, sexualReproduction: false, adaptiveStepSize: p,
+                        },
+                        environmentPatterns: {
+                            spatial: { type: 'gradient', parameters: { gradientStrength: 5 } },
+                            temporal: { type: 'linear', parameters: { changeRate: 200 } },
+                        },
+                    },
+                });
+        return out;
+    },
     // Small-amplitude fast cycles — the F5 registered buffer-regime prediction
     // (plasticity wins when amplitude ≤ reach ~2.5), widened upward because a standing-
     // load analysis suggests the true window may be amplitude ∈ (tolerable-with-
