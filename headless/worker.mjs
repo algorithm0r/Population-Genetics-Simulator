@@ -32,7 +32,7 @@ while (true) {
     }
     current = claim.id; gen = 0; epoch = claim.config.epoch; pop = 0;
     try {
-        const result = runOne({ ...claim.config, onTick: (g, n) => { gen = g; pop = n; } });
+        const result = await runOne({ ...claim.config, onTick: (g, n) => { gen = g; pop = n; } });
         await post('/complete', { id: claim.id, binId: claim.binId, worker: WID, result });
         console.log(`[${WID}] ${claim.id} ${result.survived ? 'SURVIVED' : 'extinct@' + result.extinctAt} (${Math.round(result.wallMs / 1000)}s)`);
     } catch (e) {

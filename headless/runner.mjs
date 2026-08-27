@@ -112,7 +112,9 @@ function snapshot(automata) {
 
 // ───────────────────────── single run ─────────────────────────
 // cfg: { seed, epoch, reportEvery, overrides: {PARAMS fields}, environmentPatterns: {...} }
-export function runOne(cfg) {
+// async: yields to the event loop every 2000 generations so worker heartbeats (and any
+// other timers) can fire during multi-minute runs — a synchronous loop starves them.
+export async function runOne(cfg) {
     Math.random = mulberry32(cfg.seed);
 
     const P = globalThis.PARAMS;
@@ -139,6 +141,7 @@ export function runOne(cfg) {
             if (cfg.onTick) cfg.onTick(gen, s.n);   // progress hook (worker heartbeats)
             if (s.n === 0) { extinctAt = gen; break; }
         }
+        if (gen % 2000 === 0) await new Promise(r => setImmediate(r));   // let timers fire
     }
     const wallMs = Date.now() - t0;
 
@@ -156,7 +159,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     const args = Object.fromEntries(process.argv.slice(2).map((a, i, arr) => a.startsWith('--') ? [a.slice(2), arr[i + 1]] : []).filter(x => x.length));
     const cfg = JSON.parse(readFileSync(args.config, 'utf8'));
     loadSim();
-    const result = runOne(cfg);
+    const result = await runOne(cfg);
     const out = args.out ?? 'out/run.jsonl';
     appendFileSync(out, JSON.stringify(result) + '\n');
     console.log(`PopGenSim run seed=${cfg.seed} ${result.survived ? 'SURVIVED' : 'extinct@' + result.extinctAt} wall=${result.wallMs}ms → ${out}`);

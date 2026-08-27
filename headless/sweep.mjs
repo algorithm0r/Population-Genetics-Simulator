@@ -1,4 +1,4 @@
-// Pilot 1 — single-population replication of the shielding result (DEVPLAN Phase 0a).
+﻿// Pilot 1 — single-population replication of the shielding result (DEVPLAN Phase 0a).
 // Question: does the preliminary slide finding (plasticity → extinction sooner /
 // lower critical rate) replicate under seeded, replicated conditions, and what do
 // the mechanism traces (genetic variance, genotypic lag, selection differential
@@ -48,7 +48,7 @@ const t0 = Date.now();
 
 for (const p of PLASTICITY) for (const rate of RATES) for (const seed of SEEDS) {
     const run = `pilot1_p${p}_r${rate}_s${seed}`;
-    const result = runOne({
+    const result = await runOne({
         seed, epoch: EPOCH, reportEvery: REPORT,
         overrides: { ...BASE, adaptiveStepSize: p },
         environmentPatterns: env(rate),
@@ -67,3 +67,4 @@ for (const p of PLASTICITY) for (const rate of RATES) for (const seed of SEEDS) 
     console.log(`[${done}/${total}] ${run} ${result.survived ? 'SURVIVED' : 'extinct@' + result.extinctAt} (${result.wallMs}ms, eta ${eta}m)`);
 }
 console.log(`\nPilot 1 complete: ${total} runs in ${((Date.now() - t0) / 60000).toFixed(1)} min → ${OUT}`);
+
