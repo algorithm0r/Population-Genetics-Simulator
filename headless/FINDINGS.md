@@ -77,7 +77,21 @@ model is the biologically honest case; the linear arms bracket it.
 Regenerate: `node gen-settings.mjs linvar settings/linvar.json && node launch.mjs settings/linvar.json linvar`;
 table: `node agg.mjs results/linvar.jsonl`. Smoke: `node smoketest.mjs` (7/7 PASS incl. linear-norm invariant).
 
-## F4 — ηc(plasticity strength) curve (pending: batch `pstrength`)
+## F4 — ηc falls monotonically with plasticity strength; the first dose hurts most (2026-08-27)
 
-60 bins: step ∈ {0, 0.1, 0.25, 0.5, 0.75, 1.0} × rate ∈ {20..300}. Figure + ηc table:
+Batch `pstrength` + pooled pilot/bracket data: **1,068 runs, 84 (plasticity × rate) bins**.
+ηc by 0.5-crossing interpolation of P(extinct) vs rate:
+
+| step plasticity | 0 | 0.1 | 0.25 | 0.5 | 0.75 | 1.0 |
+|---|---|---|---|---|---|---|
+| **ηc** | 273 | 119 | 70 | 50 | 50 | 32 |
+
+**Monotonic harm, steepest at the first increment** — step 0.1 (one draw of ~0.1
+units/generation of acclimation) already cuts the sustainable rate of environmental
+change by more than half. Harm saturates near step 0.5–0.75. No bounded-plasticity
+level helps at any tested rate. This is the paper's money figure.
+
+Figure: `results/etac.svg` (+ `results/etac.svg.etac.csv`). Regenerate:
 `node fig-etac.mjs results/etac.svg results/pstrength.jsonl results/pilot1x.jsonl results/bracket1.jsonl`
+
+## F5 — Cyclical environments + 200k-gen metastability probe (pending: batch `cyclic`)
