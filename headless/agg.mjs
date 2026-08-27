@@ -23,12 +23,17 @@ const plasOf = r => {
     if (o.plasticityModel === 'linear') return `lin${o.reactionNormSlope}`;   // linear-norm arms are their own labels
     return o.adaptiveStepSize ?? r.PARAMS?.adaptiveStepSize;
 };
-const key = r => `p${plasOf(r)}_r${rateOf(r)}`;
+// migration is an axis whenever nonzero; folded into the label so arms never pool
+const migOf = r => {
+    const m = r.cfg.overrides?.offspringMigrationChance ?? 0;
+    return m > 0 ? `_m${m}` : '';
+};
+const key = r => `p${plasOf(r)}_r${rateOf(r)}${migOf(r)}`;
 
 const bins = new Map();
 for (const r of runs) {
     const k = key(r);
-    if (!bins.has(k)) bins.set(k, { plasticity: plasOf(r), rate: rateOf(r), runs: [] });
+    if (!bins.has(k)) bins.set(k, { plasticity: plasOf(r), rate: rateOf(r), mig: r.cfg.overrides?.offspringMigrationChance ?? 0, runs: [] });
     bins.get(k).runs.push(r);
 }
 
@@ -39,7 +44,7 @@ function wilson(x, n) {
     return { p, half: (z / d) * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) };
 }
 
-const rows = [['plasticity', 'rate', 'n', 'extinct', 'pExtinct', 'ciHalf', 'meanTTE', 'sdTTE', 'meanFinalVarGeno_survivors', 'meanFinalLag_survivors']];
+const rows = [['plasticity', 'rate', 'mig', 'n', 'extinct', 'pExtinct', 'ciHalf', 'meanTTE', 'sdTTE', 'meanFinalVarGeno_survivors', 'meanFinalLag_survivors']];
 for (const b of [...bins.values()].sort((a, c) => a.plasticity - c.plasticity || a.rate - c.rate)) {
     const n = b.runs.length, ext = b.runs.filter(r => !r.survived);
     const { p, half } = wilson(ext.length, n);
@@ -49,7 +54,7 @@ for (const b of [...bins.values()].sort((a, c) => a.plasticity - c.plasticity ||
     const survFinals = b.runs.filter(r => r.survived).map(r => r.series.at(-1));
     const mVar = survFinals.length ? survFinals.reduce((a, s) => a + s.varGeno, 0) / survFinals.length : null;
     const mLag = survFinals.length ? survFinals.reduce((a, s) => a + s.genoLag, 0) / survFinals.length : null;
-    rows.push([b.plasticity, b.rate, n, ext.length, p?.toFixed(3), half?.toFixed(3), mTTE ? Math.round(mTTE) : '', sdTTE ? Math.round(sdTTE) : '', mVar?.toFixed(4) ?? '', mLag?.toFixed(3) ?? '']);
+    rows.push([b.plasticity, b.rate, b.mig, n, ext.length, p?.toFixed(3), half?.toFixed(3), mTTE ? Math.round(mTTE) : '', sdTTE ? Math.round(sdTTE) : '', mVar?.toFixed(4) ?? '', mLag?.toFixed(3) ?? '']);
 }
 fs.writeFileSync(PREFIX + '_bins.csv', rows.map(r => r.join(',')).join('\n'));
 console.log(rows.map(r => r.map(String).map(s => s.padEnd(10)).join(' ')).join('\n'));

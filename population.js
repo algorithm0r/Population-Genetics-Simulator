@@ -236,6 +236,21 @@ class Population {
             // Randomly select one of the 8 neighboring cells
             const [rowOffset, colOffset] = neighborhoodOffsets[Math.floor(Math.random() * neighborhoodOffsets.length)];
 
+            // Island mode (added 2026-08-27, Jobran's "turn edges off" request): a hop
+            // off the grid edge is cancelled — the organism stays home. Needed for
+            // gradient worlds, where torus wrap creates a target-cliff seam. Default
+            // remains torus (browser behavior unchanged).
+            if (PARAMS.worldEdges === "island") {
+                const newRow = this.row + rowOffset;
+                const newCol = this.col + colOffset;
+                if (newRow < 0 || newRow >= PARAMS.numRows || newCol < 0 || newCol >= PARAMS.numCols) {
+                    this.nextPopulation.push(offspring);
+                    return;
+                }
+                grid[newRow][newCol].nextPopulation.push(offspring);
+                return;
+            }
+
             // Calculate the new row and column, wrapping around the grid edges (torus behavior)
             const newRow = (this.row + rowOffset + PARAMS.numRows) % PARAMS.numRows;
             const newCol = (this.col + colOffset + PARAMS.numCols) % PARAMS.numCols;

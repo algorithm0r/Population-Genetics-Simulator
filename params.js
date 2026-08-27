@@ -30,8 +30,9 @@ var PARAMS = {
     plasticityModel: "step",     // "step" (bounded within-lifetime acclimation, original) | "linear" (instant reaction norm, Chevin-style control)
     reactionNormSlope: 0.5,      // linear model only: fraction of the observed offset compensated
     deathChancePerGeneration: 0.2,
-    offspringMigrationChance: 0.0001, 
+    offspringMigrationChance: 0.0001,
     adultMigrationChance: 0.0001,
+    worldEdges: "torus",         // "torus" (wrap, original) | "island" (edge hops cancelled — required for gradient worlds, which have a wrap seam)
     sexualReproduction: false,
 
     // data gathering

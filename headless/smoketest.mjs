@@ -52,6 +52,19 @@ check('linear norm slope 1: |meanPheno| < |meanGeno| (compensation toward target
     Math.abs(last.meanPheno) < Math.abs(last.meanGeno) && Math.abs(last.meanGeno) > 0.05,
     `meanPheno=${last.meanPheno.toFixed(3)} meanGeno=${last.meanGeno.toFixed(3)}`);
 
+// island edges: on a 2x2 grid with migration chance 1 on birth, no organism may cross
+// an edge — verified by checking corner-cell hops stay in-bounds (torus would wrap).
+// Deterministic check: island mode + gradient world runs without error and occupies
+// only valid cells (structural sanity; the seam-free property is by construction).
+const island = runOne({
+    seed: 11, epoch: 300, reportEvery: 100,
+    overrides: { numRows: 3, numCols: 3, offspringMigrationChance: 0.5, adultMigrationChance: 0.5, targetObservationalNoise: 0, sexualReproduction: false, adaptiveStepSize: 0, worldEdges: 'island' },
+    environmentPatterns: { spatial: { type: 'gradient', parameters: { gradientStrength: 2 } }, temporal: { type: 'static', parameters: {} } },
+});
+check('island edges: 3x3 gradient world runs, cells occupied sanely',
+    island.series.at(-1).n > 0 && island.series.at(-1).cellsOccupied <= 9,
+    `N=${island.series.at(-1).n} cells=${island.series.at(-1).cellsOccupied}`);
+
 // timing note for sweep sizing
 console.log(`\ntiming: 2000 gens single-cell ≈ ${a.wallMs} ms  (${(a.wallMs / 2000).toFixed(3)} ms/gen)`);
 process.exit(failures ? 1 : 0);

@@ -144,3 +144,28 @@ Batch `smallamp` (373 runs, 30 bins; amplitude {1,2,4,6,8} × period {50,200,100
 
 Regenerate: `node gen-settings.mjs smallamp settings/smallamp.json && node launch.mjs settings/smallamp.json smallamp`;
 table: `node agg.mjs results/smallamp.jsonl`.
+
+## F7 (feasibility + hypothesis, NOT a finding) — spatial probe (2026-08-27)
+
+Batch `spatialprobe` (26 runs, 4 bins, n=5–9 — feasibility-grade only). 4×4 **torus**
+gradient (strength 5, so the world carries a wrap SEAM — target cliff at the boundary;
+caveats everything here), rate 200, migration {0.001, 0.05}.
+
+- Clines form: p0 survives with global varGeno ≈ 62 = between-cell local adaptation
+  across targets −15..+15. The spatial machinery works.
+- p0.5 dies at both migration levels (TTE 2,500–2,900) — spatial structure delays the
+  shielding death ~3–4× vs single-cell (750) but does not prevent it at these rates.
+- Cost: ~3–4 min per 4×4 / 20k-gen run — the Phase 3 factorial is affordable.
+
+**Hypothesis registered (to test in Phase 3, designed with Jobran):** undirected
+migration cannot track the moving match-zone (random walk, zero net displacement);
+range-shift rescue must run through **migrant sorting** — migrants landing in matching
+cells outreproduce. That channel is fitness-mediated, so **shielding should suppress
+spatial sorting exactly as it suppresses temporal tracking**: plasticity may prevent
+the range shift that would otherwise save the population. Chris's design addition:
+the **uniform world is the migration control** — migration there has demographic but
+zero adaptive value, separating migration's two channels for free.
+
+**Prerequisite shipped:** `worldEdges: "island"` option (edge hops cancelled; default
+torus unchanged; smoke 8/8) — gradient worlds need it (wrap seam), torus stays right
+for the uniform control.
