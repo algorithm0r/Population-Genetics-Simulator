@@ -97,6 +97,30 @@ const EXPERIMENTS = {
         });
         return out;
     },
+    // Spatial 2 — de-censoring: spatial1's migration arms showed extinctions landing at
+    // gen 18-19.7k (just under the 20k epoch) and survivors with accelerating lag →
+    // pExt@20k is right-censored. Same four migration arms at epoch 50k settle whether
+    // the migration "rescue" is real persistence or slow death.
+    spatial2() {
+        const strip = { numRows: 1, numCols: 24, worldEdges: 'island', targetObservationalNoise: 0, sexualReproduction: false };
+        const world = (kind, rate) => ({
+            spatial: kind === 'gradient' ? { type: 'gradient', parameters: { gradientStrength: 2 } } : { type: 'uniform', parameters: { baseEnvironment: 0 } },
+            temporal: { type: 'linear', parameters: { changeRate: rate } },
+        });
+        const out = [];
+        for (const { p, rate } of [{ p: 0, rate: 320 }, { p: 0.5, rate: 80 }])
+            for (const kind of ['gradient', 'uniform'])
+                out.push({
+                    id: `spt2_p${p}_r${rate}_m0.1_${kind}_50k`,
+                    meta: { plasticity: p, rate: `r${rate}m0.1${kind[0]}L` },
+                    config: {
+                        epoch: 50000, reportEvery: 500,
+                        overrides: { ...strip, adaptiveStepSize: p, offspringMigrationChance: 0.1, adultMigrationChance: 0.1 },
+                        environmentPatterns: world(kind, rate),
+                    },
+                });
+        return out;
+    },
     // Spatial FEASIBILITY probe (not the Phase 3 factorial — that design belongs with
     // Jobran). 4×4 torus, spatial gradient 5 (targets −15..+15 across the diagonal),
     // uniform linear trend → range-shift geometry (an organism's matching cell walks
