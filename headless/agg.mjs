@@ -14,7 +14,11 @@ const runs = fs.readFileSync(IN, 'utf8').split('\n').filter(l => l.trim()).map(l
 
 // bin key: (adaptiveStepSize, rate) from stored cfg
 const rateOf = r => r.cfg.environmentPatterns?.temporal?.parameters?.changeRate ?? 0;
-const plasOf = r => r.cfg.overrides?.adaptiveStepSize ?? r.PARAMS?.adaptiveStepSize;
+const plasOf = r => {
+    const o = r.cfg.overrides ?? {};
+    if (o.plasticityModel === 'linear') return `lin${o.reactionNormSlope}`;   // linear-norm arms are their own labels
+    return o.adaptiveStepSize ?? r.PARAMS?.adaptiveStepSize;
+};
 const key = r => `p${plasOf(r)}_r${rateOf(r)}`;
 
 const bins = new Map();

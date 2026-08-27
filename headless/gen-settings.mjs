@@ -61,16 +61,35 @@ const EXPERIMENTS = {
                 });
         return out;
     },
-    // Plasticity-strength resolution at fixed rates (for the eta_c(plasticity) curve later)
+    // Plasticity-strength resolution (the eta_c(plasticity) money-figure data).
+    // Rate grid spans both brackets found 2026-08-27: eta_c(p=0)~280, eta_c(p=0.5)~40-60.
     pstrength() {
         const out = [];
         for (const p of [0, 0.1, 0.25, 0.5, 0.75, 1.0])
-            for (const rate of [100, 140, 160, 180, 200, 240])
+            for (const rate of [20, 40, 60, 80, 100, 140, 180, 220, 260, 300])
                 out.push({
                     id: `pstr_p${p}_r${rate}`,
                     meta: { plasticity: p, rate },
                     config: { epoch: 50000, reportEvery: 250, overrides: { ...BASE, adaptiveStepSize: p }, environmentPatterns: env(rate) },
                 });
+        return out;
+    },
+    // Cyclical environments (slide-33 hypothesis: plasticity buffers cycles, dooms trends).
+    // amplitude x period x plasticity; static bins covered elsewhere.
+    cyclic() {
+        const out = [];
+        for (const p of [0, 0.5])
+            for (const amp of [10, 25, 50])
+                for (const period of [500, 2000, 10000])
+                    out.push({
+                        id: `cyc_p${p}_a${amp}_T${period}`,
+                        meta: { plasticity: p, rate: `a${amp}/T${period}` },
+                        config: {
+                            epoch: 50000, reportEvery: 250,
+                            overrides: { ...BASE, adaptiveStepSize: p },
+                            environmentPatterns: { spatial: { type: 'uniform', parameters: { baseEnvironment: 0 } }, temporal: { type: 'cycling', parameters: { cycleAmplitude: amp, cyclePeriod: period } } },
+                        },
+                    });
         return out;
     },
 };
