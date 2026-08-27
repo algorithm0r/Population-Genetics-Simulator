@@ -63,7 +63,7 @@ console.log(rows.map(r => r.map(String).map(s => s.padEnd(10)).join(' ')).join('
 // realizedResp = Δ meanGeno per generation between report ticks — the honest measurement
 // of genetic response (the fecundity-only selDiff estimator under-measures by ~2×
 // because it omits survival selection; see FINDINGS F2 caveat, closed 2026-08-28).
-const t = [['plasticity', 'rate', 'gen', 'nReps', 'meanN', 'meanVarGeno', 'meanGenoLag', 'meanPhenoLag', 'meanSelDiff', 'realizedResp', 'meanCentroidCol']];
+const t = [['plasticity', 'rate', 'mig', 'gen', 'nReps', 'meanN', 'meanVarGeno', 'meanGenoLag', 'meanPhenoLag', 'meanSelDiff', 'realizedResp', 'meanCentroidCol']];
 for (const b of [...bins.values()].sort((a, c) => a.plasticity - c.plasticity || String(a.rate).localeCompare(String(c.rate), undefined, { numeric: true }))) {
     const byGen = new Map();
     for (const r of b.runs) for (const s of r.series) {
@@ -78,7 +78,7 @@ for (const b of [...bins.values()].sort((a, c) => a.plasticity - c.plasticity ||
         const mg = m('meanGeno');
         const resp = prev ? ((mg - prev.mg) / (gen - prev.gen)).toFixed(5) : '';
         const cc = live[0].centroidCol != null ? m('centroidCol').toFixed(2) : '';
-        t.push([b.plasticity, b.rate, gen, live.length, Math.round(m('n')), m('varGeno').toFixed(4), m('genoLag').toFixed(3), m('phenoLag').toFixed(3), m('selDiffGeno').toFixed(5), resp, cc]);
+        t.push([b.plasticity, b.rate, b.mig, gen, live.length, Math.round(m('n')), m('varGeno').toFixed(4), m('genoLag').toFixed(3), m('phenoLag').toFixed(3), m('selDiffGeno').toFixed(5), resp, cc]);
         prev = { gen, mg };
     }
 }
