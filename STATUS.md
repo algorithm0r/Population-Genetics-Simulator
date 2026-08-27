@@ -1,29 +1,26 @@
 # STATUS — PopGenSim (MAAD)
 
-**Updated:** 2026-08-27, session close (autonomous run: recovery → infrastructure → literature → F1–F5)
-**Verified:** this session, warm — smoke suite 7/7 PASS @ `a5402ee`+; ~1,300 seeded runs, ≥10 reps/bin, Wilson CIs; every finding regenerable by command (FINDINGS.md). Browser sim NOT visually checked (core behavior unchanged by default; linear-norm variant is flag-gated). No cold `/audit` yet.
+**Updated:** 2026-08-28, close of the full-steam run (F1–F9 complete)
+**Verified:** warm, this session — smoke 8/8; ~2,400 seeded runs across 11 batches; every "works" claim carries a regeneration command in FINDINGS.md; browser sim verified by Chris, DB endpoint fixed + live on Pages. No cold `/audit` yet.
 
-**Stage:** DEVPLAN Phases 0a/0b DONE · Phase 1 controls mostly DONE (drift moot per F2; linear-norm control = F3) · Phase 2 headline experiments mostly DONE (F4 money figure, F5 cycles) · Phase 3 (spatial) NOT STARTED — it is the paper's differentiator.
+**Stage:** experiments for the paper substantively DONE (Phases 0–3 all have results); next phase is **writing** + polish runs designed with Jobran.
 
-**State — the five findings (details + regen commands in [headless/FINDINGS.md](headless/FINDINGS.md)):**
-- F1: shielding-extinction replicates; ηc(step 0) ≈ 273 vs ηc(step 0.5) ≈ 50 — a 5–6× critical-rate collapse
-- F2: mechanism is lag-load (frozen mean tracking + finite plastic reach), NOT variance erosion — variance never runs out; corrects the Apr 2025 institute framing; answers Jobran's drift question
-- F3: plasticity FORM decides: slope-1 linear norms unkillable; slope-0.5 linear worse than nothing (ηc≈130); bounded step worst — cost-free norm harm contradicts Chevin in finite populations
-- F4: ηc monotonic in plasticity strength (273 → 119 → 70 → 50 → 50 → 32); first dose hurts most; figure `headless/results/etac.svg`
-- F5: ηc(0.5) stable at 200k gens; cycles governed by peak rate vs ηc; "plasticity buffers cycles" refuted for amplitude > plastic reach; buffer-regime prediction registered for amplitude ≤ reach
+**State — nine findings, all in [headless/FINDINGS.md](headless/FINDINGS.md) with regen commands:**
+- F1–F4: shielding cuts ηc 5–6× (273 → 50); mechanism = lag-load, variance never depletes; plasticity form/reach decisive (slope-1 linear norms unkillable, slope-0.5 worse than nothing); ηc monotonic in dose. Figures: `etac.svg`.
+- F5–F6: peak-rate rule under cycles; **the rescue flip** — plasticity fully rescues under oscillation (a4–a8, fast periods) where bare genetics dies; one mechanism, sign set by the environment's return-structure. Figure: `rescue-flip.svg`.
+- F7–F9 (spatial): migration rescues via **variance supply, never relocation** (uniform control decisive; centroids static); a **gradient converts migration to net load** (100% extinct at 50k even with response restored); under shielding uniform-world rescue is **bistable** (42% dead, survivors stable at realizedResp ≈ required — tipping point at the rescue margin).
+- Registered-hypothesis ledger: all resolved (see F9 footer). Calibration debt closed (realizedResp validated). Heartbeat bug fixed.
 
-**Metrics:** 4 coordinator batches, ~1,300 runs, all deterministic-seeded; 6-worker ceiling is machine-polite (11 saturates the box).
+**Metrics:** ~2,400 runs, 11 batches, all deterministic-seeded and resumable; polite ceiling 6 workers.
 
-**Branches:** `main`, 12 commits this session. **Not pushed** (remote = live GitHub Pages; pushing deploys — Chris's call).
+**Branches:** `main`, pushed through this close (Pages deploys on push — DB endpoint fix is live).
 
 **Open:**
-- Small-amplitude cyclic sweep (registered prediction: plasticity buffers when amplitude ≤ reach ~2.5 and cycles are fast)
-- selDiff estimator calibration (before the mechanism figure)
-- Phase 3 spatial factorial: migration × plasticity × change — untouched territory, the paper's strongest claim
-- Coordinator: heartbeat-based reclaim of dead worker claims (known benign gap)
-- Literature debts: published Vinton 2022 text; re-check Vinton citers at writing time
-- **Chris:** eyes on browser sim; decision on re-engaging Jobran (F1–F5 + the mechanism correction are the material; last word was his, Apr 2025)
+- **The paper** — claim structure ready (LITERATURE.md "may/must-not say" + F1–F9); `paper/` repo to scaffold; venue + author order with Jobran
+- Polish runs to design with Jobran: more seeds on the bistable cell, gradient-steepness sweep, torus-vs-island (Chris's ask), evolvable plasticity extension (their call)
+- Cosmetic: dashboard could plot cyclic/spatial batches natively (chart assumes rate axis)
+- Coordinator: heartbeat-based dead-claim reclaim (benign gap, documented)
 
-**Next action:** Chris reviews F1–F5 and the paper framing in `../references/LITERATURE.md`; then either the small-amplitude cyclic sweep or Phase 3 spatial design (with Jobran, ideally).
+**Next action:** Chris + Jobran read FINDINGS.md F1–F9 and LITERATURE.md; decide paper skeleton and the polish-run list.
 
 **Blockers:** none.

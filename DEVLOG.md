@@ -4,7 +4,43 @@ Backward-looking, append-only. Newest entry on top. Never edit past entries.
 
 <!-- append new entries below this line -->
 
-## 2026-08-27 (close) — Five findings; Phase 1–2 experiments largely done in one day
+## 2026-08-28 — Full steam: DB fixed + deployed, F6–F9, the registered-hypothesis ledger closed
+
+**Done:** Jobran greenlit; Chris cleared pushing. DB endpoint fixed
+(research.climbinggiants.com:8888, handshake verified, live on Pages). Then four more
+batches (~500 runs) closed every open hypothesis:
+- **F6 (smallamp):** the buffer regime exists and is large — plasticity flips to FULL
+  rescue under oscillation (a4–a8/T50–200: bare genetics 10/10 dead, plasticity 0/10).
+  Unified mechanism: shielding anchors the genotype to the past; under a trend the past
+  is wrong (fatal), under a cycle the past is the mean (optimal). Figure: rescue-flip.svg.
+- **F7→F8 (spatialprobe, spatial1):** island-edges option shipped (torus+gradient has a
+  wrap seam); 1×24 escalator strip + Chris's uniform-world control. Migration rescues
+  bare genetics from super-critical change via the DEMOGRAPHIC channel (uniform control
+  decisive; centroids static — relocation ≈ nil), realizedResp restored to exactly the
+  required rate; shielding leaves the response at ~60% of required.
+- **F9 (spatial2, 50k-gen de-censor):** F8's gradient "rescues" were pure censoring —
+  gradient arms 100% extinct at 50k (migration load beats variance supply); uniform
+  rescue durable for genetics (lag constant 10k→50k); under shielding uniform rescue is
+  BISTABLE (42% dead; survivors stable at realizedResp 0.0079 ≈ 0.0080 required) — a
+  tipping point at the rescue margin.
+- **Calibration debt closed:** realizedResp trace metric validated (0.0200/gen exactly on
+  the rate-200 tracking arm); fecundity-only selDiff confirmed ~2× under-measure.
+- **Heartbeat bug fixed:** synchronous runOne starved the event loop on multi-minute
+  runs (dashboard showed 0 workers while 6 burned CPU); runner now yields every 2k gens.
+- Literature: plasticity×space cluster pass done (Pease 1989, Polechová 2009, Chevin &
+  Lande 2011, Am Nat 2019) — lane confirmed open, framing set.
+
+**Changed:** params.js (ip, worldEdges), population.js (island edges), organism.js
+(unchanged today), headless/{runner,worker,agg,gen-settings,fig-cyclic,smoketest,sweep},
+FINDINGS F6–F9, LITERATURE.md. All pushed through `c7326cf`+.
+
+**State:** nine findings F1–F9, ~2,400 seeded runs total, every registered hypothesis
+resolved and ledgered in FINDINGS.md; smoke 8/8; browser sim verified by Chris + DB
+green; deployed. All batch processes torn down.
+
+**Next:** the paper. Full factorial polish runs (more seeds on the bistable cell,
+gradient-steepness sweep, torus-vs-island comparison Chris wants) are now *design
+choices with Jobran*, not open questions. `paper/` repo scaffold when writing starts.
 
 **Done:** Continued the autonomous run through four coordinator batches (~1,300 seeded
 runs total). All findings in `headless/FINDINGS.md` with regeneration commands:

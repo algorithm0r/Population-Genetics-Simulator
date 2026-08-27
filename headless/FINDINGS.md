@@ -207,4 +207,40 @@ table: `node agg.mjs results/spatial1.jsonl`. Note: two shielded-migration bins 
 deliberately capped at n≈11–17 (precision on a censored estimate is wasted compute;
 spatial2 supersedes them).
 
-## F9 — De-censoring (pending: batch `spatial2`, 50k generations, migration arms ×12 seeds)
+## F9 — De-censored: migration is variance supply, never escape; gradients turn it into load; shielding makes rescue a coin flip (2026-08-28)
+
+Batch `spatial2` (52 runs, 4 bins, 50k generations — supersedes F8's censored
+migration-arm numbers).
+
+| arm @ mig 0.1 | gradient | uniform |
+|---|---|---|
+| genetics only (p0, r320) | **1.00 extinct** (TTE 25,821 — F8's "0.12" was pure censoring) | **0.00 extinct — durable**: lag constant −0.37 from 10k→50k, realizedResp = 0.0320 = exactly the required rate |
+| shielded (p0.5, r80) | **1.00 extinct** (TTE 18,917) | **0.42 extinct — bistable**: survivors genuinely stable (lag −1.16 constant 10k→50k, realizedResp 0.0079 ≈ required 0.0080); TTE sd 17,814 |
+
+- **Migration's rescue channel is variance supply (demographic), never relocation**:
+  occupancy centroids are static in every surviving arm (~11.5 of 24); the only
+  centroid drift is the dying tail of the gradient arms. Confirmed at 50k.
+- **A spatial gradient converts migration from rescue to load**: even bare genetics
+  with the response restored to ~0.031/gen dies by ~26k on the gradient — standing
+  migration load (locally maladapted immigrants, ±2 units/cell) eats the margin the
+  demographic channel provides. The uniform world, same migration, survives
+  indefinitely. Chris's uniform control is what makes this cell interpretable.
+- **Under shielding, rescue becomes stochastic**: gene flow restores the response to
+  *just barely* the required rate (0.0079 vs 0.0080), so populations bifurcate —
+  ~58% lock into stable tracking, ~42% slide off and die, with enormous TTE variance.
+  A tipping-point signature at the rescue margin, produced by shielding's thinning of
+  the selection response.
+- **Unified spatial sentence for the paper:** in this model, migration buys populations
+  effective size, not escape; spatial heterogeneity taxes that purchase; and plasticity
+  thins the margin until persistence is chance. Frame against Pease/Lande/Bull 1989 and
+  Polechová 2009 (both channels of the classic theory reproduced and separated in one
+  ABM by the uniform/gradient contrast) and Am Nat 2019.
+
+Regenerate: `node gen-settings.mjs spatial2 settings/spatial2.json && node launch.mjs settings/spatial2.json spatial2`;
+table: `node agg.mjs results/spatial2.jsonl`.
+
+**Registered-hypothesis ledger, all resolved:** F5 buffer-at-amp≤reach → wrong in detail,
+F6's version stronger. Load-analysis window (4,8) → partially right. F8 escalator via
+sorting → wrong (channel is demographic). F8 shielding-blocks-rescue → right in the
+gradient world, softened to bistability in the uniform world. Every prediction was
+registered before its data; every revision is in this file.
