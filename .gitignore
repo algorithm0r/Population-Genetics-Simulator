@@ -1,0 +1,13 @@
+# OS / editor junk
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+
+# logs & local artifacts
+*.log
+
+# secrets — never commit
+.env
+.tokens.json
+*.pem
