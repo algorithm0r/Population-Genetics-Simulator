@@ -49,45 +49,50 @@ measurement, headless batch runner, the four institute-feedback experiments, the
 
 ---
 
-## Stages
+## Phases
+*(Restructured 2026-08-27 after the paper-potential assessment: two Phase-0 tracks run
+in parallel; Phase 1+ is gated on the literature check.)*
 
-### 1. Core model [ DONE ]
+### 0. Core model [ DONE ]
 - [x] Grid, organisms, selection, mutation, death, migration (Nov 2024)
-- [x] Plasticity with cue noise (Nov 2024)
-- [x] Dynamic environment: spatial + temporal patterns (Nov 2024 – Mar 2025)
-- [x] Sexual reproduction option (Apr 2025)
-- [x] Visualization: graphs, quartile cells, gene histograms (Jan–Mar 2025)
+- [x] Plasticity with cue noise (Nov 2024); dynamic environments (Nov 2024 – Mar 2025)
+- [x] Sexual reproduction option (Apr 2025); visualization suite (Jan–Mar 2025)
 
-### 2. Model-completeness items from Jobran (Feb/Apr 2025) [ PLANNED ]
-- [ ] **Burn-in**: run `burnInGenerations` before temporal change / migration switches on
-- [ ] **Edges off**: boundary option (torus ↔ hard edges) for `migrate()`
-- [ ] Expose cue noise (`targetObservationalNoise`) and plasticity on/off cleanly in the UI as experiment toggles
+### 0a. Verification + instrumentation infrastructure [ ACTIVE ]
+- [x] Headless runner sub-project (`headless/`) — exact sim core, main-realm eval, view stubbed (2026-08-27)
+- [x] Seeded RNG (mulberry32 over Math.random) — full reproducibility (2026-08-27)
+- [x] Smoke suite: determinism, persistence, plasticity-off, extinction sanity — 6/6 PASS (2026-08-27)
+- [x] Mechanism instrumentation: N, var/mean genotype+phenotype, lag, realized selection differential on genotype (2026-08-27)
+- [ ] Pilot 1: single-population shielding replication, plasticity {0, 0.5} × rate {0..300/10k} × 10 seeds (RUNNING 2026-08-27)
+- [ ] Browser sim visual check (Chris — eyes on screen)
 
-**Done when:** each is a PARAMS/UI toggle, defaults reproduce current behavior.
+**Done when:** pilot replicates (or kills) the slide result with ≥10 seeds/condition and
+mechanism traces distinguish lag-of-mean vs. variance-erosion.
 
-### 3. Critical rate of change [ PLANNED ] ← *the blocker named in the hub file*
-- [ ] Implement the Chevin/Lande/Mace 2010 critical-rate metric (`../references/Chevin2010_adaptation_plasticity_extinction.pdf` + S1) adapted to this model
-- [ ] Track/report it live and in saved packets; sweep linear-change rate → extinction probability curve
+### 0b. Literature positioning [ ACTIVE ] → gates Phase 1+
+- [x] Defensive novelty sweep + offensive claim-space map → `../references/LITERATURE.md` (2026-08-27)
+  - Verdict: claim space crowded but the contribution is available; Nunney 2016 closest
+    precedent; Vinton et al. 2022 (TREE) state our mechanism as hypothesis; frame =
+    adjudicate the helps/neutral/harms disagreement, quantify ηc reduction, extend to space.
+- [ ] Verification debts: read Nunney 2016 full text; published Vinton 2022; Scheiner XIV/XVI; re-check citers of Vinton 2022 at writing time
 
-**Done when:** a rate sweep produces an extinction-probability-vs-rate curve with a
-measurable critical rate, with and without plasticity.
+### 1. Controls (institute-feedback list, Apr 2025) [ PLANNED ]
+- [ ] **Drift control**: softCap sweep (realized N ≈650 → ~6.5k → ~65k) — is variance collapse drift?
+- [ ] **Plasticity-form control**: linear/scaling reaction norm (Chevin/Scheiner-style) — does cost-free shielding harm persist? *(Prediction registered 2026-08-27: it will NOT — plasticity form is likely the decisive knob. Falsifiable.)*
+- [ ] **Shielding-separation control**: force selection on genotype with plasticity active (separates "phenotype optimal" from "selection removed")
+- [ ] Burn-in phase + edges-off toggle (Jobran's Feb 2025 requests) as PARAMS/UI options
 
-### 4. Institute-feedback experiments (Apr 2025 list) [ PLANNED ]
-- [ ] **Drift control**: is variance collapse just genetic drift at small N? (vary softCap / N at fixed selection)
-- [ ] **Plasticity-model control**: linear reaction-norm plasticity (Chevin-style) — does shielding persist?
-- [ ] **Single-population test**: does shielding→extinction occur in one isolated cell? (rules out migration)
-- [ ] **Polechová comparison**: map our temporal-change results onto her claim that plasticity doesn't move the critical rate
+### 2. Headline experiments [ PLANNED ]
+- [ ] ηc(plasticity strength) curve with Chevin 2010 analytic prediction overlaid — the money figure (logistic fit of P(extinct) vs rate, CIs, ≥20 seeds)
+- [ ] Mechanism figure: variance + lag + selection-differential trajectories ± plasticity
+- [ ] Directional vs cyclical change (slide-33 hypothesis: plasticity buffers cycles, dooms trends) — amplitude × period × plasticity
+- [ ] Cue-noise sweep (connects to Ashander 2016 / King & Hadfield 2019 cue-reliability axis)
 
-**Done when:** each question has a figure + a written answer, replicated (multiple seeds —
-never report a single stochastic run).
+### 3. Spatial differentiator [ PLANNED ]
+- [ ] Gradient + migration factorial: can moving substitute for adjusting?
+- [ ] Does plasticity delay range shifts by masking maladaptation? (connects to Polechová's fragmentation)
 
-### 5. Headless runner + batch infrastructure [ PLANNED ]
-- [ ] Conventions-standard headless runner (main-realm eval, shared sim core — never fork it), `batch_NNN` collections, PARAMS serialized into every packet
-- [ ] Replicate seeds per condition; run-name grammar documented here
-
-**Done when:** a parameter sweep runs unattended and every figure regenerates from a
-documented command.
-
-### 6. Paper [ PLANNED ]
-- [ ] `paper/` repo in the container (per conventions); venue TBD with Jobran
-- [ ] Position against Polechová 2025; Vedder 2013 as the results archetype; bibliography seeded from `../references/litlens_papers.csv` and the Feb 2025 email list
+### 4. Paper [ PLANNED ]
+- [ ] `paper/` repo in container; venue with Jobran (Evolution / Am Nat / Evol Letters / Proc B tier)
+- [ ] Frame: test the Vinton 2022 shading hypothesis; adjudicate helps/neutral/harms; Vedder 2013 results archetype
+- [ ] Re-establish contact with Jobran (last word his, 2025-04-24) — Chris's action

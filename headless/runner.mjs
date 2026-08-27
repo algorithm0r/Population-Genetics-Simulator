@@ -125,6 +125,7 @@ export function runOne(cfg) {
         if (gen % cfg.reportEvery === 0 || gen === cfg.epoch) {
             const s = snapshot(automata);
             series.push({ gen, ...s });
+            if (cfg.onTick) cfg.onTick(gen, s.n);   // progress hook (worker heartbeats)
             if (s.n === 0) { extinctAt = gen; break; }
         }
     }

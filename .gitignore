@@ -17,3 +17,5 @@ Desktop.ini
 
 # headless run artifacts (regenerate with: node headless/sweep.mjs)
 headless/out/
+headless/results/
+headless/settings/  # regenerate with: node headless/gen-settings.mjs <experiment>
