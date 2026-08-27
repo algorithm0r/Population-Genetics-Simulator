@@ -76,8 +76,14 @@ const EXPERIMENTS = {
     },
     // Cyclical environments (slide-33 hypothesis: plasticity buffers cycles, dooms trends).
     // amplitude x period x plasticity; static bins covered elsewhere.
+    // Also carries the F1 metastability probe: p0.5 @ rate 40 (a 50k-gen "survivor" bin
+    // whose lag was still growing) run to 200k generations.
     cyclic() {
         const out = [];
+        out.push({
+            id: 'meta_p0.5_r40_200k', meta: { plasticity: 0.5, rate: 40 },
+            config: { epoch: 200000, reportEvery: 500, overrides: { ...BASE, adaptiveStepSize: 0.5 }, environmentPatterns: env(40) },
+        });
         for (const p of [0, 0.5])
             for (const amp of [10, 25, 50])
                 for (const period of [500, 2000, 10000])
