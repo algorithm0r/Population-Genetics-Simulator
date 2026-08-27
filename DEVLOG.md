@@ -4,7 +4,57 @@ Backward-looking, append-only. Newest entry on top. Never edit past entries.
 
 <!-- append new entries below this line -->
 
-## 2026-08-27 — Project recovery & infrastructure build
+## 2026-08-27 (later) — Headless infrastructure, literature check, and the shielding result replicated
+
+**Done:**
+- **Phase 0a infrastructure:** `headless/` sub-project — exact sim core loaded via
+  main-realm eval (view layer stubbed; core never forked), seeded RNG (mulberry32),
+  smoke suite 6/6 PASS (determinism, persistence, plasticity-off ⇒ phenotype≡genotype,
+  extinction sanity). Then the multi-run architecture, design adapted from
+  Domestication's runner: adaptive coordinator (:8090; Wilson-CI-driven per-bin rep
+  counts, fewest-reps-first dispatch, resumable from results JSONL, deterministic rep
+  seeds), in-process workers, live dashboard (:8091), launcher, settings generators,
+  aggregator (`agg.mjs` — bin summaries + mechanism traces).
+- **Phase 0b literature check:** `../references/LITERATURE.md` — claim-space map and
+  verdicts. Key finds: the field is in a four-way disagreement (Chevin/Scheiner: helps;
+  Polechová: neutral; Nunney/Lambert: harms); Vinton et al. 2022 (TREE) state our exact
+  drift/shading mechanism *as an untested hypothesis*; **Nunney 2016 (read in full, PDF
+  saved) is the closest precedent** — IBM + density dependence + lag-load mechanism +
+  S_min critical-rate metric — so our novelty lives in: plasticity-form generalization
+  (bounded acclimation w/ cue noise), direct mechanism instrumentation, the spatial axis
+  (migration × plasticity × change — untouched anywhere), and the adjudication frame.
+- **Pilot 1x (batch `pilot1x`, 284 runs, 28 bins, 10 seeds+ each, all seeded &
+  reproducible):** the slide result replicates and is far stronger than the slides
+  suggested. **p=0: 0/10 extinct at every rate ≤ 240 units/10k gens; 10/10 extinct at
+  300 ⇒ ηc(p0) ∈ (240, 300]. p=0.5: 10/10 extinct at every rate ≥ 100 ⇒ ηc(p0.5) < 100
+  — plasticity cuts the critical rate ≥ 3× (bracketing in progress), and mean
+  time-to-extinction falls smoothly with rate (1600 → 550 gens).** Static controls
+  survive in both arms.
+- **Mechanism (measured, traces in `headless/results/pilot1x_traces.csv`):** the
+  collapse is **lag-load, not variance erosion** — under plasticity the genotypic lag
+  grows without bound (−1.2 → −10 at rate 100) while adults ride ~2.4 units of plastic
+  reach (≈ stepSize × mean lifespan); genetic variance is never exhausted (0.046 at
+  collapse vs 0.013 in healthy p0 tracking, and ~7× HIGHER under plasticity in static
+  environments — the relaxed-selection signature). This *corrects* the Apr 2025
+  institute framing ("reduction in genetic variance … leads to collapse") and largely
+  answers Jobran's drift question (#1): variance depletion is not the killer; frozen
+  mean tracking is.
+
+**Changed:** `headless/` (+coordinator, worker, dashboard, launch, gen-settings, agg,
+runner onTick hook), .gitignore, DEVPLAN phase restructure, LITERATURE.md +
+references/README (+Nunney2016 PDF) at container level.
+
+**State:** Coordinator batch `bracket1` running (p0.5 at rates 10–80, p0 at 260–500) to
+pin both ηc values. Verification: all sim results from the exact browser sim files,
+seeded, ≥10 reps/bin, Wilson CIs; smoke suite green @ this commit. Browser sim still
+needs Chris's eyes (unchanged code, so low risk). selDiff instrumentation needs
+calibration (absolute values don't separate the arms; the lag divergence is the
+trustworthy datum) — TODO before the mechanism figure.
+
+**Next:** bracket1 completion → updated ηc table; then Phase 1 controls (linear
+reaction-norm variant — the decisive knob per Scheiner comparison; forced genotype
+selection; softCap sweep — deprioritized now that drift looks moot but still worth one
+figure), then cyclical regimes, then the spatial factorial (the differentiator).
 
 **Done:** Recovered the project's research context after a 16-month pause. The design
 discussions happened in the claude.ai web UI (not recoverable from Claude Code), so the
