@@ -61,6 +61,26 @@ const EXPERIMENTS = {
                 });
         return out;
     },
+    // Small-amplitude fast cycles — the F5 registered buffer-regime prediction
+    // (plasticity wins when amplitude ≤ reach ~2.5), widened upward because a standing-
+    // load analysis suggests the true window may be amplitude ∈ (tolerable-with-
+    // plasticity, lethal-without) ≈ (4, 8). Grid lets the data arbitrate.
+    smallamp() {
+        const out = [];
+        for (const p of [0, 0.5])
+            for (const amp of [1, 2, 4, 6, 8])
+                for (const period of [50, 200, 1000])
+                    out.push({
+                        id: `sa_p${p}_a${amp}_T${period}`,
+                        meta: { plasticity: p, rate: `a${amp}/T${period}` },
+                        config: {
+                            epoch: 50000, reportEvery: 250,
+                            overrides: { ...BASE, adaptiveStepSize: p },
+                            environmentPatterns: { spatial: { type: 'uniform', parameters: { baseEnvironment: 0 } }, temporal: { type: 'cycling', parameters: { cycleAmplitude: amp, cyclePeriod: period } } },
+                        },
+                    });
+        return out;
+    },
     // Plasticity-strength resolution (the eta_c(plasticity) money-figure data).
     // Rate grid spans both brackets found 2026-08-27: eta_c(p=0)~280, eta_c(p=0.5)~40-60.
     pstrength() {

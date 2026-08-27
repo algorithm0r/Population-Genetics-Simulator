@@ -1,0 +1,1052 @@
+[
+ {
+  "id": "sa_p0_a1_T50",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a1/T50"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 1,
+      "cyclePeriod": 50
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a1_T200",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a1/T200"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 1,
+      "cyclePeriod": 200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a1_T1000",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a1/T1000"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 1,
+      "cyclePeriod": 1000
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a2_T50",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a2/T50"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 2,
+      "cyclePeriod": 50
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a2_T200",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a2/T200"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 2,
+      "cyclePeriod": 200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a2_T1000",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a2/T1000"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 2,
+      "cyclePeriod": 1000
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a4_T50",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a4/T50"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 4,
+      "cyclePeriod": 50
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a4_T200",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a4/T200"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 4,
+      "cyclePeriod": 200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a4_T1000",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a4/T1000"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 4,
+      "cyclePeriod": 1000
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a6_T50",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a6/T50"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 6,
+      "cyclePeriod": 50
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a6_T200",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a6/T200"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 6,
+      "cyclePeriod": 200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a6_T1000",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a6/T1000"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 6,
+      "cyclePeriod": 1000
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a8_T50",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a8/T50"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 8,
+      "cyclePeriod": 50
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a8_T200",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a8/T200"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 8,
+      "cyclePeriod": 200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0_a8_T1000",
+  "meta": {
+   "plasticity": 0,
+   "rate": "a8/T1000"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 8,
+      "cyclePeriod": 1000
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a1_T50",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a1/T50"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 1,
+      "cyclePeriod": 50
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a1_T200",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a1/T200"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 1,
+      "cyclePeriod": 200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a1_T1000",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a1/T1000"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 1,
+      "cyclePeriod": 1000
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a2_T50",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a2/T50"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 2,
+      "cyclePeriod": 50
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a2_T200",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a2/T200"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 2,
+      "cyclePeriod": 200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a2_T1000",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a2/T1000"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 2,
+      "cyclePeriod": 1000
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a4_T50",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a4/T50"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 4,
+      "cyclePeriod": 50
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a4_T200",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a4/T200"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 4,
+      "cyclePeriod": 200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a4_T1000",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a4/T1000"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 4,
+      "cyclePeriod": 1000
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a6_T50",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a6/T50"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 6,
+      "cyclePeriod": 50
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a6_T200",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a6/T200"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 6,
+      "cyclePeriod": 200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a6_T1000",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a6/T1000"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 6,
+      "cyclePeriod": 1000
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a8_T50",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a8/T50"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 8,
+      "cyclePeriod": 50
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a8_T200",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a8/T200"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 8,
+      "cyclePeriod": 200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "sa_p0.5_a8_T1000",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a8/T1000"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "cycling",
+     "parameters": {
+      "cycleAmplitude": 8,
+      "cyclePeriod": 1000
+     }
+    }
+   }
+  }
+ }
+]
