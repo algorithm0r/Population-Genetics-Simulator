@@ -46,7 +46,7 @@ var PARAMS = {
     // database
     db: "populationGeneticsDB",
     collection: "test",
-    ip: 'https://73.19.38.112:8888'
+    ip: 'https://research.climbinggiants.com:8888'   // shared socket.io -> MongoDB server
 };
 
 function loadParameters() {
