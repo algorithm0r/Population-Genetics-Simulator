@@ -1,0 +1,11 @@
+{
+  "name": "popgensim-headless",
+  "version": "0.1.0",
+  "description": "PopGenSim (MAAD) headless batch runner — loads the exact browser sim core, seeded RNG, JSONL output",
+  "type": "module",
+  "scripts": {
+    "smoke": "node smoketest.mjs",
+    "pilot1": "node sweep.mjs"
+  },
+  "private": true
+}
