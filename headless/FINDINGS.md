@@ -48,11 +48,11 @@ before their first plastic step (the model's selection-before-adapt ordering) �
 the lag exceeds the plastic reach, recruitment fails and the population becomes a
 cohort of aging, individually well-adapted adults.
 
-*Instrumentation caveat:* the realized-selection-differential estimator (cov(g,w)/mean(w),
-fecundity-only) under-measures — p0's realized response (0.01/gen) is ~2× its measured
-selDiff — because survival selection and normalization are omitted. The lag divergence
-is the trustworthy datum; calibrate the estimator before any mechanism figure (good
-Jobran surface).
+*Instrumentation caveat — RESOLVED 2026-08-28:* the fecundity-only selDiff estimator
+under-measures by ~2× (survival selection + normalization omitted). `agg.mjs` traces now
+carry `realizedResp` = Δ meanGeno per generation, validated on the p0@200 tracking arm:
+realizedResp = 0.0200/gen, exactly the environmental rate, with constant lag. The
+mechanism figure uses realizedResp; selDiff is retained as a secondary indicator only.
 
 ## F3 — Plasticity FORM decides everything: linear-norm control (2026-08-27)
 

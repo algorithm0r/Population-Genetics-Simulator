@@ -61,6 +61,42 @@ const EXPERIMENTS = {
                 });
         return out;
     },
+    // Spatial 1 — the F7 hypothesis test (registered predictions in FINDINGS F8 stub):
+    // migration rescues genetics-only populations from locally super-critical change
+    // (the Pease/Lande/Bull 1989 gene-flow escalator, here via migrant sorting through
+    // undirected dispersal), but shielding disables it (plasticity flattens the spatial
+    // fitness differences that drive sorting). 1×24 ISLAND strip, gradient 2/cell;
+    // uniform-world controls isolate migration's adaptive channel (Chris's design).
+    spatial1() {
+        const strip = { numRows: 1, numCols: 24, worldEdges: 'island', targetObservationalNoise: 0, sexualReproduction: false };
+        const world = (kind, rate) => ({
+            spatial: kind === 'gradient' ? { type: 'gradient', parameters: { gradientStrength: 2 } } : { type: 'uniform', parameters: { baseEnvironment: 0 } },
+            temporal: { type: 'linear', parameters: { changeRate: rate } },
+        });
+        const out = [];
+        const arms = [
+            { p: 0, rate: 320 },    // locally super-critical for genetics (eta_c 273)
+            { p: 0.5, rate: 80 },   // locally super-critical under shielding (eta_c ~50)
+        ];
+        for (const { p, rate } of arms)
+            for (const mig of [0, 0.1])
+                for (const kind of ['gradient', 'uniform'])
+                    out.push({
+                        id: `spt1_p${p}_r${rate}_m${mig}_${kind}`,
+                        meta: { plasticity: p, rate: `r${rate}m${mig}${kind[0]}` },
+                        config: {
+                            epoch: 20000, reportEvery: 250,
+                            overrides: { ...strip, adaptiveStepSize: p, offspringMigrationChance: mig, adultMigrationChance: mig },
+                            environmentPatterns: world(kind, rate),
+                        },
+                    });
+        // sanity: locally sub-critical genetics on the gradient strip tracks in place
+        out.push({
+            id: 'spt1_p0_r80_m0_gradient', meta: { plasticity: 0, rate: 'r80m0g' },
+            config: { epoch: 20000, reportEvery: 250, overrides: { ...strip, adaptiveStepSize: 0, offspringMigrationChance: 0, adultMigrationChance: 0 }, environmentPatterns: world('gradient', 80) },
+        });
+        return out;
+    },
     // Spatial FEASIBILITY probe (not the Phase 3 factorial — that design belongs with
     // Jobran). 4×4 torus, spatial gradient 5 (targets −15..+15 across the diagonal),
     // uniform linear trend → range-shift geometry (an organism's matching cell walks

@@ -59,19 +59,27 @@ for (const b of [...bins.values()].sort((a, c) => a.plasticity - c.plasticity ||
 fs.writeFileSync(PREFIX + '_bins.csv', rows.map(r => r.join(',')).join('\n'));
 console.log(rows.map(r => r.map(String).map(s => s.padEnd(10)).join(' ')).join('\n'));
 
-// mechanism traces: per bin, mean across reps at each report gen (up to each rep's end)
-const t = [['plasticity', 'rate', 'gen', 'nReps', 'meanN', 'meanVarGeno', 'meanGenoLag', 'meanPhenoLag', 'meanSelDiff']];
-for (const b of [...bins.values()].sort((a, c) => a.plasticity - c.plasticity || a.rate - c.rate)) {
+// mechanism traces: per bin, mean across reps at each report gen (up to each rep's end).
+// realizedResp = Δ meanGeno per generation between report ticks — the honest measurement
+// of genetic response (the fecundity-only selDiff estimator under-measures by ~2×
+// because it omits survival selection; see FINDINGS F2 caveat, closed 2026-08-28).
+const t = [['plasticity', 'rate', 'gen', 'nReps', 'meanN', 'meanVarGeno', 'meanGenoLag', 'meanPhenoLag', 'meanSelDiff', 'realizedResp', 'meanCentroidCol']];
+for (const b of [...bins.values()].sort((a, c) => a.plasticity - c.plasticity || String(a.rate).localeCompare(String(c.rate), undefined, { numeric: true }))) {
     const byGen = new Map();
     for (const r of b.runs) for (const s of r.series) {
         if (!byGen.has(s.gen)) byGen.set(s.gen, []);
         byGen.get(s.gen).push(s);
     }
+    let prev = null;
     for (const [gen, ss] of [...byGen.entries()].sort((a, c) => a[0] - c[0])) {
         const live = ss.filter(s => s.n > 0);
         if (!live.length) continue;
         const m = f => (live.reduce((a, s) => a + (s[f] ?? 0), 0) / live.length);
-        t.push([b.plasticity, b.rate, gen, live.length, Math.round(m('n')), m('varGeno').toFixed(4), m('genoLag').toFixed(3), m('phenoLag').toFixed(3), m('selDiffGeno').toFixed(5)]);
+        const mg = m('meanGeno');
+        const resp = prev ? ((mg - prev.mg) / (gen - prev.gen)).toFixed(5) : '';
+        const cc = live[0].centroidCol != null ? m('centroidCol').toFixed(2) : '';
+        t.push([b.plasticity, b.rate, gen, live.length, Math.round(m('n')), m('varGeno').toFixed(4), m('genoLag').toFixed(3), m('phenoLag').toFixed(3), m('selDiffGeno').toFixed(5), resp, cc]);
+        prev = { gen, mg };
     }
 }
 fs.writeFileSync(PREFIX + '_traces.csv', t.map(r => r.join(',')).join('\n'));

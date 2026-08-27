@@ -1,0 +1,317 @@
+[
+ {
+  "id": "spt1_p0_r320_m0_gradient",
+  "meta": {
+   "plasticity": 0,
+   "rate": "r320m0g"
+  },
+  "config": {
+   "epoch": 20000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 2
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 320
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "spt1_p0_r320_m0_uniform",
+  "meta": {
+   "plasticity": 0,
+   "rate": "r320m0u"
+  },
+  "config": {
+   "epoch": 20000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 320
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "spt1_p0_r320_m0.1_gradient",
+  "meta": {
+   "plasticity": 0,
+   "rate": "r320m0.1g"
+  },
+  "config": {
+   "epoch": 20000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0,
+    "offspringMigrationChance": 0.1,
+    "adultMigrationChance": 0.1
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 2
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 320
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "spt1_p0_r320_m0.1_uniform",
+  "meta": {
+   "plasticity": 0,
+   "rate": "r320m0.1u"
+  },
+  "config": {
+   "epoch": 20000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0,
+    "offspringMigrationChance": 0.1,
+    "adultMigrationChance": 0.1
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 320
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "spt1_p0.5_r80_m0_gradient",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "r80m0g"
+  },
+  "config": {
+   "epoch": 20000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 2
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 80
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "spt1_p0.5_r80_m0_uniform",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "r80m0u"
+  },
+  "config": {
+   "epoch": 20000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 80
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "spt1_p0.5_r80_m0.1_gradient",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "r80m0.1g"
+  },
+  "config": {
+   "epoch": 20000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5,
+    "offspringMigrationChance": 0.1,
+    "adultMigrationChance": 0.1
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 2
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 80
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "spt1_p0.5_r80_m0.1_uniform",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "r80m0.1u"
+  },
+  "config": {
+   "epoch": 20000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0.5,
+    "offspringMigrationChance": 0.1,
+    "adultMigrationChance": 0.1
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 80
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "spt1_p0_r80_m0_gradient",
+  "meta": {
+   "plasticity": 0,
+   "rate": "r80m0g"
+  },
+  "config": {
+   "epoch": 20000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "adaptiveStepSize": 0,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 2
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 80
+     }
+    }
+   }
+  }
+ }
+]

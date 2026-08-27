@@ -92,6 +92,12 @@ function snapshot(automata) {
     // lags as mean per-organism deviation from the organism's OWN cell target — correct
     // on spatial gradients (identical to mg - target on a 1×1 grid)
     const gLag = mean(orgs.map(o => o.g - o.t)), pLag = mean(orgs.map(o => o.p - o.t));
+    // occupancy centroid (population-weighted mean column) — range-shift tracking
+    let wCol = 0, wRow = 0, occupied = 0;
+    for (const row of automata.grid) for (const cell of row) {
+        const nc = cell.currentPopulation.length;
+        if (nc > 0) { occupied++; wCol += nc * cell.col; wRow += nc * cell.row; }
+    }
     return {
         n: orgs.length,
         target,
@@ -99,7 +105,8 @@ function snapshot(automata) {
         meanPheno: mp, varPheno: variance(ps, mp),
         genoLag: gLag, phenoLag: pLag,
         selDiffGeno: mw > 0 ? covGW / mw : 0,
-        cellsOccupied: automata.grid.flat().filter(c => c.currentPopulation.length > 0).length,
+        cellsOccupied: occupied,
+        centroidCol: wCol / orgs.length, centroidRow: wRow / orgs.length,
     };
 }
 
