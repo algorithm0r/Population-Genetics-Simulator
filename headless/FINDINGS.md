@@ -118,3 +118,29 @@ plus the 200k-gen probe).
 
 Regenerate: `node gen-settings.mjs cyclic settings/cyclic.json && node launch.mjs settings/cyclic.json cyclic`;
 table: `node agg.mjs results/cyclic.jsonl`.
+
+## F6 — The buffer regime exists: plasticity flips to full rescue under oscillation (2026-08-27)
+
+Batch `smallamp` (373 runs, 30 bins; amplitude {1,2,4,6,8} × period {50,200,1000} × step {0,0.5}).
+
+- **Full rescue:** at a4–a8/T50 and a4–a6/T200, no-plasticity dies 10/10 while
+  plasticity survives **0/10 extinct** — the exact mirror of the directional result.
+- Transition at a8/T200 (p0.5 50%, adaptive n=40); partial protection persists even at
+  slow cycles (a6/T1000: 77% vs 25%; a8/T1000: 4× extinction delay).
+- Small amplitudes (1–2): both arms survive (standing load tolerable) — as predicted.
+- **Both registered predictions wrong in detail** (F5's "amplitude ≤ reach ~2.5" and the
+  load-analysis "window at 4–8 only"): rescue extends to amplitude 8 ≫ reach at fast
+  periods. What governs is not amplitude vs. reach but (a) per-generation tracking rate
+  within lifetimes and (b) the genotype anchoring at the **cycle mean**.
+- **The unified mechanism sentence for the paper:** shielding pins the genotype to the
+  past. Under a directional trend the past is wrong — the anchor is fatal (F1–F4).
+  Under oscillation the past equals the future mean — the anchor is adaptive, and
+  plasticity absorbs the swing (F6). One mechanism, opposite signs, switched by the
+  return-structure (autocorrelation) of the environment. Slide 33's intuition is
+  vindicated in the right regime; connects to Leung 2020 / Tufto 2015 / King & Hadfield
+  2019 on environmental predictability.
+- Side observation: fluctuating selection maintains elevated genetic variance in
+  surviving p0 arms (0.04–0.06 vs 0.013 under a trend).
+
+Regenerate: `node gen-settings.mjs smallamp settings/smallamp.json && node launch.mjs settings/smallamp.json smallamp`;
+table: `node agg.mjs results/smallamp.jsonl`.
