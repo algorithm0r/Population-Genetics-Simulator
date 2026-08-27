@@ -30,6 +30,17 @@ const EXPERIMENTS = {
                 });
         return out;
     },
+    // Bracket 1: find each arm's actual critical region. Early pilot1x returns say the
+    // arms are far apart — p0.5 dies even at rate 100 while p0 survives to 240 — so
+    // bracket p0.5 at LOW rates and p0 at HIGH rates. Includes p0.5 static sanity bin.
+    bracket1() {
+        const out = [];
+        for (const rate of [0, 10, 20, 40, 60, 80])
+            out.push({ id: `brk_p0.5_r${rate}`, meta: { plasticity: 0.5, rate }, config: { epoch: 50000, reportEvery: 250, overrides: { ...BASE, adaptiveStepSize: 0.5 }, environmentPatterns: env(rate) } });
+        for (const rate of [260, 280, 320, 360, 400, 500])
+            out.push({ id: `brk_p0_r${rate}`, meta: { plasticity: 0, rate }, config: { epoch: 50000, reportEvery: 250, overrides: { ...BASE, adaptiveStepSize: 0 }, environmentPatterns: env(rate) } });
+        return out;
+    },
     // Plasticity-strength resolution at fixed rates (for the eta_c(plasticity) curve later)
     pstrength() {
         const out = [];
