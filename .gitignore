@@ -1,4 +1,4 @@
-# OS / editor junk
+﻿# OS / editor junk
 Thumbs.db
 Desktop.ini
 .DS_Store
@@ -7,7 +7,7 @@ Desktop.ini
 # logs & local artifacts
 *.log
 
-# secrets — never commit
+# secrets â€” never commit
 .env
 .tokens.json
 *.pem
@@ -18,4 +18,4 @@ Desktop.ini
 # headless run artifacts (regenerate with: node headless/sweep.mjs)
 headless/out/
 headless/results/
-headless/settings/  # regenerate with: node headless/gen-settings.mjs <experiment>
+# headless/settings/ stays TRACKED - the exact experiment grids are provenance
