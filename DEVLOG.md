@@ -4,6 +4,51 @@ Backward-looking, append-only. Newest entry on top. Never edit past entries.
 
 <!-- append new entries below this line -->
 
+## 2026-08-28 (later still) — F11–F13: the information arc closed, realistic environments, and the spatial finale
+
+**Done:** three batches (~925 runs) that finish the experimental program.
+
+- **F11 (spatial4, 30 runs):** Chris's "no open questions" call — genotype-based
+  (innate-cue) habitat assessment tested against F10's phenotype-assessed baseline.
+  **0/30 extinct in both worlds** (vs 35% gradient / bistable uniform); realizedResp
+  pinned at the required 0.008/gen. F10's residual mortality was entirely the
+  information channel: *the constraint was the blindfold, not shielded selection.*
+- **Mongo retrofit** (Chris's "DB or CSVs?"): thin socket.io client + idempotent
+  count-verified importer; every batch now mirrored to
+  `populationGeneticsDB.maad_<batch>` alongside the JSONL/CSVs.
+- **F12 (realistic1, 835 runs):** Chris's cycle-behaving-as-trend insight became three
+  environment models (composite, plateau, rednoise) + registered-prediction suites.
+  Composite prediction REFUTED into the applied headline: a cycle the population
+  buffers perfectly still drains the reach budget the trend needs — the
+  climate-change-shaped world is worse than the sum of its parts for plastic
+  populations. Plateau double dissociation confirmed as registered (excursion kills
+  the plastic, rate kills the genetic). Red noise: plasticity ≥ genetics everywhere.
+- **F13 (spatialcomp1, 59 runs, the finale):** the F10/F11 sorting machine under the
+  climate shape. Prediction half-refuted, and the refutation is the finding: honest
+  (genotype) assessment still rescues completely on the gradient (**0/19** at 50k,
+  response pinned, cline variance ~165 stable) but **no longer saves the uniform
+  world** — both assessment arms die there identically in ~2,200 gens (cycle peak
+  rate ~9× sustainable, amplitude beyond plastic reach, nowhere to go). The gradient
+  flips from F8–F10's *burden* to the composite world's *refuge*: information and
+  landscape are complements, not substitutes. Blindfolded gradient populations surf
+  to the island edge (centroid → 22.9/24) and die at the wall at ~13.6k.
+
+**Recurring lesson, recurred:** agg.mjs pooled the assessment arms until
+`migrationAssessment` entered the bin key — *every* new experimental axis must enter
+the bin key, sixth occurrence of this exact bug class.
+
+**Changed:** environmentalPatterns.js (+3 generators), gen-settings (4 suites),
+agg (assess axis + column), mongo.mjs + import-mongo.mjs (new), smoke 15/15,
+FINDINGS F11–F13 + ledger, STATUS regenerated.
+
+**State:** F1–F13 complete, every registered hypothesis resolved; ~3,470 seeded runs
+across 15 batches, all in Mongo; fleet torn down; worker ceiling 10 (Chris raised it).
+
+**Next:** the paper, with Jobran — the arc is now: shielding cuts ηc (F1–F4), sign
+set by return-structure (F5–F6, F12), plasticity eats the mismatch signal that
+selection *and* informed movement consume (F8–F10), honest cues restore it (F11),
+but only where space provides options (F13).
+
 ## 2026-08-28 (later) — F10: informed migration (Chris's "need + fit" question)
 
 **Done:** Implemented condition-dependent emigration (`needMigrationScale`) and matching

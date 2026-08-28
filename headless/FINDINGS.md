@@ -344,8 +344,58 @@ non-reverting change, sharpening F6.
 Regenerate: `node gen-settings.mjs composite1|plateau1|rednoise1 ...` (merged as
 `settings/realistic1.json`); table: `node agg.mjs results/realistic1.jsonl`.
 
+## F13 — Under the climate shape, the gradient flips from burden to refuge: honest information rescues only where space provides options (2026-08-28)
+
+Batch `spatialcomp1` (59 runs, 4 bins; shielded arm p0.5 only, both informed-migration
+mechanisms on, 1×24 island strip, composite environment a6/T500 riding trend 80,
+epoch 50k). The F10/F11 sorting machine, re-tested under the realistic environment.
+
+| arm | extinct | TTE |
+|---|---|---|
+| phenotype-assessed, uniform | 14/14 | 2,179 ± 317 |
+| genotype-assessed, uniform | 12/12 | 2,292 ± 257 |
+| phenotype-assessed, gradient | 14/14 | 13,643 ± 602 |
+| **genotype-assessed, gradient** | **0/19** | — |
+
+**Registered prediction half-confirmed, half-refuted — and the refuted half is the
+finding.** Confirmed: phenotype-assessed (blindfolded) arms die under the composite even
+with both mechanisms on, exactly as predicted — the blindfold persists under realistic
+environments. Refuted: genotype assessment does NOT track the composite "as it tracked
+the pure trend" everywhere — **F11's uniform-world rescue vanishes.** In the uniform
+world the two assessment arms die at statistically identical times (~2,200 gens ≈ 4.4
+cycle periods): the cycle's peak rate (2πA/T ≈ 0.075/gen, ~9× the sustainable genetic
+rate) with amplitude 6 beyond the ~2.5 plastic reach kills a spatially homogeneous
+world no matter how honest the organisms' information is. **With nowhere to go,
+information is worthless.**
+
+On the gradient the story inverts twice over. Genotype-assessed populations survive
+50k generations to a run: realizedResp pinned at 0.0075–0.0084/gen (required: 0.008),
+lag flat at −0.50, varGeno stable ~165 (the sorted cline as a standing-variance
+reservoir), N at carrying capacity. The gradient — the *killer* in F8–F10's pure-trend
+world — becomes the *refuge* under composite change, because a strip spanning 46
+phenotype units always contains near-matched habitat somewhere and honest sorting can
+find it, while the cline's variance reservoir funds genetic tracking of the trend
+component. Phenotype-assessed gradient populations instead surf spatially — centroid
+drifts from mid-strip to 22.9/24, pinned against the island edge — while variance
+drains (165 → 0.06), then die at the wall at ~13.6k: they buffer the cycle, lose the
+trend, and run out of world. (Measurement caveat: reportEvery 500 equals the cycle
+period, so centroid samples are phase-locked; within-cycle spatial commuting in the
+surviving arm is unresolved — a finer-grained probe would need reportEvery ≠ T.)
+
+**Refinement of F11's closer:** honest information is necessary but not sufficient —
+it restores persistence only where space provides options to spend it on. The paper's
+spatial arc completes: plasticity destroys the mismatch signal (F8–F10), honest cues
+restore it (F11), and under realistic (cycle+trend) change the signal buys survival
+only through spatial structure (F13) — information and landscape are complements,
+not substitutes.
+
+Regenerate: `node gen-settings.mjs spatialcomp1 settings/spatialcomp1.json && node launch.mjs settings/spatialcomp1.json spatialcomp1`;
+table: `node agg.mjs results/spatialcomp1.jsonl`.
+
 **Registered-hypothesis ledger, all resolved:** F5 buffer-at-amp≤reach → wrong in detail,
 F6's version stronger. Load-analysis window (4,8) → partially right. F8 escalator via
 sorting → wrong (channel is demographic). F8 shielding-blocks-rescue → right in the
-gradient world, softened to bistability in the uniform world. Every prediction was
+gradient world, softened to bistability in the uniform world. F13
+genotype-tracks-composite-everywhere → right on the gradient, wrong in the uniform
+world (information needs spatial options to spend itself on). Every prediction was
 registered before its data; every revision is in this file.
