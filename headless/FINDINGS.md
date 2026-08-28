@@ -280,6 +280,30 @@ the current phenotype; 50k gens; random-dispersal baselines = F9).
 Regenerate: `node gen-settings.mjs spatial3 settings/spatial3.json && node launch.mjs settings/spatial3.json spatial3`;
 table: `node agg.mjs results/spatial3.jsonl`.
 
+## F11 — Honest information fully restores the rescue: the constraint was the blindfold, not selection (2026-08-28)
+
+Batch `spatial4` (30 runs, 2 bins; shielded populations, both-mechanisms informed
+migration, **genotype-based (innate-cue) assessment** — Edelaar's heritable-preference
+alternative; 50k gens; phenotype-assessment baselines = F10).
+
+| shielded, both mechanisms, mig 0.1 | phenotype assessment (F10) | genotype assessment |
+|---|---|---|
+| gradient | 0.35 extinct | **0.00 (0/15)** |
+| uniform | bistable (0.42 random / 0.00 both) | **0.00 (0/15)** |
+
+Mechanism sealed: realizedResp = 0.0080–0.0081 = exactly the required rate in both
+worlds, lags constant 10k→50k, populations at carrying capacity, gradient survivors
+holding steep sorted clines (varGeno 191). **Registered prediction confirmed**: F10's
+residual shielded mortality was entirely the information channel — when assessment is
+honest, informed migration defeats shielding completely; shielded selection was never
+the binding constraint once sorting worked. This isolates the paper's mechanism at its
+sharpest: *plasticity's harm under sustained change is an information effect — it
+falsifies the mismatch signal that selection, dispersal, and habitat choice all
+consume — and restoring the signal by any honest channel restores persistence.*
+
+Regenerate: `node gen-settings.mjs spatial4 settings/spatial4.json && node launch.mjs settings/spatial4.json spatial4`;
+table: `node agg.mjs results/spatial4.jsonl`.
+
 **Registered-hypothesis ledger, all resolved:** F5 buffer-at-amp≤reach → wrong in detail,
 F6's version stronger. Load-analysis window (4,8) → partially right. F8 escalator via
 sorting → wrong (channel is demographic). F8 shielding-blocks-rescue → right in the
