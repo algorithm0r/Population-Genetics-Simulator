@@ -89,12 +89,14 @@ class Population {
             for (let i = 0; i < integerOffspring; i++) {
                 let offspring = new Organism(org);
                 offspring.mutate();
+                if (PARAMS.birthCue === "pre") offspring.developAtBirth(this.target);
                 this.migrate(offspring, PARAMS.offspringMigrationChance);
             }
 
             if (Math.random() < fractionalOffspring) {
                 let offspring = new Organism(org);
                 offspring.mutate();
+                if (PARAMS.birthCue === "pre") offspring.developAtBirth(this.target);
                 this.migrate(offspring, PARAMS.offspringMigrationChance);
             }
 
@@ -217,6 +219,10 @@ class Population {
 
         // Apply mutations
         offspring.mutate();
+
+        // birthCue "pre": developmental adjustment fires before first selection and
+        // birth migration (natal cell target is the cue)
+        if (PARAMS.birthCue === "pre") offspring.developAtBirth(this.target);
 
         return offspring;
     }

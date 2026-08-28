@@ -23,8 +23,14 @@ const rateOf = r => {
 };
 const plasOf = r => {
     const o = r.cfg.overrides ?? {};
-    if (o.plasticityModel === 'linear') return `lin${o.reactionNormSlope}`;   // linear-norm arms are their own labels
-    return o.adaptiveStepSize ?? r.PARAMS?.adaptiveStepSize;
+    let base = o.plasticityModel === 'linear' ? `lin${o.reactionNormSlope}`   // linear-norm arms are their own labels
+        : String(o.adaptiveStepSize ?? r.PARAMS?.adaptiveStepSize);
+    // cue/adjust timing tags (2026-08-28) — timing is an axis whenever non-default
+    if ((o.cuePeriod ?? 1) === 0) base += o.birthCue === 'pre' ? 'Bpre' : 'B';   // birth-registered cue (Bpre = pre-selection = pure Chevin when linear)
+    else if ((o.cuePeriod ?? 1) > 1) base += `C${o.cuePeriod}`;
+    else if (o.birthCue === 'pre') base += 'pre';                                 // live cue but blind newborns
+    if ((o.adjustDelay ?? 0) > 0) base += `D${o.adjustDelay}`;
+    return base;
 };
 // migration and spatial-world type are axes whenever non-default; folded into the
 // label so arms never pool

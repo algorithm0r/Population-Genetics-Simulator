@@ -29,6 +29,12 @@ var PARAMS = {
     adaptiveStepSize: 0.5,
     plasticityModel: "step",     // "step" (bounded within-lifetime acclimation, original) | "linear" (instant reaction norm, Chevin-style control)
     reactionNormSlope: 0.5,      // linear model only: fraction of the observed offset compensated
+    // cue/adjust timing architecture (2026-08-28) — precursor to the full
+    // cue-rate x adjust-rate x delay factorial (paper 2; see research backlog).
+    // Defaults reproduce original behavior exactly (cue + adjust every tick).
+    cuePeriod: 1,                // ticks between environmental cue samples; 0 = birth cue only (developmental registration, never re-sampled)
+    adjustDelay: 0,              // ticks between a cue and the first adjustment consuming it
+    birthCue: "post",            // "pre" = birth cue + one adjustment fire at construction, BEFORE first selection and birth migration; with cuePeriod 0 + linear model this is the pure Chevin/Lande developmental reaction norm
     deathChancePerGeneration: 0.2,
     offspringMigrationChance: 0.0001,
     adultMigrationChance: 0.0001,

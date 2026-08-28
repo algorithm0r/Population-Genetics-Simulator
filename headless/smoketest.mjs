@@ -109,6 +109,42 @@ check('need-triggered migration: harmless on a single adapted cell', needOn.surv
     check('rednoise same value across cells at same generation', rn1.getValue({ row: 0, col: 0 }, 777) === rn1.getValue({ row: 5, col: 3 }, 777));
 }
 
+// ── cue/adjust timing architecture (2026-08-28) ──
+{
+    // explicit defaults ≡ omitted defaults (the refactor's fast path is the original code path)
+    const expl = await runOne({ seed: 42, epoch: 2000, reportEvery: 100, overrides: { ...SINGLE_CELL, adaptiveStepSize: 0.5, cuePeriod: 1, adjustDelay: 0, birthCue: 'post' }, environmentPatterns: STATIC_ENV });
+    check('timing defaults explicit === omitted (bit-identical)', JSON.stringify(expl.series) === JSON.stringify(a.series));
+
+    // pure Chevin (linear slope 1, birth cue only, pre-selection): every organism —
+    // newborns included, since development precedes selection — sits exactly on its
+    // birth target; under static env meanPheno is exactly 0 at every report while
+    // genotype drifts unseen
+    const CHEV = { ...SINGLE_CELL, plasticityModel: 'linear', reactionNormSlope: 1, adaptiveStepSize: 0, cuePeriod: 0, birthCue: 'pre' };
+    const chevPre = await runOne({ seed: 7, epoch: 1500, reportEvery: 100, overrides: CHEV, environmentPatterns: STATIC_ENV });
+    const preRows = chevPre.series.filter(s => s.gen > 0);
+    const prePin = Math.max(...preRows.map(s => Math.abs(s.meanPheno)));
+    const preDrift = Math.max(...preRows.map(s => Math.abs(s.meanPheno - s.meanGeno)));
+    check('pure Chevin (pre): all phenotypes pinned to birth target, genotype drifts unseen',
+        prePin === 0 && preDrift > 0.05, `max|mp|=${prePin} max|mp-mg|=${preDrift.toFixed(3)}`);
+
+    // same model with birthCue post: newborns appear in snapshots un-adjusted (honest
+    // window open until their first tick), so meanPheno is NOT pinned to 0
+    const chevPost = await runOne({ seed: 7, epoch: 1500, reportEvery: 100, overrides: { ...CHEV, birthCue: 'post' }, environmentPatterns: STATIC_ENV });
+    const postPin = Math.max(...chevPost.series.filter(s => s.gen > 0).map(s => Math.abs(s.meanPheno)));
+    check('birth-cue post keeps the honest-newborn window (meanPheno not pinned)', postPin > 0, `max|mp|=${postPin.toFixed(4)}`);
+
+    // delay line: an effectively infinite delay = plasticity never fires; a finite
+    // delay matures through the queue and fires
+    const dInf = await runOne({ seed: 11, epoch: 800, reportEvery: 100, overrides: { ...SINGLE_CELL, adaptiveStepSize: 0.5, adjustDelay: 999999 }, environmentPatterns: STATIC_ENV });
+    const dInfDrift = Math.max(...dInf.series.map(s => Math.abs(s.meanPheno - s.meanGeno)));
+    const d5 = await runOne({ seed: 11, epoch: 800, reportEvery: 100, overrides: { ...SINGLE_CELL, adaptiveStepSize: 0.5, adjustDelay: 5 }, environmentPatterns: STATIC_ENV });
+    const d5Drift = Math.max(...d5.series.map(s => Math.abs(s.meanPheno - s.meanGeno)));
+    // static env holds genotype near 0, so population drift is intrinsically small;
+    // the contrast that matters is exact-zero (never fires) vs any-positive (fires)
+    check('adjustDelay: infinite delay = plasticity inert; finite delay matures and fires',
+        dInfDrift === 0 && d5Drift > 0, `drift inf=${dInfDrift} d5=${d5Drift.toFixed(4)}`);
+}
+
 // timing note for sweep sizing
 console.log(`\ntiming: 2000 gens single-cell ≈ ${a.wallMs} ms  (${(a.wallMs / 2000).toFixed(3)} ms/gen)`);
 process.exit(failures ? 1 : 0);

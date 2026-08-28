@@ -351,6 +351,91 @@ const EXPERIMENTS = {
                     });
         return out;
     },
+    // Timing 1 — the cue/adjust timing architecture's first outing (2026-08-28).
+    // Two purposes: (1) PAPER-1 SEAL: our linvar "linear norm" arms used live per-tick
+    // cues; pure Chevin is cue-at-birth, adjust-once, PRE-selection. Does the
+    // shielding result survive the faithful timing? (2) PRECURSOR PROBE of the
+    // cue-timing axis (paper 2): birth-registered cues and delayed adjustment.
+    // Mean lifespan ≈ 5 ticks (deathChance 0.2), so cue staleness under trend r80 is
+    // ~rate × lifespan ≈ 0.04 phenotype units — negligible against lags of 0.5–2.
+    // REGISTERED PREDICTIONS:
+    //  A (trend r80): timing-invariance at slow rates — chevPre lin0.5 dies like
+    //    labile lin0.5 (worse than nothing); chevPre lin1 survives like labile lin1;
+    //    birth-cue step0.5 dies like live step0.5. p0 survives (r80 << bare-genetics
+    //    etaC 273). The paper-1 claim "the trap appears in their own model" holds
+    //    under Chevin-faithful timing.
+    //  B (cycle a6/T50): divergence — live cues buffer (step0.5 full rescue per F6,
+    //    labile lin1 trivially), birth-registered cues chase a stale phase and die
+    //    (within-life phase drift is large); chevPre lin1 phenotype = env(birth),
+    //    mismatch up to 2A = 12. p0 dies (F6). Cue staleness is harmful exactly when
+    //    the environment returns — the timing sign rule's first half.
+    //  C (anti-phase, lin1 live cue + adjustDelay 2): at T = 2×delay the compensation
+    //    lands anti-phase (mismatch swing 2A). Pre-flight caught an ALIASING artifact:
+    //    at T4, integer generations sample the sine's zeros every other tick, so
+    //    boom-bust demography persists at any amplitude — T4 arms are retained as the
+    //    aliasing demonstration (predict: survives). T5 (incommensurate; |mismatch|
+    //    bounded away from 0, swing ~11.4) is the real test — predict: delay-2 dies at
+    //    T5 while delay-0 survives trivially and p0 (max mismatch 6) outlives delay-2
+    //    (max ~11.4): delayed compensation worse than none. At T40 delay is harmless.
+    //  D (spatial, the preserved difference): lin0.5 labile + both informed-migration
+    //    mechanisms on the r80 gradient strip — birthCue post keeps the honest-newborn
+    //    window (partial rescue, F10-style); birthCue pre closes it at BOTH selection
+    //    and birth migration — predict rescue collapses toward 100% extinction.
+    timing1() {
+        const out = [];
+        const one = (id, meta, overrides, temporal, epoch = 30000, reportEvery = 250) => out.push({
+            id, meta, config: {
+                epoch, reportEvery, overrides,
+                environmentPatterns: { spatial: { type: 'uniform', parameters: { baseEnvironment: 0 } }, temporal },
+            },
+        });
+        const trend80 = { type: 'linear', parameters: { changeRate: 80 } };
+        const cyc = (A, T) => ({ type: 'cycling', parameters: { cycleAmplitude: A, cyclePeriod: T } });
+        const LIN = (b) => ({ ...BASE, plasticityModel: 'linear', reactionNormSlope: b, adaptiveStepSize: 0 });
+        const STEP = { ...BASE, adaptiveStepSize: 0.5 };
+        const CHEV = (b) => ({ ...LIN(b), cuePeriod: 0, birthCue: 'pre' });
+
+        // A — trend r80
+        one('tm_lab0.5_r80', { plasticity: 'lin0.5', rate: 80 }, LIN(0.5), trend80);
+        one('tm_chev0.5_r80', { plasticity: 'lin0.5Bpre', rate: 80 }, CHEV(0.5), trend80);
+        one('tm_chev1_r80', { plasticity: 'lin1Bpre', rate: 80 }, CHEV(1), trend80);
+        one('tm_step_r80', { plasticity: 0.5, rate: 80 }, STEP, trend80);
+        one('tm_stepB_r80', { plasticity: '0.5B', rate: 80 }, { ...STEP, cuePeriod: 0 }, trend80);
+        one('tm_p0_r80', { plasticity: 0, rate: 80 }, { ...BASE, adaptiveStepSize: 0 }, trend80);
+
+        // B — cycle a6/T50
+        one('tm_step_a6T50', { plasticity: 0.5, rate: 'a6/T50' }, STEP, cyc(6, 50));
+        one('tm_stepB_a6T50', { plasticity: '0.5B', rate: 'a6/T50' }, { ...STEP, cuePeriod: 0 }, cyc(6, 50));
+        one('tm_lab1_a6T50', { plasticity: 'lin1', rate: 'a6/T50' }, LIN(1), cyc(6, 50));
+        one('tm_chev1_a6T50', { plasticity: 'lin1Bpre', rate: 'a6/T50' }, CHEV(1), cyc(6, 50));
+        one('tm_p0_a6T50', { plasticity: 0, rate: 'a6/T50' }, { ...BASE, adaptiveStepSize: 0 }, cyc(6, 50));
+
+        // C — anti-phase delay (linear slope 1, live cue). T4 = aliasing demo; T5 = real test.
+        one('tm_lab1D2_a6T4', { plasticity: 'lin1D2', rate: 'a6/T4' }, { ...LIN(1), adjustDelay: 2 }, cyc(6, 4));
+        one('tm_lab1_a6T4', { plasticity: 'lin1', rate: 'a6/T4' }, LIN(1), cyc(6, 4));
+        one('tm_lab1D2_a6T5', { plasticity: 'lin1D2', rate: 'a6/T5' }, { ...LIN(1), adjustDelay: 2 }, cyc(6, 5));
+        one('tm_lab1_a6T5', { plasticity: 'lin1', rate: 'a6/T5' }, LIN(1), cyc(6, 5));
+        one('tm_p0_a6T5', { plasticity: 0, rate: 'a6/T5' }, { ...BASE, adaptiveStepSize: 0 }, cyc(6, 5));
+        one('tm_lab1D2_a6T40', { plasticity: 'lin1D2', rate: 'a6/T40' }, { ...LIN(1), adjustDelay: 2 }, cyc(6, 40));
+        one('tm_p0_a6T4', { plasticity: 0, rate: 'a6/T4' }, { ...BASE, adaptiveStepSize: 0 }, cyc(6, 4));
+
+        // D — spatial: honest-newborn window, pre vs post (50k gradient strip, both mechanisms)
+        const strip = { numRows: 1, numCols: 24, worldEdges: 'island', targetObservationalNoise: 0, sexualReproduction: false, offspringMigrationChance: 0.1, adultMigrationChance: 0.1, needMigrationScale: 0.4, fitTargetedMigration: true, plasticityModel: 'linear', reactionNormSlope: 0.5, adaptiveStepSize: 0 };
+        for (const bc of ['post', 'pre'])
+            out.push({
+                id: `tm_sp_lin0.5_${bc}`,
+                meta: { plasticity: `lin0.5${bc === 'pre' ? 'pre' : ''}`, rate: `r80both${bc}` },
+                config: {
+                    epoch: 50000, reportEvery: 500,
+                    overrides: { ...strip, birthCue: bc },
+                    environmentPatterns: {
+                        spatial: { type: 'gradient', parameters: { gradientStrength: 2 } },
+                        temporal: { type: 'linear', parameters: { changeRate: 80 } },
+                    },
+                },
+            });
+        return out;
+    },
 };
 
 const name = process.argv[2];
