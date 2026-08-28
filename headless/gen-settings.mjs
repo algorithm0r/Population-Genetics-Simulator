@@ -455,6 +455,25 @@ const EXPERIMENTS = {
         }
         return out;
     },
+    // Timing 1c — mechanism isolation for timing1b's refutation (2026-08-28,
+    // registered pre-run). chev0.5 (birth cue + pre) survives r160 where labile
+    // lin0.5 (live cue + post) dies. Two candidate mechanisms: (i) REGISTRATION —
+    // stale cues leak the drift-since-birth signal honestly to selection; (ii)
+    // NEWBORN DEMOGRAPHY — the honest-newborn window is a pure fecundity tax in a
+    // single cell (full-mismatch penalty, no migration to spend the information on),
+    // and pre-adjustment removes the tax. The missing 2x2 cells decide:
+    // live cue + birthCue pre  -> (ii) predicts SURVIVES, (i) predicts dies.
+    // birth cue + birthCue post -> (ii) predicts DIES,     (i) predicts survives.
+    // REGISTERED PREDICTION: mechanism (ii) — the staleness leak (~0.08 units over a
+    // ~5-tick lifespan) is too small to matter against lags of ~0.3; the demographic
+    // channel dominates. live+pre survives r160; birth+post dies.
+    timing1c() {
+        const LIN05 = { ...BASE, plasticityModel: 'linear', reactionNormSlope: 0.5, adaptiveStepSize: 0 };
+        return [
+            { id: 'tm3_livePre_r160', meta: { plasticity: 'lin0.5pre', rate: 160 }, config: { epoch: 30000, reportEvery: 250, overrides: { ...LIN05, birthCue: 'pre' }, environmentPatterns: env(160) } },
+            { id: 'tm3_birthPost_r160', meta: { plasticity: 'lin0.5B', rate: 160 }, config: { epoch: 30000, reportEvery: 250, overrides: { ...LIN05, cuePeriod: 0, birthCue: 'post' }, environmentPatterns: env(160) } },
+        ];
+    },
 };
 
 const name = process.argv[2];
