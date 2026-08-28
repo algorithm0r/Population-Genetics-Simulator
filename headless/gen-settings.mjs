@@ -436,6 +436,25 @@ const EXPERIMENTS = {
             });
         return out;
     },
+    // Timing 1b — supplement registered mid-timing1 (2026-08-28), BEFORE any runs at
+    // these rates: timing1's r80 lin arms turned out non-discriminating (labile lin0.5
+    // survives r80 per linvar — it dies at r160+, TTE 5400 at r160). The Chevin-vs-
+    // labile contrast must run where the labile trap actually bites.
+    // REGISTERED PREDICTION: timing-invariance holds — chev0.5 (cue-at-birth,
+    // pre-selection) dies at r160 and r240 like labile lin0.5, because the honest
+    // staleness leak is tiny at these lifespans (rate x lifespan ≈ 0.08–0.12) and the
+    // 0.5-slope signal dilution is identical. If instead chev0.5 survives r160, cue
+    // timing — not partial compensation — is the trap's load-bearing element and the
+    // paper-1 linvar claim narrows to labile plasticity.
+    timing1b() {
+        const out = [];
+        const LIN = (b) => ({ ...BASE, plasticityModel: 'linear', reactionNormSlope: b, adaptiveStepSize: 0 });
+        for (const rate of [160, 240]) {
+            out.push({ id: `tm2_lab0.5_r${rate}`, meta: { plasticity: 'lin0.5', rate }, config: { epoch: 30000, reportEvery: 250, overrides: LIN(0.5), environmentPatterns: env(rate) } });
+            out.push({ id: `tm2_chev0.5_r${rate}`, meta: { plasticity: 'lin0.5Bpre', rate }, config: { epoch: 30000, reportEvery: 250, overrides: { ...LIN(0.5), cuePeriod: 0, birthCue: 'pre' }, environmentPatterns: env(rate) } });
+        }
+        return out;
+    },
 };
 
 const name = process.argv[2];

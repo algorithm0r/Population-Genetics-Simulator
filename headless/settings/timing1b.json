@@ -1,0 +1,150 @@
+[
+ {
+  "id": "tm2_lab0.5_r160",
+  "meta": {
+   "plasticity": "lin0.5",
+   "rate": 160
+  },
+  "config": {
+   "epoch": 30000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.5,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 160
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "tm2_chev0.5_r160",
+  "meta": {
+   "plasticity": "lin0.5Bpre",
+   "rate": 160
+  },
+  "config": {
+   "epoch": 30000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.5,
+    "adaptiveStepSize": 0,
+    "cuePeriod": 0,
+    "birthCue": "pre"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 160
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "tm2_lab0.5_r240",
+  "meta": {
+   "plasticity": "lin0.5",
+   "rate": 240
+  },
+  "config": {
+   "epoch": 30000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.5,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 240
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "tm2_chev0.5_r240",
+  "meta": {
+   "plasticity": "lin0.5Bpre",
+   "rate": 240
+  },
+  "config": {
+   "epoch": 30000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.5,
+    "adaptiveStepSize": 0,
+    "cuePeriod": 0,
+    "birthCue": "pre"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 240
+     }
+    }
+   }
+  }
+ }
+]
