@@ -392,10 +392,85 @@ not substitutes.
 Regenerate: `node gen-settings.mjs spatialcomp1 settings/spatialcomp1.json && node launch.mjs settings/spatialcomp1.json spatialcomp1`;
 table: `node agg.mjs results/spatialcomp1.jsonl`.
 
+## F14 — Cue timing is load-bearing: the labile trap, the developmental rescue, the newborn tax, and the intrinsic delay (2026-08-28)
+
+Batches `timing1` (243 runs, 20 bins), `timing1b` (53 runs, 4 bins), `timing1c` (36
+runs, 2 bins) — first outing of the cue/adjust timing architecture (`cuePeriod`,
+`adjustDelay`, `birthCue`; Chris's two-events/two-dimensions formalization). Pure
+Chevin/Lande developmental norm = `{linear, cuePeriod: 0, birthCue: "pre"}` — cue at
+birth, adjust once, pre-selection. Defaults bit-identical to original code (smoke 19/19).
+
+**(a) The paper-1 seal, revised — the linvar trap is a *labile* trap.** Registered
+timing-invariance prediction REFUTED at the rates where it matters (timing1b/1c, r160
+where labile lin0.5 dies 12/12 TTE 8,292):
+
+| slope-0.5 linear norm, r160 | honest newborns (post) | blanketed newborns (pre) |
+|---|---|---|
+| live cue (labile = linvar arms) | 12/12 dead, TTE 8,292 | **0/13 alive** |
+| birth-registered cue | 4/23 dead (17%), TTE 15,250 | 0/17 alive (pure Chevin) |
+
+Mechanism 2×2 (timing1c, registered): the dominant channel is the **newborn fecundity
+tax** — in a single cell, an honest newborn pays the full-mismatch fecundity penalty
+with no migration to spend the honesty on, and blanketing newborns (pre) rescues under
+either cue policy. Cue **registration adds real secondary margin** (given honest
+newborns: 100% → 17% mortality, TTE ×2). Trace signature: labile survivors track at
+exactly the required 0.016/gen but attrit rep-by-rep off lag excursions (knife-edge, no
+stability margin); Chevin-pre holds lag −0.29 flat across all 17 reps.
+**Critical-rate ordering: labile lin0.5 (100–160) < registered-post (~160) <
+Chevin-pre (160–240) < bare genetics (273).** Every partial-plasticity timing variant
+stays worse than no plasticity under trends — the paper-1 claim survives in every
+timing — but *how much* worse is a timing property, and Chevin-faithful timing is the
+least harmed. State linvar's "worse than nothing" as a **labile** result.
+
+**(b) The staleness sign rule, cycle half confirmed.** Birth-registered step plasticity
+dies 12/12 under a6/T50 (TTE 2,604) where live-cue step is 0/12 (F6's full rescue);
+under the r80 trend the same registration is inert (stepB TTE 2,479 vs live 2,229 —
+both die of shielding; staleness ≈ rate × lifespan ≈ 0.04 is negligible). Cue staleness
+is harmful exactly when the environment returns. Instant birth-calibration is different:
+Chevin lin1 survives BOTH a6/T50 (lifespan ≪ period, phase drift small — my "mismatch
+up to 2A" registered prediction was wrong on magnitude) and r80 with **zero evolution**
+(genotype lag −240 after 30k gens, phenotypic lag −0.03: persistence on pure birth
+calibration with selection fully disabled — the shielding limit made flesh).
+
+**(c) The intrinsic delay: nobody in this model is delay-0.** Selection computes
+fitness on the phenotype adjusted *last* tick, so every organism carries a built-in
+1-tick cue-to-selection latency — the selection-before-adapt ordering that *is* the
+shielding mechanism is, in timing language, a delay-1 architecture. Demonstrated:
+"perfect" live lin1 dies 12/12 at a6/T4 (TTE 792; effective lag T/4 = constant
+mismatch 6, no matched windows) while **p0 survives the same environment** (0/13;
+mismatch oscillates through zero — good windows twice per cycle) and lin1+delay-2
+survives (total lag aliases onto a favorable phase). Perfect plasticity with 1 tick of
+latency is lethal where no plasticity is safe. Delay effects are non-monotonic
+(aliasing with the period), and discrete-generation demography survives *windowed*
+mismatch but not *constant* mismatch — the anti-phase harm is about window structure,
+not average load (registered anti-phase predictions partially refuted on this point:
+T5 delay-2 survives via windows, 0/12).
+
+**(d) Spatial: the honest-newborn window is unnecessary for the linear sorting
+machine.** Registered prediction REFUTED: on the r80 gradient strip with both informed
+mechanisms, lin0.5 pre and post are indistinguishable (0/13 vs 0/13; N ≈ 11.5k,
+varGeno ≈ 192, lag −0.113, response 0.008 = required, in both). A slope-0.5 adult is
+only half-blind: habitat choice is an argmax, and a monotone (half-contrast) signal
+ranks cells identically. Synthesis across F10/F11/F13/F14: rescue completeness tracks
+*information* completeness (genotype-honest 0% extinct; half-sighted linear adults 0%;
+step's blind adults + honest newborns 35%; fully blind on composite 100%) — and the
+newborn honesty channel matters only where there are options to spend it on (space),
+while in a uniform cell it is a pure demographic tax. Information value is
+option-dependent; honesty without options is a cost. F13's rule, now visible at the
+timing level.
+
+Regenerate: `node gen-settings.mjs timing1|timing1b|timing1c settings/<b>.json` + coordinator/workers;
+tables: `node agg.mjs results/timing1.jsonl` (+1b, 1c).
+
 **Registered-hypothesis ledger, all resolved:** F5 buffer-at-amp≤reach → wrong in detail,
 F6's version stronger. Load-analysis window (4,8) → partially right. F8 escalator via
 sorting → wrong (channel is demographic). F8 shielding-blocks-rescue → right in the
 gradient world, softened to bistability in the uniform world. F13
 genotype-tracks-composite-everywhere → right on the gradient, wrong in the uniform
-world (information needs spatial options to spend itself on). Every prediction was
-registered before its data; every revision is in this file.
+world (information needs spatial options to spend itself on). F14 timing-invariance →
+wrong at the rates that matter (the trap is labile; newborn tax dominant, registration
+secondary); F14 staleness-under-cycles → right for step, wrong on magnitude for
+instant norms; F14 anti-phase → right that latency kills, wrong about where (window
+structure, not average load; aliasing non-monotonic); F14 spatial pre/post → wrong
+(half-sighted adults suffice; argmax choice is monotone-invariant). Every prediction
+was registered before its data; every revision is in this file.

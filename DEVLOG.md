@@ -4,6 +4,50 @@ Backward-looking, append-only. Newest entry on top. Never edit past entries.
 
 <!-- append new entries below this line -->
 
+## 2026-08-28 (night) — F14: the cue/adjust timing architecture, and cue timing turns out to be load-bearing
+
+**Done:** Chris's two-events/two-dimensions formalization (events: cue, adjust;
+dimensions: rate, delay) implemented as a flag-gated precursor architecture
+(`cuePeriod`, `adjustDelay` delay-line, `birthCue` pre/post) — pure Chevin/Lande
+developmental norm falls out as `{linear, cuePeriod: 0, birthCue: "pre"}` with no
+special machinery (the linear norm is idempotent against a frozen cue). Defaults
+bit-identical to original code, smoke 19/19. Three batches (timing1/1b/1c, 332 runs,
+26 bins, every prediction registered pre-run; 1b registered mid-flight when r80 turned
+out non-discriminating; 1c registered to break 1b's mechanism confound).
+
+**F14, four panels:**
+- **The linvar trap is a *labile* trap.** Timing-invariance REFUTED where it matters:
+  pure Chevin lin0.5 survives r160 (0/17, lag −0.29 flat) where labile lin0.5 dies
+  (12/12). The 2×2 isolates the mechanism: the **newborn fecundity tax** dominates
+  (blanketing newborns rescues under either cue policy), registration adds secondary
+  margin (100% → 17% given honest newborns). Critical-rate ordering: labile (100–160)
+  < registered-post (~160) < Chevin-pre (160–240) < bare genetics (273) — all timing
+  variants still worse than nothing under trends, so paper 1's claim survives, but
+  linvar must be stated as a labile result.
+- **Staleness sign rule (cycle half):** birth-registered step dies 12/12 under a6/T50
+  where live step fully rescues; inert under the trend (staleness ≈ 0.04). Chevin lin1
+  survives r80 with ZERO evolution (genotype lag −240, phenotypic lag −0.03).
+- **The intrinsic delay-1:** selection-before-adapt = a delay-1 architecture; "live"
+  lin1 dies at a6/T4 (constant mismatch 6) while p0 SURVIVES the same environment
+  (windowed mismatch) — perfect plasticity with one tick of latency, lethal where no
+  plasticity is safe. Anti-phase harm is window-structure, not average load; delay
+  effects alias with the period (non-monotonic).
+- **Spatial pre/post indistinguishable** (0/13 both, all metrics equal): half-sighted
+  slope-0.5 adults suffice for the sorting machine — argmax habitat choice is
+  monotone-invariant. Synthesis: honesty pays only where there are options (space);
+  in a uniform cell it is a pure demographic tax — F13's rule at the timing level.
+
+**Changed:** params/organism/population (timing architecture), smoke +4, agg (timing
+labels in bin key — applied the recurring lesson proactively this time), gen-settings
+(timing1/1b/1c), FINDINGS F14 + ledger, Mongo (maad_timing1/1b/1c, 332 docs).
+
+**State:** F1–F14; ~3,800 runs, 18 batches; fleet down; all pushed.
+
+**Next:** Chris + Jobran decide where F14 lands — the labile-trap revision belongs in
+paper 1's linvar framing; the timing factorial (cue rate × adjust rate × delay,
+layered systems) is paper 2's spine, now with an empirical anchor and the intrinsic
+delay-1 insight.
+
 ## 2026-08-28 (later still) — F11–F13: the information arc closed, realistic environments, and the spatial finale
 
 **Done:** three batches (~925 runs) that finish the experimental program.
