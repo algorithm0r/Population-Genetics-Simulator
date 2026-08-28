@@ -1,0 +1,78 @@
+[
+ {
+  "id": "spt4_p0.5_r80_bothG_gradient",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "r80bothGg"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 500,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "offspringMigrationChance": 0.1,
+    "adultMigrationChance": 0.1,
+    "needMigrationScale": 0.4,
+    "fitTargetedMigration": true,
+    "migrationAssessment": "genotype",
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 2
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 80
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "spt4_p0.5_r80_bothG_uniform",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "r80bothGu"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 500,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "offspringMigrationChance": 0.1,
+    "adultMigrationChance": 0.1,
+    "needMigrationScale": 0.4,
+    "fitTargetedMigration": true,
+    "migrationAssessment": "genotype",
+    "adaptiveStepSize": 0.5
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 80
+     }
+    }
+   }
+  }
+ }
+]

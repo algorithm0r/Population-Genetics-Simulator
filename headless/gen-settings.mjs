@@ -156,6 +156,25 @@ const EXPERIMENTS = {
                     });
         return out;
     },
+    // Spatial 4 — genotype-based (innate-cue) habitat assessment (Chris, 2026-08-28:
+    // close the open question). Splits F10's residual 35% shielded mortality:
+    // REGISTERED PREDICTION: adult blinding is the binding constraint, so honest
+    // genotype assessment pushes the shielded both-mechanisms gradient arm from 0.35
+    // toward ~0 (and uniform from 0 stays 0). If it stays ~0.35, the constraint is
+    // shielded SELECTION, not blinded assessment. (p0 arms are identical under either
+    // assessment — genotype ≡ phenotype without plasticity — so F10 covers them.)
+    spatial4() {
+        const strip = { numRows: 1, numCols: 24, worldEdges: 'island', targetObservationalNoise: 0, sexualReproduction: false, offspringMigrationChance: 0.1, adultMigrationChance: 0.1, needMigrationScale: 0.4, fitTargetedMigration: true, migrationAssessment: 'genotype', adaptiveStepSize: 0.5 };
+        const world = (kind) => ({
+            spatial: kind === 'gradient' ? { type: 'gradient', parameters: { gradientStrength: 2 } } : { type: 'uniform', parameters: { baseEnvironment: 0 } },
+            temporal: { type: 'linear', parameters: { changeRate: 80 } },
+        });
+        return ['gradient', 'uniform'].map(kind => ({
+            id: `spt4_p0.5_r80_bothG_${kind}`,
+            meta: { plasticity: 0.5, rate: `r80bothG${kind[0]}` },
+            config: { epoch: 50000, reportEvery: 500, overrides: { ...strip }, environmentPatterns: world(kind) },
+        }));
+    },
     // Spatial FEASIBILITY probe (not the Phase 3 factorial — that design belongs with
     // Jobran). 4×4 torus, spatial gradient 5 (targets −15..+15 across the diagonal),
     // uniform linear trend → range-shift geometry (an organism's matching cell walks

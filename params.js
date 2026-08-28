@@ -35,6 +35,7 @@ var PARAMS = {
     worldEdges: "torus",         // "torus" (wrap, original) | "island" (edge hops cancelled — required for gradient worlds, which have a wrap seam)
     needMigrationScale: 0,       // informed migration: emigration prob rises with local mismatch (0 = off, original behavior)
     fitTargetedMigration: false, // informed migration: destination = best-match cell among home+neighbors (false = uniform random, original)
+    migrationAssessment: "phenotype", // informed migration senses with: "phenotype" (realized — plasticity blinds it) | "genotype" (innate cue — honest under plasticity)
     sexualReproduction: false,
 
     // data gathering

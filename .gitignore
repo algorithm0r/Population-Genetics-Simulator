@@ -19,3 +19,4 @@ Desktop.ini
 headless/out/
 headless/results/
 # headless/settings/ stays TRACKED - the exact experiment grids are provenance
+node_modules/

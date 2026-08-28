@@ -7,5 +7,8 @@
     "smoke": "node smoketest.mjs",
     "pilot1": "node sweep.mjs"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "socket.io-client": "^4.8.3"
+  }
 }

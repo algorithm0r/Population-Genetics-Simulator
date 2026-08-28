@@ -233,9 +233,15 @@ class Population {
     migrate(offspring, chance) {
         const grid = gameEngine.automata.grid;
 
+        // migrationAssessment (added 2026-08-28): what informed migration senses with.
+        // "phenotype" (default) = realized phenotype — plasticity blinds adult assessment;
+        // "genotype" = innate cue / heritable preference (Edelaar's alternative) — honest
+        // assessment even under plasticity.
+        const assessed = PARAMS.migrationAssessment === "genotype" ? offspring.genotype : offspring.phenotype;
+
         let moveChance = chance;
         if (PARAMS.needMigrationScale > 0) {
-            const w = Math.exp(-Math.abs(offspring.phenotype - this.target) / PARAMS.reproductionVariance);
+            const w = Math.exp(-Math.abs(assessed - this.target) / PARAMS.reproductionVariance);
             moveChance = chance + PARAMS.needMigrationScale * (1 - w);
         }
 
@@ -255,7 +261,7 @@ class Population {
             for (const [dr, dc] of candidates) {
                 const nr = (this.row + dr + PARAMS.numRows) % PARAMS.numRows;
                 const nc = (this.col + dc + PARAMS.numCols) % PARAMS.numCols;
-                const w = Math.exp(-Math.abs(offspring.phenotype - grid[nr][nc].target) / PARAMS.reproductionVariance);
+                const w = Math.exp(-Math.abs(assessed - grid[nr][nc].target) / PARAMS.reproductionVariance);
                 if (w > bestW + 1e-12) { bestW = w; best = [[nr, nc]]; }
                 else if (Math.abs(w - bestW) <= 1e-12) best.push([nr, nc]);
             }
