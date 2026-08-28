@@ -133,6 +133,11 @@ export async function runOne(cfg) {
     let extinctAt = null;
 
     const t0 = Date.now();
+    // Event-loop yield budget: yield after ~1M organism-updates rather than a fixed
+    // generation count — a fixed 2000-gen stride starves heartbeats for minutes on
+    // big spatial runs (24 cells x ~11k organisms), making live workers invisible to
+    // the coordinator's 120s staleness filter (observed 2026-08-28, timing2).
+    let updateBudget = 0, lastN = 1000;              // lastN: population estimate, refreshed at each report
     for (let gen = 1; gen <= cfg.epoch; gen++) {
         automata.nextGeneration();
         if (gen % cfg.reportEvery === 0 || gen === cfg.epoch) {
@@ -140,8 +145,10 @@ export async function runOne(cfg) {
             series.push({ gen, ...s });
             if (cfg.onTick) cfg.onTick(gen, s.n);   // progress hook (worker heartbeats)
             if (s.n === 0) { extinctAt = gen; break; }
+            lastN = Math.max(s.n, 1);
         }
-        if (gen % 2000 === 0) await new Promise(r => setImmediate(r));   // let timers fire
+        updateBudget += lastN;
+        if (updateBudget >= 1_000_000) { updateBudget = 0; await new Promise(r => setImmediate(r)); }
     }
     const wallMs = Date.now() - t0;
 
