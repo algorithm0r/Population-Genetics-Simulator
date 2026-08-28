@@ -65,6 +65,27 @@ check('island edges: 3x3 gradient world runs, cells occupied sanely',
     island.series.at(-1).n > 0 && island.series.at(-1).cellsOccupied <= 9,
     `N=${island.series.at(-1).n} cells=${island.series.at(-1).cellsOccupied}`);
 
+// informed migration: on a static gradient with heavy migration, fit-targeted
+// dispersal must sort organisms into better-matching cells than random dispersal
+// (lower mean |genoLag| = per-organism deviation from own-cell target; plasticity off
+// so phenotype === genotype and assessment is honest).
+const IM_BASE = { numRows: 3, numCols: 3, targetObservationalNoise: 0, sexualReproduction: false, adaptiveStepSize: 0, worldEdges: 'island', offspringMigrationChance: 0.3, adultMigrationChance: 0.3 };
+const IM_ENV = { spatial: { type: 'gradient', parameters: { gradientStrength: 3 } }, temporal: { type: 'static', parameters: {} } };
+const imRand = await runOne({ seed: 21, epoch: 1000, reportEvery: 200, overrides: { ...IM_BASE }, environmentPatterns: IM_ENV });
+const imFit = await runOne({ seed: 21, epoch: 1000, reportEvery: 200, overrides: { ...IM_BASE, fitTargetedMigration: true }, environmentPatterns: IM_ENV });
+const mis = r => Math.abs(r.series.at(-1).genoLag);
+check('fit-targeted migration sorts better than random on a static gradient',
+    mis(imFit) < mis(imRand),
+    `|lag| fit=${mis(imFit).toFixed(3)} vs random=${mis(imRand).toFixed(3)}`);
+
+// need-triggered: mismatch raises emigration — under uniform static env (w≈1 for
+// adapted organisms) need adds ~nothing, so same-seed series with scale on/off must
+// stay close; the real behavioral test is the sorting check above plus spatial3.
+const needOff = await runOne({ seed: 22, epoch: 500, reportEvery: 100, overrides: { ...SINGLE_CELL, adaptiveStepSize: 0 }, environmentPatterns: STATIC_ENV });
+const needOn = await runOne({ seed: 22, epoch: 500, reportEvery: 100, overrides: { ...SINGLE_CELL, adaptiveStepSize: 0, needMigrationScale: 0.5 }, environmentPatterns: STATIC_ENV });
+check('need-triggered migration: harmless on a single adapted cell', needOn.survived && needOff.survived,
+    `N on=${needOn.series.at(-1).n} off=${needOff.series.at(-1).n}`);
+
 // timing note for sweep sizing
 console.log(`\ntiming: 2000 gens single-cell ≈ ${a.wallMs} ms  (${(a.wallMs / 2000).toFixed(3)} ms/gen)`);
 process.exit(failures ? 1 : 0);

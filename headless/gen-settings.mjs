@@ -121,6 +121,41 @@ const EXPERIMENTS = {
                 });
         return out;
     },
+    // Spatial 3 — informed migration (Chris, 2026-08-28: "triggered by need, targeted
+    // by fit"). Same super-critical arms as F8/F9; random-dispersal baselines live in
+    // spatial2 results. REGISTERED PREDICTIONS (before running): (1) fit-targeting
+    // rescues the gradient world for bare genetics — restores the sorting channel
+    // random dispersal lacks (F9: gradient = 100% extinct); (2) under plasticity the
+    // rescue is at best partial, carried by newborns (honest innate assessment) while
+    // shielded adults are blinded (no need felt, no fit gradient perceived);
+    // (3) uniform-world controls: fit-targeting inert (all cells tie), need-triggering
+    // adds only extra random movement.
+    spatial3() {
+        const strip = { numRows: 1, numCols: 24, worldEdges: 'island', targetObservationalNoise: 0, sexualReproduction: false, offspringMigrationChance: 0.1, adultMigrationChance: 0.1 };
+        const world = (kind, rate) => ({
+            spatial: kind === 'gradient' ? { type: 'gradient', parameters: { gradientStrength: 2 } } : { type: 'uniform', parameters: { baseEnvironment: 0 } },
+            temporal: { type: 'linear', parameters: { changeRate: rate } },
+        });
+        const MODELS = {
+            need: { needMigrationScale: 0.4, fitTargetedMigration: false },
+            fit: { needMigrationScale: 0, fitTargetedMigration: true },
+            both: { needMigrationScale: 0.4, fitTargetedMigration: true },
+        };
+        const out = [];
+        for (const { p, rate } of [{ p: 0, rate: 320 }, { p: 0.5, rate: 80 }])
+            for (const [model, mp] of Object.entries(MODELS))
+                for (const kind of ['gradient', 'uniform'])
+                    out.push({
+                        id: `spt3_p${p}_r${rate}_${model}_${kind}`,
+                        meta: { plasticity: p, rate: `r${rate}${model}${kind[0]}` },
+                        config: {
+                            epoch: 50000, reportEvery: 500,
+                            overrides: { ...strip, adaptiveStepSize: p, ...mp },
+                            environmentPatterns: world(kind, rate),
+                        },
+                    });
+        return out;
+    },
     // Spatial FEASIBILITY probe (not the Phase 3 factorial — that design belongs with
     // Jobran). 4×4 torus, spatial gradient 5 (targets −15..+15 across the diagonal),
     // uniform linear trend → range-shift geometry (an organism's matching cell walks

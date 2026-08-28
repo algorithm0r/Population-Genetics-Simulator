@@ -221,11 +221,50 @@ class Population {
         return offspring;
     }
 
-    // Handles migration by placing offspring in neighboring cells within the global grid
+    // Handles migration by placing offspring in neighboring cells within the global grid.
+    // Informed migration (added 2026-08-28, both default OFF — browser behavior unchanged):
+    //  - needMigrationScale > 0: emigration probability rises with local mismatch
+    //    (condition-dependent dispersal, Bowler & Benton 2005): p = chance + scale*(1-w),
+    //    w = the sim's own fitness kernel on the CURRENT phenotype.
+    //  - fitTargetedMigration: destination chosen as the best-match cell among home +
+    //    in-bounds neighbors (matching habitat choice, Edelaar et al. 2008), assessed
+    //    with the CURRENT phenotype — so plasticity blinds adult assessment, while
+    //    newborns (phenotype === genotype at birth) assess innately.
     migrate(offspring, chance) {
         const grid = gameEngine.automata.grid;
 
-        if (Math.random() < chance) {
+        let moveChance = chance;
+        if (PARAMS.needMigrationScale > 0) {
+            const w = Math.exp(-Math.abs(offspring.phenotype - this.target) / PARAMS.reproductionVariance);
+            moveChance = chance + PARAMS.needMigrationScale * (1 - w);
+        }
+
+        if (PARAMS.fitTargetedMigration && Math.random() < moveChance) {
+            // candidates: home + in-bounds neighbors (torus wraps; island drops out-of-bounds)
+            const candidates = [[0, 0]];
+            for (const [dr, dc] of [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]) {
+                if (PARAMS.worldEdges === "island") {
+                    const nr = this.row + dr, nc = this.col + dc;
+                    if (nr < 0 || nr >= PARAMS.numRows || nc < 0 || nc >= PARAMS.numCols) continue;
+                    candidates.push([dr, dc]);
+                } else {
+                    candidates.push([dr, dc]);
+                }
+            }
+            let best = [], bestW = -Infinity;
+            for (const [dr, dc] of candidates) {
+                const nr = (this.row + dr + PARAMS.numRows) % PARAMS.numRows;
+                const nc = (this.col + dc + PARAMS.numCols) % PARAMS.numCols;
+                const w = Math.exp(-Math.abs(offspring.phenotype - grid[nr][nc].target) / PARAMS.reproductionVariance);
+                if (w > bestW + 1e-12) { bestW = w; best = [[nr, nc]]; }
+                else if (Math.abs(w - bestW) <= 1e-12) best.push([nr, nc]);
+            }
+            const [row, col] = best[Math.floor(Math.random() * best.length)];
+            grid[row][col].nextPopulation.push(offspring);
+            return;
+        }
+
+        if (Math.random() < moveChance) {
             // Define possible offsets for the Moore neighborhood (excluding the center cell)
             const neighborhoodOffsets = [
                 [-1, -1], [-1, 0], [-1, 1],
