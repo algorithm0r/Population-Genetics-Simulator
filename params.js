@@ -35,6 +35,7 @@ var PARAMS = {
     cuePeriod: 1,                // ticks between environmental cue samples; 0 = birth cue only (developmental registration, never re-sampled)
     adjustDelay: 0,              // ticks between a cue and the first adjustment consuming it
     birthCue: "post",            // "pre" = birth cue + one adjustment fire at construction, BEFORE first selection and birth migration; with cuePeriod 0 + linear model this is the pure Chevin/Lande developmental reaction norm
+    fitnessTiming: "lastTick",   // "lastTick" (original): each tick's reproduction test uses the phenotype adjusted LAST tick — a uniform 1-tick cue-to-selection delay whose degenerate case is the honest-newborn window. "currentTick": adjust fires before the test (delay-0; newborns are tested after their first adjustment)
     deathChancePerGeneration: 0.2,
     offspringMigrationChance: 0.0001,
     adultMigrationChance: 0.0001,

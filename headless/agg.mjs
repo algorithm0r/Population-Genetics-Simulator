@@ -30,6 +30,8 @@ const plasOf = r => {
     else if ((o.cuePeriod ?? 1) > 1) base += `C${o.cuePeriod}`;
     else if (o.birthCue === 'pre') base += 'pre';                                 // live cue but blind newborns
     if ((o.adjustDelay ?? 0) > 0) base += `D${o.adjustDelay}`;
+    if (o.fitnessTiming === 'currentTick') base += 'CT';                          // delay-0 fitness ordering
+    if (o.deathChancePerGeneration != null && o.deathChancePerGeneration !== 0.2) base += `dc${o.deathChancePerGeneration}`;  // lifespan axis
     return base;
 };
 // migration and spatial-world type are axes whenever non-default; folded into the

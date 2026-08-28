@@ -474,6 +474,89 @@ const EXPERIMENTS = {
             { id: 'tm3_birthPost_r160', meta: { plasticity: 'lin0.5B', rate: 160 }, config: { epoch: 30000, reportEvery: 250, overrides: { ...LIN05, cuePeriod: 0, birthCue: 'post' }, environmentPatterns: env(160) } },
         ];
     },
+    // Timing 2 — ordering-sensitivity suite for the "newborn bug" decision (2026-08-28,
+    // Chris: does testing newborns on raw genotype constitute an ordering bug, and what
+    // moves if we fix it?). fitnessTiming "currentTick" = adapt before the tick's
+    // reproduction test (uniform delay-0; newborns tested after first adjustment).
+    // REGISTERED PREDICTIONS:
+    //  P1 (step etaC bracket, rates 40-160): currentTick removes both the newborn TAX
+    //    (demographic cost) and most of the newborn SIGNAL (the one honest selection
+    //    event per lifetime, which F2 says is the binding constraint in shielded
+    //    populations). Signal loss should dominate: step0.5 etaC under currentTick
+    //    <= lastTick (shielding deepens or holds; shift <= one rate bin).
+    //  P2 (lin1 a6/T4): lastTick dies (F14c, intrinsic delay-1), currentTick SURVIVES
+    //    (delay-0 = truly instant compensation). Validates the delay interpretation.
+    //  P3 (labile lin0.5 r160): currentTick newborns are tested half-compensated —
+    //    the tax is halved; predict survival markedly improves vs lastTick's 12/12
+    //    (consistent with timing1c's live+pre 0/13).
+    //  P4 (spatial step r80 strip, both mechanisms): natal migration still assesses
+    //    the raw birth phenotype (honest information channel intact) while the
+    //    newborn'S first selection tax is softened — predict extinction below
+    //    lastTick's F10-style partial mortality.
+    timing2() {
+        const out = [];
+        const STEP = { ...BASE, adaptiveStepSize: 0.5 };
+        const one = (id, meta, overrides, temporal, epoch, reportEvery = 250) => out.push({
+            id, meta, config: { epoch, reportEvery, overrides, environmentPatterns: { spatial: { type: 'uniform', parameters: { baseEnvironment: 0 } }, temporal } },
+        });
+        for (const ft of ['lastTick', 'currentTick'])
+            for (const rate of [40, 60, 80, 120, 160])
+                one(`t2_step_${ft}_r${rate}`, { plasticity: ft === 'currentTick' ? '0.5CT' : 0.5, rate }, { ...STEP, fitnessTiming: ft }, { type: 'linear', parameters: { changeRate: rate } }, 50000);
+        for (const ft of ['lastTick', 'currentTick']) {
+            one(`t2_lin1_${ft}_a6T4`, { plasticity: ft === 'currentTick' ? 'lin1CT' : 'lin1', rate: 'a6/T4' }, { ...BASE, plasticityModel: 'linear', reactionNormSlope: 1, adaptiveStepSize: 0, fitnessTiming: ft }, { type: 'cycling', parameters: { cycleAmplitude: 6, cyclePeriod: 4 } }, 30000);
+            one(`t2_lin0.5_${ft}_r160`, { plasticity: ft === 'currentTick' ? 'lin0.5CT' : 'lin0.5', rate: 160 }, { ...BASE, plasticityModel: 'linear', reactionNormSlope: 0.5, adaptiveStepSize: 0, fitnessTiming: ft }, { type: 'linear', parameters: { changeRate: 160 } }, 30000);
+        }
+        const strip = { numRows: 1, numCols: 24, worldEdges: 'island', targetObservationalNoise: 0, sexualReproduction: false, offspringMigrationChance: 0.1, adultMigrationChance: 0.1, needMigrationScale: 0.4, fitTargetedMigration: true, adaptiveStepSize: 0.5 };
+        for (const ft of ['lastTick', 'currentTick'])
+            out.push({
+                id: `t2_sp_step_${ft}`, meta: { plasticity: ft === 'currentTick' ? '0.5CT' : 0.5, rate: 'r80both' },
+                config: {
+                    epoch: 50000, reportEvery: 500, overrides: { ...strip, fitnessTiming: ft },
+                    environmentPatterns: { spatial: { type: 'gradient', parameters: { gradientStrength: 2 } }, temporal: { type: 'linear', parameters: { changeRate: 80 } } },
+                },
+            });
+        return out;
+    },
+    // Lifespan 1 — Chris's lifespan sweep (2026-08-28, registered pre-run). Mean
+    // lifespan = 1/deathChance; the default 0.2 -> ~5 ticks -> ~5 adjustment events and
+    // reach = step x lifespan = 2.5. Lifespan confounds THREE axes: plastic reach,
+    // newborn turnover (the taxed/honest fraction per tick), and cue staleness
+    // (rate x lifespan). Two sub-sweeps decouple them:
+    //   (a) reach-VARYING: dc in {0.4, 0.2, 0.1, 0.05}, step 0.5 (reach 1.25 -> 10);
+    //   (b) reach-HELD: step co-varied {1.0, 0.5, 0.25, 0.125} so reach stays 2.5.
+    // REGISTERED PREDICTIONS:
+    //  L1 (a, trend): longer life deepens shielding (more complete compensation, fewer
+    //    honest newborns per tick) -> step0.5 extinction extends to LOWER rates as dc
+    //    falls (etaC decreases with lifespan).
+    //  L2 (a, cycle a16/T200, beyond baseline reach): cycle-buffer capacity grows with
+    //    reach -> dc 0.05 (reach 10) survives where dc 0.2 (reach 2.5) dies.
+    //  L3 (b, trend): if reach is the operative organism parameter, reach-held arms
+    //    behave near-identically across dc; residual differences isolate the
+    //    turnover-tax channel (weak prior: long life slightly safer, fewer taxed
+    //    newborns per tick).
+    //  L4 (p0 controls at r240/280): exploratory — fecundity selection acts per tick,
+    //    so bare-genetics etaC should be roughly lifespan-independent (weak prior).
+    lifespan1() {
+        const out = [];
+        const one = (id, meta, overrides, temporal) => out.push({
+            id, meta, config: { epoch: 50000, reportEvery: 250, overrides, environmentPatterns: { spatial: { type: 'uniform', parameters: { baseEnvironment: 0 } }, temporal } },
+        });
+        const trend = r => ({ type: 'linear', parameters: { changeRate: r } });
+        const cyc = { type: 'cycling', parameters: { cycleAmplitude: 16, cyclePeriod: 200 } };
+        const DCS = [0.4, 0.2, 0.1, 0.05];
+        for (const dc of DCS) {
+            const tag = dc === 0.2 ? '' : `dc${dc}`;
+            // (a) reach-varying
+            for (const r of [40, 80, 160]) one(`ls_a_dc${dc}_r${r}`, { plasticity: `0.5${tag}`, rate: r }, { ...BASE, adaptiveStepSize: 0.5, deathChancePerGeneration: dc }, trend(r));
+            one(`ls_a_dc${dc}_a16T200`, { plasticity: `0.5${tag}`, rate: 'a16/T200' }, { ...BASE, adaptiveStepSize: 0.5, deathChancePerGeneration: dc }, cyc);
+            // (b) reach-held at 2.5: step = 0.5 * (dc / 0.2)
+            const step = 0.5 * dc / 0.2;
+            for (const r of [40, 80]) one(`ls_b_dc${dc}_r${r}`, { plasticity: `${step}${tag}`, rate: r }, { ...BASE, adaptiveStepSize: step, deathChancePerGeneration: dc }, trend(r));
+            // p0 controls
+            for (const r of [240, 280]) one(`ls_p0_dc${dc}_r${r}`, { plasticity: `0${tag}`, rate: r }, { ...BASE, adaptiveStepSize: 0, deathChancePerGeneration: dc }, trend(r));
+        }
+        return out;
+    },
 };
 
 const name = process.argv[2];

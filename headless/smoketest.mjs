@@ -145,6 +145,14 @@ check('need-triggered migration: harmless on a single adapted cell', needOn.surv
         dInfDrift === 0 && d5Drift > 0, `drift inf=${dInfDrift} d5=${d5Drift.toFixed(4)}`);
 }
 
+// ── fitnessTiming ordering flag (2026-08-28) ──
+{
+    const explFT = await runOne({ seed: 42, epoch: 2000, reportEvery: 100, overrides: { ...SINGLE_CELL, adaptiveStepSize: 0.5, fitnessTiming: 'lastTick' }, environmentPatterns: STATIC_ENV });
+    check('fitnessTiming lastTick explicit === omitted (bit-identical)', JSON.stringify(explFT.series) === JSON.stringify(a.series));
+    const ct = await runOne({ seed: 42, epoch: 2000, reportEvery: 100, overrides: { ...SINGLE_CELL, adaptiveStepSize: 0.5, fitnessTiming: 'currentTick' }, environmentPatterns: STATIC_ENV });
+    check('fitnessTiming currentTick: static env runs and persists', ct.survived && JSON.stringify(ct.series) !== JSON.stringify(a.series), `N=${ct.series.at(-1).n}`);
+}
+
 // timing note for sweep sizing
 console.log(`\ntiming: 2000 gens single-cell ≈ ${a.wallMs} ms  (${(a.wallMs / 2000).toFixed(3)} ms/gen)`);
 process.exit(failures ? 1 : 0);

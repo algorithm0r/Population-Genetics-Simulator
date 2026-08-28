@@ -79,8 +79,12 @@ class Population {
     // Original reproduction logic moved to a separate method
     asexualReproduction(variance, maxOffspring, offspringPenalty) {
         this.currentPopulation.forEach(org => {
+            // fitnessTiming (2026-08-28): "lastTick" (original) tests on the phenotype
+            // adjusted last tick, then adapts; "currentTick" adapts first (delay-0 —
+            // newborns are tested after their first adjustment)
+            if (PARAMS.fitnessTiming === "currentTick") org.adapt(this.target);
             let distance = Math.abs(org.phenotype - this.target);
-            org.adapt(this.target);
+            if (PARAMS.fitnessTiming !== "currentTick") org.adapt(this.target);
             let expectedOffspring = Math.max(maxOffspring * Math.max(0, Math.pow(Math.E, -distance / variance)) - offspringPenalty, 0);
 
             const integerOffspring = Math.floor(expectedOffspring);
@@ -110,8 +114,9 @@ class Population {
     sexualReproduction(variance, maxOffspring, offspringPenalty) {
         // Calculate expected offspring for each organism
         const organismData = this.currentPopulation.map(org => {
+            if (PARAMS.fitnessTiming === "currentTick") org.adapt(this.target);
             let distance = Math.abs(org.phenotype - this.target);
-            org.adapt(this.target);
+            if (PARAMS.fitnessTiming !== "currentTick") org.adapt(this.target);
             let expectedOffspring = Math.max(maxOffspring * Math.max(0, Math.pow(Math.E, -distance / variance)) - offspringPenalty, 0);
 
             return {
