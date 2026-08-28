@@ -4,6 +4,39 @@ Backward-looking, append-only. Newest entry on top. Never edit past entries.
 
 <!-- append new entries below this line -->
 
+## 2026-08-28 (later) — F10: informed migration (Chris's "need + fit" question)
+
+**Done:** Implemented condition-dependent emigration (`needMigrationScale`) and matching
+habitat choice (`fitTargetedMigration`) in the sim core — flag-gated, browser defaults
+unchanged, smoke 10/10 (fit-targeting sorts a static gradient to |lag|≈0). Biology
+grounding + novelty check logged in LITERATURE.md (Bowler & Benton 2005, Clobert 2009,
+Edelaar 2008/2012; nearest model Am Nat 2021 — no plasticity/moving-optimum overlap).
+Batch `spatial3` (152 runs, 12 bins, 50k gens, predictions registered pre-launch):
+
+- **Complementarity headline:** on the gradient, need-only and fit-only both remain
+  100% extinct (delay only: TTE +30–40%); **both together = 0% extinct for bare
+  genetics, 35% under shielding** (from 100% random). Airtight factorial: need-only
+  carries both-arm's movement volume; fit-only carries its targeting. Jointly
+  necessary, singly useless.
+- **Mechanism: sorting machine, not caravan** — survivor centroids static, realizedResp
+  pinned to the required rate (0.0324/0.032; 0.0079/0.0080), varGeno ≈ 180 (steep
+  maintained clines). Informed placement keeps selection sharp; nothing migrates far.
+- **Shielding half-defeated as predicted:** newborns (honest assessors, phenotype =
+  genotype at birth) carry the rescue; blinded adults keep it partial and stochastic.
+- Prediction ledger: (1) fit-alone-rescues WRONG (volume matters equally);
+  (2) partial-newborn-carried rescue under plasticity RIGHT; (3) uniform controls
+  inert for genetics RIGHT, shielded uniform cells not interpretable (CIs overlap).
+
+**Changed:** population.js (informed migrate()), params.js (2 new flags),
+smoketest (+2 checks), agg (model + world columns), gen-settings (spatial3),
+FINDINGS F10, LITERATURE addendum.
+
+**State:** F1–F10 complete; ~2,550 seeded runs; all processes down; everything pushed.
+
+**Next:** the paper, with Jobran. F10 gives it a hopeful closing panel: information can
+substitute for genetic tracking — if it is both acted on (need) and aimed (fit) — and
+plasticity taxes even that, by falsifying the signal.
+
 ## 2026-08-28 — Full steam: DB fixed + deployed, F6–F9, the registered-hypothesis ledger closed
 
 **Done:** Jobran greenlit; Chris cleared pushing. DB endpoint fixed

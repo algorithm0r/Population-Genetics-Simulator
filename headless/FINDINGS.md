@@ -239,6 +239,47 @@ migration-arm numbers).
 Regenerate: `node gen-settings.mjs spatial2 settings/spatial2.json && node launch.mjs settings/spatial2.json spatial2`;
 table: `node agg.mjs results/spatial2.jsonl`.
 
+## F10 — Informed migration: need and fit are complementary — neither works alone, together they defeat the gradient and half-defeat shielding (2026-08-28)
+
+Batch `spatial3` (152 runs, 12 bins; need-triggered emigration and/or fit-targeted
+destination — condition-dependent dispersal + matching habitat choice, assessment on
+the current phenotype; 50k gens; random-dispersal baselines = F9).
+
+| gradient world | random (F9) | need only | fit only | **both** |
+|---|---|---|---|---|
+| genetics (p0, r320) | 1.00 | 1.00 (TTE 33.8k) | 1.00 (TTE 34.2k) | **0.00 — durable** |
+| shielded (p0.5, r80) | 1.00 | 1.00 (TTE 16.5k) | 1.00 (TTE 11.7k) | **0.35** |
+
+| uniform world | random (F9) | need only | fit only | both |
+|---|---|---|---|---|
+| genetics | 0.00 | 0.00 | 0.00 | 0.00 |
+| shielded | 0.42 | 0.57 | 0.20 | **0.00** (n=11) |
+
+- **Complementarity is the headline, and the factorial logic is airtight:** need-only
+  carries the same movement volume as both (same needScale) and dies; fit-only carries
+  the same targeting and dies (base volume 0.1 too low). Direction × volume, jointly
+  necessary. Single mechanisms do extend TTE ~30-40% — delay, not rescue.
+- **Mechanism (traces): informed migration is a sorting machine, not a caravan.**
+  Survivor centroids are static; realizedResp sits exactly at the required rate
+  (p0: 0.0324 vs 0.032; p0.5: 0.0079 vs 0.0080); survivor varGeno ≈ 180–187 — informed
+  placement keeps each lineage in its best cell, maintaining steep clines and sharp
+  selection. The escalator never runs; the sorting does.
+- **Shielding is half-defeated, as registered (prediction 2):** the shielded gradient
+  arm goes from certain death (F9) to 0.35 with informed migration — carried by
+  newborns, the only honest assessors (phenotype = genotype at birth) and the only
+  cohort selection fully sees. Adults are blinded (no need felt, no fit gradient
+  perceived), which is why rescue stays partial and stochastic.
+- Prediction 1 (fit-targeting alone rescues) was WRONG — volume matters as much as
+  direction. Prediction 3 (uniform controls inert) held for genetics; the shielded
+  uniform cells move with model but CIs overlap — not interpreted.
+- Biology framing: Bowler & Benton 2005 / Clobert 2009 (condition-dependent, informed
+  dispersal), Edelaar et al. 2008 / Edelaar & Bolnick 2012 (matching habitat choice —
+  whose mismatch-resolution triad IS MAAD's verb set); nearest model: Am Nat 2021
+  (habitat choice × rescue, patch-degradation setting, no plasticity/moving optimum).
+
+Regenerate: `node gen-settings.mjs spatial3 settings/spatial3.json && node launch.mjs settings/spatial3.json spatial3`;
+table: `node agg.mjs results/spatial3.jsonl`.
+
 **Registered-hypothesis ledger, all resolved:** F5 buffer-at-amp≤reach → wrong in detail,
 F6's version stronger. Load-analysis window (4,8) → partially right. F8 escalator via
 sorting → wrong (channel is demographic). F8 shielding-blocks-rescue → right in the

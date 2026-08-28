@@ -33,12 +33,18 @@ const worldOf = r => {
     const sp = r.cfg.environmentPatterns?.spatial;
     return sp && sp.type !== 'uniform' ? `_${sp.type}` : ((r.cfg.overrides?.numCols ?? 1) > 1 ? '_uniform' : '');
 };
-const key = r => `p${plasOf(r)}_r${rateOf(r)}${migOf(r)}${worldOf(r)}`;
+// informed-migration model tag (need / fit / both); empty = random dispersal
+const modelOf = r => {
+    const o = r.cfg.overrides ?? {};
+    const need = (o.needMigrationScale ?? 0) > 0, fit = !!o.fitTargetedMigration;
+    return need && fit ? '_both' : need ? '_need' : fit ? '_fit' : '';
+};
+const key = r => `p${plasOf(r)}_r${rateOf(r)}${migOf(r)}${modelOf(r)}${worldOf(r)}`;
 
 const bins = new Map();
 for (const r of runs) {
     const k = key(r);
-    if (!bins.has(k)) bins.set(k, { plasticity: plasOf(r), rate: rateOf(r), mig: r.cfg.overrides?.offspringMigrationChance ?? 0, world: worldOf(r).replace(/^_/, '') || '-', runs: [] });
+    if (!bins.has(k)) bins.set(k, { plasticity: plasOf(r), rate: rateOf(r), mig: r.cfg.overrides?.offspringMigrationChance ?? 0, model: modelOf(r).replace(/^_/, '') || 'random', world: worldOf(r).replace(/^_/, '') || '-', runs: [] });
     bins.get(k).runs.push(r);
 }
 
@@ -49,7 +55,7 @@ function wilson(x, n) {
     return { p, half: (z / d) * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) };
 }
 
-const rows = [['plasticity', 'rate', 'mig', 'world', 'n', 'extinct', 'pExtinct', 'ciHalf', 'meanTTE', 'sdTTE', 'meanFinalVarGeno_survivors', 'meanFinalLag_survivors']];
+const rows = [['plasticity', 'rate', 'mig', 'model', 'world', 'n', 'extinct', 'pExtinct', 'ciHalf', 'meanTTE', 'sdTTE', 'meanFinalVarGeno_survivors', 'meanFinalLag_survivors']];
 for (const b of [...bins.values()].sort((a, c) => a.plasticity - c.plasticity || a.rate - c.rate)) {
     const n = b.runs.length, ext = b.runs.filter(r => !r.survived);
     const { p, half } = wilson(ext.length, n);
@@ -59,7 +65,7 @@ for (const b of [...bins.values()].sort((a, c) => a.plasticity - c.plasticity ||
     const survFinals = b.runs.filter(r => r.survived).map(r => r.series.at(-1));
     const mVar = survFinals.length ? survFinals.reduce((a, s) => a + s.varGeno, 0) / survFinals.length : null;
     const mLag = survFinals.length ? survFinals.reduce((a, s) => a + s.genoLag, 0) / survFinals.length : null;
-    rows.push([b.plasticity, b.rate, b.mig, b.world, n, ext.length, p?.toFixed(3), half?.toFixed(3), mTTE ? Math.round(mTTE) : '', sdTTE ? Math.round(sdTTE) : '', mVar?.toFixed(4) ?? '', mLag?.toFixed(3) ?? '']);
+    rows.push([b.plasticity, b.rate, b.mig, b.model, b.world, n, ext.length, p?.toFixed(3), half?.toFixed(3), mTTE ? Math.round(mTTE) : '', sdTTE ? Math.round(sdTTE) : '', mVar?.toFixed(4) ?? '', mLag?.toFixed(3) ?? '']);
 }
 fs.writeFileSync(PREFIX + '_bins.csv', rows.map(r => r.join(',')).join('\n'));
 console.log(rows.map(r => r.map(String).map(s => s.padEnd(10)).join(' ')).join('\n'));
@@ -68,7 +74,7 @@ console.log(rows.map(r => r.map(String).map(s => s.padEnd(10)).join(' ')).join('
 // realizedResp = Δ meanGeno per generation between report ticks — the honest measurement
 // of genetic response (the fecundity-only selDiff estimator under-measures by ~2×
 // because it omits survival selection; see FINDINGS F2 caveat, closed 2026-08-28).
-const t = [['plasticity', 'rate', 'mig', 'world', 'gen', 'nReps', 'meanN', 'meanVarGeno', 'meanGenoLag', 'meanPhenoLag', 'meanSelDiff', 'realizedResp', 'meanCentroidCol']];
+const t = [['plasticity', 'rate', 'mig', 'model', 'world', 'gen', 'nReps', 'meanN', 'meanVarGeno', 'meanGenoLag', 'meanPhenoLag', 'meanSelDiff', 'realizedResp', 'meanCentroidCol']];
 for (const b of [...bins.values()].sort((a, c) => a.plasticity - c.plasticity || String(a.rate).localeCompare(String(c.rate), undefined, { numeric: true }))) {
     const byGen = new Map();
     for (const r of b.runs) for (const s of r.series) {
@@ -83,7 +89,7 @@ for (const b of [...bins.values()].sort((a, c) => a.plasticity - c.plasticity ||
         const mg = m('meanGeno');
         const resp = prev ? ((mg - prev.mg) / (gen - prev.gen)).toFixed(5) : '';
         const cc = live[0].centroidCol != null ? m('centroidCol').toFixed(2) : '';
-        t.push([b.plasticity, b.rate, b.mig, b.world, gen, live.length, Math.round(m('n')), m('varGeno').toFixed(4), m('genoLag').toFixed(3), m('phenoLag').toFixed(3), m('selDiffGeno').toFixed(5), resp, cc]);
+        t.push([b.plasticity, b.rate, b.mig, b.model, b.world, gen, live.length, Math.round(m('n')), m('varGeno').toFixed(4), m('genoLag').toFixed(3), m('phenoLag').toFixed(3), m('selDiffGeno').toFixed(5), resp, cc]);
         prev = { gen, mg };
     }
 }
