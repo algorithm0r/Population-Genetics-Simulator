@@ -3,7 +3,7 @@
 // trajectory, (3) different seed → different trajectory, (4) population persists
 // under static environment, (5) absurdly fast change → extinction,
 // (6) adaptiveStepSize 0 keeps phenotype === genotype (plasticity truly off).
-import { loadSim, runOne } from './runner.mjs';
+import { loadSim, runOne, mulberry32 } from './runner.mjs';
 
 const SINGLE_CELL = {
     numRows: 1, numCols: 1,
@@ -85,6 +85,29 @@ const needOff = await runOne({ seed: 22, epoch: 500, reportEvery: 100, overrides
 const needOn = await runOne({ seed: 22, epoch: 500, reportEvery: 100, overrides: { ...SINGLE_CELL, adaptiveStepSize: 0, needMigrationScale: 0.5 }, environmentPatterns: STATIC_ENV });
 check('need-triggered migration: harmless on a single adapted cell', needOn.survived && needOff.survived,
     `N on=${needOn.series.at(-1).n} off=${needOff.series.at(-1).n}`);
+
+// realistic-environment generators (composite / plateau / rednoise), tested directly
+{
+    const comp = globalThis.createPattern('composite', { changeRate: 100, cycleAmplitude: 6, cyclePeriod: 500 });
+    const expected = t => t * 100 / 10000 + Math.sin(2 * Math.PI * t / 500) * 6;
+    const compOK = [0, 125, 1000, 12345].every(t => Math.abs(comp.getValue({ row: 0, col: 0 }, t) - expected(t)) < 1e-9);
+    check('composite = linear + cycle at sample generations', compOK);
+
+    const plat = globalThis.createPattern('plateau', { changeRate: 160, plateauAt: 10 });
+    check('plateau ramps then caps', Math.abs(plat.getValue({}, 100) - 1.6) < 1e-9 && plat.getValue({}, 5000) === 10 && plat.getValue({}, 50000) === 10);
+
+    Math.random = mulberry32(99);
+    const rn1 = globalThis.createPattern('rednoise', { autocorrelation: 0.99, stationarySD: 5 });
+    const vals1 = []; for (let t = 0; t < 20000; t++) vals1.push(rn1.getValue({}, t));
+    Math.random = mulberry32(99);
+    const rn2 = globalThis.createPattern('rednoise', { autocorrelation: 0.99, stationarySD: 5 });
+    const vals2 = []; for (let t = 0; t < 20000; t++) vals2.push(rn2.getValue({}, t));
+    const mean99 = vals1.reduce((a, b) => a + b, 0) / vals1.length;
+    const sd99 = Math.sqrt(vals1.reduce((a, v) => a + (v - mean99) ** 2, 0) / vals1.length);
+    check('rednoise deterministic under seed', vals1.every((v, i) => v === vals2[i]));
+    check('rednoise stationary SD near target (5)', sd99 > 3 && sd99 < 7, `empirical SD=${sd99.toFixed(2)}`);
+    check('rednoise same value across cells at same generation', rn1.getValue({ row: 0, col: 0 }, 777) === rn1.getValue({ row: 5, col: 3 }, 777));
+}
 
 // timing note for sweep sizing
 console.log(`\ntiming: 2000 gens single-cell ≈ ${a.wallMs} ms  (${(a.wallMs / 2000).toFixed(3)} ms/gen)`);

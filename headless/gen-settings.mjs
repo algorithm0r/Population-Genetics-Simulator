@@ -175,6 +175,99 @@ const EXPERIMENTS = {
             config: { epoch: 50000, reportEvery: 500, overrides: { ...strip }, environmentPatterns: world(kind) },
         }));
     },
+    // ══════════ Realistic-environment suite (Chris, 2026-08-28) ══════════
+    // Composite 1 — cycle riding a trend (the climate-change shape).
+    // REGISTERED PREDICTIONS: (i) the plastic arm's trend tolerance under a cycle it
+    // handles ≈ its pure-trend eta_c (~40-60) — the cycle is absorbed within reach and
+    // is roughly orthogonal; (ii) bare genetics in the a6/T500 rescue-regime cycle stays
+    // dead at every trend; (iii) applied headline: a cycle that plasticity fully
+    // buffers CONCEALS trend vulnerability — the buffered population dies at modest
+    // underlying trends that look survivable from its cycle performance.
+    composite1() {
+        const out = [];
+        for (const cyc of [{ a: 2, T: 500 }, { a: 6, T: 500 }])
+            for (const trend of [0, 40, 80, 160, 240])
+                for (const p of [0, 0.5])
+                    out.push({
+                        id: `cmp1_p${p}_a${cyc.a}T${cyc.T}_tr${trend}`,
+                        meta: { plasticity: p, rate: `a${cyc.a}T${cyc.T}+tr${trend}` },
+                        config: {
+                            epoch: 30000, reportEvery: 250,
+                            overrides: { numRows: 1, numCols: 1, offspringMigrationChance: 0, adultMigrationChance: 0, targetObservationalNoise: 0, sexualReproduction: false, adaptiveStepSize: p },
+                            environmentPatterns: { spatial: { type: 'uniform', parameters: { baseEnvironment: 0 } }, temporal: { type: 'composite', parameters: { changeRate: trend, cycleAmplitude: cyc.a, cyclePeriod: cyc.T } } },
+                        },
+                    });
+        return out;
+    },
+    // Plateau 1 — finite trends (ramp to a total excursion, then hold).
+    // REGISTERED PREDICTIONS: (i) for PLASTIC populations survival is governed by total
+    // excursion (vs plastic reach + slow newborn-mediated catch-up), nearly
+    // rate-independent; (ii) for GENETIC populations survival is governed by rate
+    // (< eta_c tracks any excursion; > eta_c survives only excursions short enough to
+    // outlive the transient). If both hold: "finite change: excursion kills the
+    // plastic, rate kills the genetic" — the applied asymmetry.
+    plateau1() {
+        const out = [];
+        for (const rate of [160, 320, 640])
+            for (const cap of [5, 10, 20, 40])
+                for (const p of [0, 0.5])
+                    out.push({
+                        id: `plt1_p${p}_r${rate}_cap${cap}`,
+                        meta: { plasticity: p, rate: `r${rate}cap${cap}` },
+                        config: {
+                            epoch: 30000, reportEvery: 250,
+                            overrides: { numRows: 1, numCols: 1, offspringMigrationChance: 0, adultMigrationChance: 0, targetObservationalNoise: 0, sexualReproduction: false, adaptiveStepSize: p },
+                            environmentPatterns: { spatial: { type: 'uniform', parameters: { baseEnvironment: 0 } }, temporal: { type: 'plateau', parameters: { changeRate: rate, plateauAt: cap } } },
+                        },
+                    });
+        return out;
+    },
+    // Rednoise 1 — autocorrelated stochastic environments (the predictability axis of
+    // Botero/Tufto/Leung). REGISTERED PREDICTIONS: (i) plasticity buffers red noise
+    // broadly (mean-reverting ≈ cycle-like — the F6 regime); (ii) bare genetics fails
+    // at high SD × high phi (slow large excursions = transient trends); (iii) the sign
+    // of plasticity's effect flips along the phi axis somewhere — connecting F6's
+    // return-structure rule to the predictability literature.
+    rednoise1() {
+        const out = [];
+        for (const phi of [0.9, 0.99, 0.999])
+            for (const sd of [2, 5, 10])
+                for (const p of [0, 0.5])
+                    out.push({
+                        id: `rn1_p${p}_phi${phi}_sd${sd}`,
+                        meta: { plasticity: p, rate: `phi${phi}sd${sd}` },
+                        config: {
+                            epoch: 30000, reportEvery: 250,
+                            overrides: { numRows: 1, numCols: 1, offspringMigrationChance: 0, adultMigrationChance: 0, targetObservationalNoise: 0, sexualReproduction: false, adaptiveStepSize: p },
+                            environmentPatterns: { spatial: { type: 'uniform', parameters: { baseEnvironment: 0 } }, temporal: { type: 'rednoise', parameters: { autocorrelation: phi, stationarySD: sd } } },
+                        },
+                    });
+        return out;
+    },
+    // Spatial-composite 1 — does the informed-migration sorting machine (F10/F11) hold
+    // under the climate shape? Shielded arm only; phenotype vs genotype assessment.
+    // REGISTERED PREDICTION: genotype-assessment arms track the composite as they
+    // tracked the pure trend; phenotype-assessment arms lose the trend component while
+    // buffering the cycle (blindfold effect persists under realistic environments).
+    spatialcomp1() {
+        const strip = { numRows: 1, numCols: 24, worldEdges: 'island', targetObservationalNoise: 0, sexualReproduction: false, offspringMigrationChance: 0.1, adultMigrationChance: 0.1, needMigrationScale: 0.4, fitTargetedMigration: true, adaptiveStepSize: 0.5 };
+        const out = [];
+        for (const assess of ['phenotype', 'genotype'])
+            for (const kind of ['gradient', 'uniform'])
+                out.push({
+                    id: `spc1_p0.5_both_${assess === 'genotype' ? 'G' : 'P'}_${kind}`,
+                    meta: { plasticity: 0.5, rate: `a6T500tr80both${assess[0]}${kind[0]}` },
+                    config: {
+                        epoch: 50000, reportEvery: 500,
+                        overrides: { ...strip, migrationAssessment: assess },
+                        environmentPatterns: {
+                            spatial: kind === 'gradient' ? { type: 'gradient', parameters: { gradientStrength: 2 } } : { type: 'uniform', parameters: { baseEnvironment: 0 } },
+                            temporal: { type: 'composite', parameters: { changeRate: 80, cycleAmplitude: 6, cyclePeriod: 500 } },
+                        },
+                    },
+                });
+        return out;
+    },
     // Spatial FEASIBILITY probe (not the Phase 3 factorial — that design belongs with
     // Jobran). 4×4 torus, spatial gradient 5 (targets −15..+15 across the diagonal),
     // uniform linear trend → range-shift geometry (an organism's matching cell walks
