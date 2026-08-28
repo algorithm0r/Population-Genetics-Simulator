@@ -16,6 +16,9 @@ const runs = fs.readFileSync(IN, 'utf8').split('\n').filter(l => l.trim()).map(l
 const rateOf = r => {
     const t = r.cfg.environmentPatterns?.temporal;
     if (t?.type === 'cycling') return `a${t.parameters.cycleAmplitude}T${t.parameters.cyclePeriod}`;
+    if (t?.type === 'composite') return `a${t.parameters.cycleAmplitude}T${t.parameters.cyclePeriod}+tr${t.parameters.changeRate}`;
+    if (t?.type === 'plateau') return `r${t.parameters.changeRate}cap${t.parameters.plateauAt}`;
+    if (t?.type === 'rednoise') return `phi${t.parameters.autocorrelation}sd${t.parameters.stationarySD}`;
     return t?.parameters?.changeRate ?? 0;
 };
 const plasOf = r => {

@@ -304,6 +304,46 @@ consume — and restoring the signal by any honest channel restores persistence.
 Regenerate: `node gen-settings.mjs spatial4 settings/spatial4.json && node launch.mjs settings/spatial4.json spatial4`;
 table: `node agg.mjs results/spatial4.jsonl`.
 
+## F12 — Realistic environments: composite worlds are worse than their parts for plastic populations; excursion kills the plastic, rate kills the genetic; noise favors plasticity (2026-08-28)
+
+Batch `realistic1` (835 runs, 62 bins, three registered-prediction suites; single-cell, 30k gens).
+
+**Composite (cycle + trend) — prediction (i) REFUTED, and the refutation is the applied
+headline.** The cycle is NOT orthogonal: it actively lowers the shielded population's
+trend tolerance. Pure trend 40 is stably survivable for p0.5 (lag −0.5 constant,
+200k-gen confirmed); add an amplitude-2 cycle it handles trivially in isolation and the
+same population dies (12/12, TTE ~7,750; lag −1.8 → −5.1, response just under required
+— measured). Every composite cell with any trend killed the plastic arm. Genetics
+degrades mildly and additively (a2 tolerance ~160–240 vs pure 273); a6 stays lethal to
+genetics as in F6. **Framing for the paper: "a cycle the population buffers perfectly
+still drains the reach budget the trend needs — seasonal competence conceals trend
+fragility, and the composite (climate-change-shaped) world is worse than the sum of
+its parts for plastic populations."** The concealment is double: the cycle hides the
+trend's damage, and F2's shielding hides the mismatch — the population looks healthy
+by phenotype and by season until recruitment fails.
+
+**Plateau (finite trends) — both registered predictions CONFIRMED, a clean double
+dissociation.** Plastic survival is governed by total excursion (threshold between 10
+and 20, nearly rate-independent: survives cap ≤10 even at rate 640); genetic survival
+by rate (rate 160 < ηc survives every cap; supercritical rates survive only excursions
+short enough to outlive the transient). The two dissociating cells: **rate 640/cap 10 —
+genetics dead, plastic alive; rate 160/cap ≥20 — genetics alive, plastic dead.**
+"Excursion kills the plastic, rate kills the genetic." (Plastic survival at cap 10 > reach
+2.5 shows slow post-plateau genetic catch-up through newborn selection — the plateau
+grants unlimited time.) This is the policy-facing panel: fast-but-bounded change favors
+plasticity; slow-but-unbounded change favors genetics.
+
+**Red noise (AR(1)) — plasticity ≥ genetics everywhere tested,** consistent with the
+return-structure rule (noise reverts): plasticity extends the survivable envelope from
+SD 2 to ~SD 5 at fast reversion (φ0.9/sd5: genetics 12/12 dead, plastic 3/23) and never
+underperforms. Genetics shows the effective-rate logic mid-φ (φ0.99/sd2: 44% dead with
+TTE 15k — slow excursions acting as transient trends near ηc; faster or slower φ both
+survivable). No harm regime for plasticity in pure noise — the harm requires
+non-reverting change, sharpening F6.
+
+Regenerate: `node gen-settings.mjs composite1|plateau1|rednoise1 ...` (merged as
+`settings/realistic1.json`); table: `node agg.mjs results/realistic1.jsonl`.
+
 **Registered-hypothesis ledger, all resolved:** F5 buffer-at-amp≤reach → wrong in detail,
 F6's version stronger. Load-analysis window (4,8) → partially right. F8 escalator via
 sorting → wrong (channel is demographic). F8 shielding-blocks-rescue → right in the
