@@ -462,6 +462,48 @@ timing level.
 Regenerate: `node gen-settings.mjs timing1|timing1b|timing1c settings/<b>.json` + coordinator/workers;
 tables: `node agg.mjs results/timing1.jsonl` (+1b, 1c).
 
+## F15 — The ordering decision: paper-1's step results are ordering-robust; the delay-1 and the newborn tax are causally confirmed; either burden's removal rescues the spatial arm (2026-08-28)
+
+Batch `timing2` (206 runs, 16 bins; registered pre-run). Context: Chris asked whether
+testing newborns on raw genotype is an ordering bug. The rule is uniform — fitness each
+tick uses the phenotype adjusted LAST tick — so the honest-newborn window and F14's
+intrinsic delay-1 are the same architectural fact. New flag `fitnessTiming:
+"currentTick"` adapts before the test (uniform delay-0; newborns tested after their
+first adjustment). All four registered predictions CONFIRMED:
+
+- **P1 — paper-1's headline is ordering-robust.** Step-0.5 ηc is identical under both
+  orderings at every rate (survive r40; die r60–r160 with near-equal TTEs: 2250/2375
+  @r80, 1375/1375 @r120, 1000/1021 @r160). At the r60 threshold currentTick dies
+  *faster* (TTE 4250 vs 5896) — blanketing newborns removes honest signal along with
+  the tax, and in shielded populations signal is the binding constraint (F2). The
+  shielding result does not depend on the ordering choice; if anything the "fix"
+  deepens it.
+- **P2 — the intrinsic delay-1, causally.** lin1 at a6/T4: lastTick 12/12 dead (TTE
+  1125), currentTick 0/12. One tick of cue-to-selection latency is the entire
+  difference between lethal and trivial.
+- **P3 — the labile trap is ordering-sensitive at the knife edge.** lin0.5 at r160:
+  lastTick 12/12 dead (TTE 5333), currentTick 0/12 (lag −0.374 stable). Halving the
+  newborn's first-test mismatch is enough to restore the stability margin —
+  consistent with timing1c's tax mechanism.
+- **P4 — spatial: the two burdens are jointly necessary, singly removable.** Step-0.5
+  strip, r80, both informed mechanisms, phenotype assessment: lastTick 5/21 extinct
+  (24%, replicating F10's 35% within CI), currentTick **0/17** (varGeno 191, lag
+  −0.18). Note the triangulation: F11 removed the *blindfold* (genotype assessment,
+  tax kept) → 0%; F15 removes the *newborn tax* (ordering fix, blindfold kept) → 0%.
+  F10's residual shielded mortality required BOTH burdens — blind adult assessment
+  and taxed honest newborns — and removing either one fully rescues.
+
+**Ordering recommendation for the papers (decision Chris + Jobran):** the step-model
+core (F1–F9) is ordering-invariant, so paper 1 can keep the original lastTick ordering
+with this table as the robustness appendix. The results that DO move with ordering are
+exactly the timing-sensitive ones (fast cycles, labile knife-edges, the spatial
+residual) — which is paper 2's subject matter, where `fitnessTiming` is an axis, not a
+nuisance. currentTick is the ordering that "contains Chevin" most faithfully
+(developed phenotype tested from the first event).
+
+Regenerate: `node gen-settings.mjs timing2 settings/timing2.json` + coordinator/workers;
+table: `node agg.mjs results/timing2.jsonl`.
+
 **Registered-hypothesis ledger, all resolved:** F5 buffer-at-amp≤reach → wrong in detail,
 F6's version stronger. Load-analysis window (4,8) → partially right. F8 escalator via
 sorting → wrong (channel is demographic). F8 shielding-blocks-rescue → right in the
@@ -472,5 +514,7 @@ wrong at the rates that matter (the trap is labile; newborn tax dominant, regist
 secondary); F14 staleness-under-cycles → right for step, wrong on magnitude for
 instant norms; F14 anti-phase → right that latency kills, wrong about where (window
 structure, not average load; aliasing non-monotonic); F14 spatial pre/post → wrong
-(half-sighted adults suffice; argmax choice is monotone-invariant). Every prediction
+(half-sighted adults suffice; argmax choice is monotone-invariant). F15 all four
+ordering predictions → right (step core ordering-robust; delay-1 causal; tax causal;
+either burden's removal rescues the spatial arm). Every prediction
 was registered before its data; every revision is in this file.
