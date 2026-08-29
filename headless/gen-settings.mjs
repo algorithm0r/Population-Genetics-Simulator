@@ -627,6 +627,34 @@ const EXPERIMENTS = {
         for (const r of [3200, 4000]) one(`d3_chev1_r${r}`, { plasticity: 'lin1Bpre', rate: r }, CHEV(1), r);
         return out;
     },
+    // Dose 4 — the cliff faces (2026-08-29, registered pre-run). dose3 REFUTED the
+    // interior-minima prediction: labile declines monotonically through b=0.95
+    // (etaC ~70 at 0.9, <60 at 0.95) and developmental is still in the valley at 0.9
+    // (dies at 150) while exploding to ~4,000 at exactly 1 (3200 alive 0/20, 4000
+    // dies). Mechanism argument: for ANY b<1 the phenotype keeps the coupling term
+    // (1−b)(g−ε), whose lag grows without bound under a trend — the escape at b=1
+    // exists only because coupling is exactly zero and the load reduces to bounded
+    // within-lifetime staleness.
+    // REGISTERED PREDICTIONS:
+    //  G1: labile decline is monotone to the end — lab0.99 etaC ≤ lab0.95's (~50);
+    //      the labile escape is a true discontinuity at exactly b=1.
+    //  G2: the developmental escape is ALSO discontinuous at b=1 — chev0.99 etaC
+    //      lands far below chev1's ~4,000 (predict < 600), because 1% residual
+    //      coupling with 1%-strength selection still accumulates unbounded lag.
+    //  G3: chev0.9's surviving edge lands in 60–140 (completing its bracket).
+    dose4() {
+        const out = [];
+        const one = (id, meta, overrides, rate) => out.push({
+            id, meta, config: { epoch: 50000, reportEvery: 250, overrides, environmentPatterns: env(rate) },
+        });
+        const LAB = b => ({ ...BASE, plasticityModel: 'linear', reactionNormSlope: b, adaptiveStepSize: 0 });
+        const CHEV = b => ({ ...LAB(b), cuePeriod: 0, birthCue: 'pre' });
+        for (const r of [30, 45]) one(`d4_lab0.95_r${r}`, { plasticity: 'lin0.95', rate: r }, LAB(0.95), r);
+        for (const r of [20, 40, 80, 160]) one(`d4_lab0.99_r${r}`, { plasticity: 'lin0.99', rate: r }, LAB(0.99), r);
+        for (const r of [60, 100, 140]) one(`d4_chev0.9_r${r}`, { plasticity: 'lin0.9Bpre', rate: r }, CHEV(0.9), r);
+        for (const r of [150, 300, 600, 1200]) one(`d4_chev0.99_r${r}`, { plasticity: 'lin0.99Bpre', rate: r }, CHEV(0.99), r);
+        return out;
+    },
 };
 
 const name = process.argv[2];
