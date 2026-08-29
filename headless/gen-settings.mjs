@@ -598,6 +598,35 @@ const EXPERIMENTS = {
         for (const r of [25, 30, 35]) one(`d2_step1_r${r}`, { plasticity: 1, rate: r }, STEP(1), r);
         return out;
     },
+    // Dose 3 — pin the upturns (2026-08-29, registered pre-run). dose2 found both
+    // etaC(b) curves are VALLEYS, not dives: labile follows ~(1-b)·270 through b=0.75
+    // (200/150/~95 measured vs 202/135/67 predicted) but lin0.9 survives 60+
+    // (predicted 27) — the dive flattens/turns, plausibly because weak selection lets
+    // variance accumulate (lin0.9 varGeno 0.04–0.07 vs lin0.25's 0.026), offsetting
+    // signal loss. Developmental declines 273→245→190→120 through b=0.75 then
+    // EXPLODES: chev1 survives 300–2400 with the genotype frozen (lag −12,000 at
+    // r2400 — persistence with zero evolution) and dies at 4800.
+    // REGISTERED PREDICTIONS:
+    //  E1: both curves have interior minima; the developmental minimum sits near
+    //      b≈0.75–0.85 with the upturn steeper and earlier than the labile one,
+    //      whose minimum sits near b≈0.9–0.95 (deeper valley, later recovery).
+    //  E2: chev0.9 lands between chev0.75 (~120) and chev1 (~4000), well above 273
+    //      by b=0.9 (the upturn crosses bare genetics between 0.75 and 0.9).
+    //  E3: chev1 bracket pins near ~3,000–4,000 (staleness-load limit ≈ tolerable
+    //      mismatch / mean age).
+    dose3() {
+        const out = [];
+        const one = (id, meta, overrides, rate) => out.push({
+            id, meta, config: { epoch: 50000, reportEvery: 250, overrides, environmentPatterns: env(rate) },
+        });
+        const LAB = b => ({ ...BASE, plasticityModel: 'linear', reactionNormSlope: b, adaptiveStepSize: 0 });
+        const CHEV = b => ({ ...LAB(b), cuePeriod: 0, birthCue: 'pre' });
+        for (const r of [80, 100, 140, 180]) one(`d3_lab0.9_r${r}`, { plasticity: 'lin0.9', rate: r }, LAB(0.9), r);
+        for (const r of [60, 100, 160, 220]) one(`d3_lab0.95_r${r}`, { plasticity: 'lin0.95', rate: r }, LAB(0.95), r);
+        for (const r of [150, 300, 600, 1200]) one(`d3_chev0.9_r${r}`, { plasticity: 'lin0.9Bpre', rate: r }, CHEV(0.9), r);
+        for (const r of [3200, 4000]) one(`d3_chev1_r${r}`, { plasticity: 'lin1Bpre', rate: r }, CHEV(1), r);
+        return out;
+    },
 };
 
 const name = process.argv[2];

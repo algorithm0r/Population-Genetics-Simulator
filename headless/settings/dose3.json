@@ -1,0 +1,518 @@
+[
+ {
+  "id": "d3_lab0.9_r80",
+  "meta": {
+   "plasticity": "lin0.9",
+   "rate": 80
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.9,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 80
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "d3_lab0.9_r100",
+  "meta": {
+   "plasticity": "lin0.9",
+   "rate": 100
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.9,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 100
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "d3_lab0.9_r140",
+  "meta": {
+   "plasticity": "lin0.9",
+   "rate": 140
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.9,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 140
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "d3_lab0.9_r180",
+  "meta": {
+   "plasticity": "lin0.9",
+   "rate": 180
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.9,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 180
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "d3_lab0.95_r60",
+  "meta": {
+   "plasticity": "lin0.95",
+   "rate": 60
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.95,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 60
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "d3_lab0.95_r100",
+  "meta": {
+   "plasticity": "lin0.95",
+   "rate": 100
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.95,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 100
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "d3_lab0.95_r160",
+  "meta": {
+   "plasticity": "lin0.95",
+   "rate": 160
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.95,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 160
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "d3_lab0.95_r220",
+  "meta": {
+   "plasticity": "lin0.95",
+   "rate": 220
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.95,
+    "adaptiveStepSize": 0
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 220
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "d3_chev0.9_r150",
+  "meta": {
+   "plasticity": "lin0.9Bpre",
+   "rate": 150
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.9,
+    "adaptiveStepSize": 0,
+    "cuePeriod": 0,
+    "birthCue": "pre"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 150
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "d3_chev0.9_r300",
+  "meta": {
+   "plasticity": "lin0.9Bpre",
+   "rate": 300
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.9,
+    "adaptiveStepSize": 0,
+    "cuePeriod": 0,
+    "birthCue": "pre"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 300
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "d3_chev0.9_r600",
+  "meta": {
+   "plasticity": "lin0.9Bpre",
+   "rate": 600
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.9,
+    "adaptiveStepSize": 0,
+    "cuePeriod": 0,
+    "birthCue": "pre"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 600
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "d3_chev0.9_r1200",
+  "meta": {
+   "plasticity": "lin0.9Bpre",
+   "rate": 1200
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 0.9,
+    "adaptiveStepSize": 0,
+    "cuePeriod": 0,
+    "birthCue": "pre"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 1200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "d3_chev1_r3200",
+  "meta": {
+   "plasticity": "lin1Bpre",
+   "rate": 3200
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 1,
+    "adaptiveStepSize": 0,
+    "cuePeriod": 0,
+    "birthCue": "pre"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 3200
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "d3_chev1_r4000",
+  "meta": {
+   "plasticity": "lin1Bpre",
+   "rate": 4000
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 250,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 1,
+    "offspringMigrationChance": 0,
+    "adultMigrationChance": 0,
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "plasticityModel": "linear",
+    "reactionNormSlope": 1,
+    "adaptiveStepSize": 0,
+    "cuePeriod": 0,
+    "birthCue": "pre"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "linear",
+     "parameters": {
+      "changeRate": 4000
+     }
+    }
+   }
+  }
+ }
+]
