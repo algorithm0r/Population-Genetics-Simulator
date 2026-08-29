@@ -557,6 +557,47 @@ const EXPERIMENTS = {
         }
         return out;
     },
+    // Dose 2 — fill panel (b) of paper Fig 2: etaC vs compensation strength for the
+    // three organism designs, with fine rate grids around every transition (bracket
+    // width = grid resolution, so tighter bars need finer bins, not just more reps).
+    // REGISTERED PREDICTIONS (2026-08-29, pre-run):
+    //  D1 (labile linear): etaC(b) ≈ (1−b)·etaC(0) ≈ 270(1−b) — the residual signal
+    //    fraction sets the survivable rate. Support in hand: lin0.5 bracket midpoint
+    //    ≈130 ≈ 0.5·270. Prediction: the labile curve DIVES toward 0 as b→1
+    //    (lin0.75 ≈ 67, lin0.9 ≈ 27) with a discontinuous jump to "no etaC" at
+    //    exactly b=1 — the closer to perfect compensation, the more fragile, until
+    //    exactly perfect.
+    //  D2 (developmental/Chevin): lies ABOVE the labile curve at every b<1 (the
+    //    timing rescue) and is U-SHAPED: 273 at b=0, minimum at intermediate b
+    //    (chev0.5 bracket 160–240), rising ABOVE bare genetics as b→1 — chev1 should
+    //    survive rates in the thousands (persistence without evolution: mismatch =
+    //    staleness ≈ rate × age; tolerable up to roughly rate ~ 2·10⁴/lifespan ≈ 4000).
+    //  D3 (step refinements): monotonic decline confirmed with tighter brackets.
+    dose2() {
+        const out = [];
+        const one = (id, meta, overrides, rate) => out.push({
+            id, meta, config: { epoch: 50000, reportEvery: 250, overrides, environmentPatterns: env(rate) },
+        });
+        const LAB = b => ({ ...BASE, plasticityModel: 'linear', reactionNormSlope: b, adaptiveStepSize: 0 });
+        const CHEV = b => ({ ...LAB(b), cuePeriod: 0, birthCue: 'pre' });
+        const STEP = s => ({ ...BASE, adaptiveStepSize: s });
+        // labile linear: new slopes + riser refinements
+        for (const r of [180, 200, 220, 240]) one(`d2_lab0.25_r${r}`, { plasticity: 'lin0.25', rate: r }, LAB(0.25), r);
+        for (const r of [120, 140]) one(`d2_lab0.5_r${r}`, { plasticity: 'lin0.5', rate: r }, LAB(0.5), r);
+        for (const r of [40, 60, 80, 100]) one(`d2_lab0.75_r${r}`, { plasticity: 'lin0.75', rate: r }, LAB(0.75), r);
+        for (const r of [10, 20, 30, 40, 60]) one(`d2_lab0.9_r${r}`, { plasticity: 'lin0.9', rate: r }, LAB(0.9), r);
+        // developmental: new slopes + chev0.5 refinement + chev1 high-rate hunt
+        for (const r of [200, 220, 240, 260, 280]) one(`d2_chev0.25_r${r}`, { plasticity: 'lin0.25Bpre', rate: r }, CHEV(0.25), r);
+        for (const r of [180, 200, 220]) one(`d2_chev0.5_r${r}`, { plasticity: 'lin0.5Bpre', rate: r }, CHEV(0.5), r);
+        for (const r of [100, 140, 160, 180, 200]) one(`d2_chev0.75_r${r}`, { plasticity: 'lin0.75Bpre', rate: r }, CHEV(0.75), r);
+        for (const r of [300, 600, 1200, 2400, 4800]) one(`d2_chev1_r${r}`, { plasticity: 'lin1Bpre', rate: r }, CHEV(1), r);
+        // step-dose bracket refinements
+        for (const r of [45, 50, 55]) one(`d2_step0.5_r${r}`, { plasticity: 0.5, rate: r }, STEP(0.5), r);
+        for (const r of [110, 120, 130]) one(`d2_step0.1_r${r}`, { plasticity: 0.1, rate: r }, STEP(0.1), r);
+        for (const r of [65, 70, 75]) one(`d2_step0.25_r${r}`, { plasticity: 0.25, rate: r }, STEP(0.25), r);
+        for (const r of [25, 30, 35]) one(`d2_step1_r${r}`, { plasticity: 1, rate: r }, STEP(1), r);
+        return out;
+    },
 };
 
 const name = process.argv[2];
