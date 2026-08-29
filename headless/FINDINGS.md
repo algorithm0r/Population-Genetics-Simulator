@@ -504,6 +504,53 @@ nuisance. currentTick is the ordering that "contains Chevin" most faithfully
 Regenerate: `node gen-settings.mjs timing2 settings/timing2.json` + coordinator/workers;
 table: `node agg.mjs results/timing2.jsonl`.
 
+## F16 — Lifespan: longevity amplifies the trap twice over; reach is not the whole organism parameter (2026-08-28)
+
+Batch `lifespan1` (409 runs, 30 unique bins; Chris's sweep). Mean lifespan = 1/deathChance:
+dc 0.4/0.2/0.1/0.05 → ~2.5/5/10/20 ticks; step-0.5 reach = 1.25/2.5/5/10. Two
+sub-sweeps: (a) reach-varying (step 0.5 fixed), (b) reach-held at 2.5 (step co-varied).
+
+**L1 CONFIRMED — longer life, lower ηc (trend).** Step-0.5 survival boundary marches
+down as lifespan grows: dc 0.4 survives r80 (0/15) and dies only by r160; dc 0.2 dies
+at r60+ (the F1 baseline); dc 0.1 and 0.05 die even at r40 (12/12, TTE 7,021 and
+12,979). Long-lived plastic populations die *slower* but at *far lower* rates.
+
+**L2 CONFIRMED — cycle buffering scales with reach.** a16/T200 (beyond baseline
+reach): dc 0.4/0.2 die in 250 gens; dc 0.1 (reach 5) and 0.05 (reach 10) fully
+rescue (0/12). The F6 rescue regime's amplitude ceiling is set by reach = step ×
+lifespan, as the model-at-a-glance table implies.
+
+**L3 REFUTED — reach is NOT the sole operative organism parameter.** Reach-held arms
+(all reach 2.5) still diverge hard: short-lived/big-step (dc 0.4, step 1.0) survives
+r80 where the baseline dies; long-lived/small-step (dc 0.1, step 0.25 and dc 0.05,
+step 0.125) die even at r40. At fixed reach, longevity itself is harmful. Mechanism
+(consistent with F2/F15's signal-binding): selection response in shielded populations
+is carried by honestly-tested newborns, and births per capita-tick equal the death
+rate — a dc 0.4 population runs ~8× more honest selection events per tick than a
+dc 0.05 population. Slow turnover starves the honest channel.
+
+**L4 REFUTED — bare-genetics ηc also falls with lifespan (generation time).** p0:
+dc 0.4 nearly survives r280 (1/21); dc 0.2 ηc ≈ 273–280 (F1); dc 0.1 dies at 280;
+dc 0.05 dies even at 240. Evolution per tick slows as generation time grows — the
+expected quantitative-genetics effect, and part (but not all) of L1: the ratio
+ηc(plastic)/ηc(bare) still shrinks from dc 0.4 (~0.3–0.5) to dc 0.2 (~0.18) and
+below, so shielding's *relative* harm grows with lifespan beyond the generation-time
+effect (finer rate grids would pin the low-dc ratios; current bracket is coarse).
+
+**Headline: live fast, adapt honest.** Longevity amplifies plasticity's trap through
+two compounding channels — a longer life means a bigger plastic reach (more mismatch
+hidden) and slower turnover (fewer honest newborn tests feeding selection) — on top
+of the universal generation-time slowdown. Comparative prediction with real teeth:
+under sustained directional change, long-lived plastic species should be the most
+vulnerable class, and their populations should look demographically healthy the
+longest while dying (longest TTEs in the sweep). Caveat: deathChance also shifts
+equilibrium demography (lifetime offspring, age structure); the reach-held design
+controls the plasticity side but the L4 controls carry the same demographic shifts,
+which is why conclusions are stated as ratios against p0 where possible.
+
+Regenerate: `node gen-settings.mjs lifespan1 settings/lifespan1.json` + coordinator/workers;
+table: `node agg.mjs results/lifespan1.jsonl`.
+
 **Registered-hypothesis ledger, all resolved:** F5 buffer-at-amp≤reach → wrong in detail,
 F6's version stronger. Load-analysis window (4,8) → partially right. F8 escalator via
 sorting → wrong (channel is demographic). F8 shielding-blocks-rescue → right in the
@@ -516,5 +563,8 @@ instant norms; F14 anti-phase → right that latency kills, wrong about where (w
 structure, not average load; aliasing non-monotonic); F14 spatial pre/post → wrong
 (half-sighted adults suffice; argmax choice is monotone-invariant). F15 all four
 ordering predictions → right (step core ordering-robust; delay-1 causal; tax causal;
-either burden's removal rescues the spatial arm). Every prediction
+either burden's removal rescues the spatial arm). F16 L1/L2 → right (ηc falls, buffer
+grows with lifespan); L3 → wrong (reach is not sufficient — turnover starves the
+honest channel at fixed reach); L4 → wrong (bare ηc falls too: generation time).
+Every prediction
 was registered before its data; every revision is in this file.

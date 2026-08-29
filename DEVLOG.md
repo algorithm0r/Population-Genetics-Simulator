@@ -4,6 +4,43 @@ Backward-looking, append-only. Newest entry on top. Never edit past entries.
 
 <!-- append new entries below this line -->
 
+## 2026-08-29 — F15+F16: the ordering decision settled, and Chris's lifespan sweep (live fast, adapt honest)
+
+**Done:** Chris's two follow-ups to F14 — "is the newborn ordering a bug?" and "sweep
+lifespan" — both answered with registered-prediction batches (timing2: 206 runs;
+lifespan1: 409 runs).
+
+- **F15 (ordering):** the honest-newborn window and F14's intrinsic delay-1 are the
+  same uniform rule (fitness uses last tick's phenotype). New `fitnessTiming:
+  "currentTick"` flag = uniform delay-0. All 4 predictions confirmed: **paper-1's
+  step core is ordering-robust** (identical ηc, near-equal TTEs — robustness appendix,
+  no re-baselining); delay-1 and the newborn tax both causally confirmed by the
+  ordering flip (lin1@T4 12/12→0/12; labile lin0.5@r160 12/12→0/12); and the spatial
+  triangulation: F10's residual mortality needs BOTH burdens — F11 removed the
+  blindfold (→0%), F15 removed the tax with the blindfold intact (24%→0/17). Either
+  is sufficient; jointly necessary. Recommendation logged in FINDINGS: keep lastTick
+  canonical for paper 1, fitnessTiming becomes an axis in paper 2.
+- **F16 (lifespan):** dc {0.4,0.2,0.1,0.05} → lifespans 2.5–20, reach-varying +
+  reach-held designs. L1/L2 confirmed (plastic ηc falls with lifespan; a16/T200 cycle
+  rescue appears once reach ≥ ~5). **L3 refuted — the important one:** at FIXED reach
+  2.5, longevity is still harmful (short-lived/big-step survives r80; long-lived/
+  small-step dies at r40). Turnover starves the honest-newborn selection channel
+  (births per capita-tick = death rate; 8× fewer honest tests at dc 0.05). L4 refuted
+  too (bare ηc falls with generation time), but the plastic/bare ηc RATIO still
+  shrinks with lifespan — shielding's relative harm grows beyond the generation-time
+  effect. Headline: **live fast, adapt honest** — longevity amplifies the trap via
+  reach AND turnover; long-lived plastic species are the most vulnerable class under
+  sustained change and look healthy longest while dying.
+- Heartbeat starvation recurrence on big spatial runs fixed properly: yield by
+  organism-update budget (~1M) instead of fixed 2000-gen stride (runner.mjs).
+
+**State:** F1–F16; ~4,400 runs, 21 batches, all in Mongo; fleet down; all pushed.
+
+**Next:** with Jobran — bless the canonical ordering (rec: lastTick + robustness
+appendix), fold F14's labile qualifier + F16's longevity result into the paper-1
+skeleton (F16 may deserve its own figure: the ηc-vs-lifespan ratio panel), and the
+timing factorial remains paper 2's spine.
+
 ## 2026-08-28 (night) — F14: the cue/adjust timing architecture, and cue timing turns out to be load-bearing
 
 **Done:** Chris's two-events/two-dimensions formalization (events: cue, adjust;
