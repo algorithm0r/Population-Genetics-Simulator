@@ -1,0 +1,242 @@
+[
+ {
+  "id": "rf1_P_grad_tr40",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a6T500tr40pg"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 500,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "offspringMigrationChance": 0.1,
+    "adultMigrationChance": 0.1,
+    "needMigrationScale": 0.4,
+    "fitTargetedMigration": true,
+    "adaptiveStepSize": 0.5,
+    "migrationAssessment": "phenotype"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 2
+     }
+    },
+    "temporal": {
+     "type": "composite",
+     "parameters": {
+      "changeRate": 40,
+      "cycleAmplitude": 6,
+      "cyclePeriod": 500
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "rf1_G_grad_tr40",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a6T500tr40gg"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 500,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "offspringMigrationChance": 0.1,
+    "adultMigrationChance": 0.1,
+    "needMigrationScale": 0.4,
+    "fitTargetedMigration": true,
+    "adaptiveStepSize": 0.5,
+    "migrationAssessment": "genotype"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 2
+     }
+    },
+    "temporal": {
+     "type": "composite",
+     "parameters": {
+      "changeRate": 40,
+      "cycleAmplitude": 6,
+      "cyclePeriod": 500
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "rf1_G_unif_tr40",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a6T500tr40gu"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 500,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "offspringMigrationChance": 0.1,
+    "adultMigrationChance": 0.1,
+    "needMigrationScale": 0.4,
+    "fitTargetedMigration": true,
+    "adaptiveStepSize": 0.5,
+    "migrationAssessment": "genotype"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "composite",
+     "parameters": {
+      "changeRate": 40,
+      "cycleAmplitude": 6,
+      "cyclePeriod": 500
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "rf1_P_grad_tr160",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a6T500tr160pg"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 500,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "offspringMigrationChance": 0.1,
+    "adultMigrationChance": 0.1,
+    "needMigrationScale": 0.4,
+    "fitTargetedMigration": true,
+    "adaptiveStepSize": 0.5,
+    "migrationAssessment": "phenotype"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 2
+     }
+    },
+    "temporal": {
+     "type": "composite",
+     "parameters": {
+      "changeRate": 160,
+      "cycleAmplitude": 6,
+      "cyclePeriod": 500
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "rf1_G_grad_tr160",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a6T500tr160gg"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 500,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "offspringMigrationChance": 0.1,
+    "adultMigrationChance": 0.1,
+    "needMigrationScale": 0.4,
+    "fitTargetedMigration": true,
+    "adaptiveStepSize": 0.5,
+    "migrationAssessment": "genotype"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "gradient",
+     "parameters": {
+      "gradientStrength": 2
+     }
+    },
+    "temporal": {
+     "type": "composite",
+     "parameters": {
+      "changeRate": 160,
+      "cycleAmplitude": 6,
+      "cyclePeriod": 500
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "rf1_G_unif_tr160",
+  "meta": {
+   "plasticity": 0.5,
+   "rate": "a6T500tr160gu"
+  },
+  "config": {
+   "epoch": 50000,
+   "reportEvery": 500,
+   "overrides": {
+    "numRows": 1,
+    "numCols": 24,
+    "worldEdges": "island",
+    "targetObservationalNoise": 0,
+    "sexualReproduction": false,
+    "offspringMigrationChance": 0.1,
+    "adultMigrationChance": 0.1,
+    "needMigrationScale": 0.4,
+    "fitTargetedMigration": true,
+    "adaptiveStepSize": 0.5,
+    "migrationAssessment": "genotype"
+   },
+   "environmentPatterns": {
+    "spatial": {
+     "type": "uniform",
+     "parameters": {
+      "baseEnvironment": 0
+     }
+    },
+    "temporal": {
+     "type": "composite",
+     "parameters": {
+      "changeRate": 160,
+      "cycleAmplitude": 6,
+      "cyclePeriod": 500
+     }
+    }
+   }
+  }
+ }
+]

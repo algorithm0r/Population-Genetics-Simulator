@@ -655,6 +655,68 @@ const EXPERIMENTS = {
         for (const r of [150, 300, 600, 1200]) one(`d4_chev0.99_r${r}`, { plasticity: 'lin0.99Bpre', rate: r }, CHEV(0.99), r);
         return out;
     },
+    // Lifespan 2 — pin both etaC's per lifespan for the Fig 7 ratio curve
+    // (2026-08-29, registered pre-run). F16 left the long-lived plastic thresholds
+    // bounded only above (<40) and the bare thresholds coarse.
+    // REGISTERED PREDICTIONS:
+    //  H1: the plastic/bare etaC ratio declines monotonically with lifespan
+    //      (~0.35 at dc 0.4, 0.18 at 0.2, <=0.12 at 0.1, <=0.08 at 0.05).
+    //  H2: plastic etaC at dc 0.05 lands in 10-30 (TTE 13k at r40 = near-threshold).
+    //  H3: bare etaC: dc 0.4 in 300-400, dc 0.1 in 200-260, dc 0.05 in 160-220 —
+    //      generation-time scaling sublinear in lifespan (adults breed every tick).
+    lifespan2() {
+        const out = [];
+        const one = (id, meta, overrides, rate, epoch) => out.push({
+            id, meta, config: { epoch, reportEvery: 500, overrides, environmentPatterns: env(rate) },
+        });
+        const arm = (dc, step) => ({ ...BASE, adaptiveStepSize: step, deathChancePerGeneration: dc });
+        for (const r of [5, 10, 20, 30]) one(`l2_p5_dc0.05_r${r}`, { plasticity: '0.5dc0.05', rate: r }, arm(0.05, 0.5), r, 100000);
+        for (const r of [10, 20, 30]) one(`l2_p5_dc0.1_r${r}`, { plasticity: '0.5dc0.1', rate: r }, arm(0.1, 0.5), r, 100000);
+        for (const r of [100, 120, 140]) one(`l2_p5_dc0.4_r${r}`, { plasticity: '0.5dc0.4', rate: r }, arm(0.4, 0.5), r, 50000);
+        for (const r of [160, 180, 200, 220]) one(`l2_p0_dc0.05_r${r}`, { plasticity: '0dc0.05', rate: r }, arm(0.05, 0), r, 50000);
+        for (const r of [200, 220, 260]) one(`l2_p0_dc0.1_r${r}`, { plasticity: '0dc0.1', rate: r }, arm(0.1, 0), r, 50000);
+        for (const r of [300, 320, 360, 400]) one(`l2_p0_dc0.4_r${r}`, { plasticity: '0dc0.4', rate: r }, arm(0.4, 0), r, 50000);
+        return out;
+    },
+    // Refuge 1 — the refuge flip as a REGION (C12 robustness; Fig 6a gains a rate
+    // axis). spatialcomp1's single composite cell (a6/T500 + tr80), swept over trend.
+    // REGISTERED PREDICTIONS:
+    //  R1: the flip holds across rates — honest-gradient survives at tr40 and tr160
+    //      (0%), blind-gradient dies at both (TTE decreasing in rate).
+    //  R2: uniform worlds die at both rates regardless of honesty (the a6 cycle is
+    //      lethal without spatial options; TTE ~2,200, roughly trend-independent).
+    refuge1() {
+        const out = [];
+        const strip = { numRows: 1, numCols: 24, worldEdges: 'island', targetObservationalNoise: 0, sexualReproduction: false, offspringMigrationChance: 0.1, adultMigrationChance: 0.1, needMigrationScale: 0.4, fitTargetedMigration: true, adaptiveStepSize: 0.5 };
+        for (const tr of [40, 160]) {
+            for (const assess of ['phenotype', 'genotype'])
+                out.push({
+                    id: `rf1_${assess === 'genotype' ? 'G' : 'P'}_grad_tr${tr}`,
+                    meta: { plasticity: 0.5, rate: `a6T500tr${tr}${assess[0]}g` },
+                    config: {
+                        epoch: 50000, reportEvery: 500,
+                        overrides: { ...strip, migrationAssessment: assess },
+                        environmentPatterns: {
+                            spatial: { type: 'gradient', parameters: { gradientStrength: 2 } },
+                            temporal: { type: 'composite', parameters: { changeRate: tr, cycleAmplitude: 6, cyclePeriod: 500 } },
+                        },
+                    },
+                });
+            out.push({
+                id: `rf1_G_unif_tr${tr}`,
+                meta: { plasticity: 0.5, rate: `a6T500tr${tr}gu` },
+                config: {
+                    epoch: 50000, reportEvery: 500,
+                    overrides: { ...strip, migrationAssessment: 'genotype' },
+                    environmentPatterns: {
+                        spatial: { type: 'uniform', parameters: { baseEnvironment: 0 } },
+                        temporal: { type: 'composite', parameters: { changeRate: tr, cycleAmplitude: 6, cyclePeriod: 500 } },
+                    },
+                },
+            });
+        }
+        return out;
+    },
 };
 
 const name = process.argv[2];
