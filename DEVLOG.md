@@ -4,6 +4,31 @@ Backward-looking, append-only. Newest entry on top. Never edit past entries.
 
 <!-- append new entries below this line -->
 
+## 2026-08-29 (night) — The full draft figure set, and F18: the ratio curve + the refuge's three bands
+
+**Done:** Chris's iterate-with-judgment mandate executed to completion. Figures 4–7
+drafted (return-structure heatmap quartet; information-arc bars incl. the
+triangulation; refuge flip; lifespan ratio), Fig 3 upgraded to per-rep spaghetti from
+raw jsonl (no survivorship artifacts; jsonl.py loader added), Fig 6a upgraded from a
+point to the three-band ladder. Two registered batches closed the manifest:
+
+- **lifespan2 (287 runs):** H1 confirmed — plastic/bare ηc ratio falls monotonically
+  0.38 → 0.19 → 0.06 → 0.04 across lifespans 2.5→20 (relative harm 2.6× → 28×).
+  H2 wrong in the alarming direction (lifespan-20 plastic ηc = 5–10, below prediction).
+- **refuge1 (73 runs):** R1 half-right — the refuge is RATE-BOUNDED. Three bands
+  under the climate shape: trend 40 = landscape alone suffices (even blind sorting
+  survives); 80 = honesty required; 160 = nothing survives (honesty triples TTE,
+  13,615 vs 4,875, buys no rescue). C12 refined: refuge = region in
+  (rate × landscape × honesty); landscape is the floor, information the ceiling,
+  and nothing extends past what a sorted cline can genetically track.
+
+**State:** F1–F18; ~6,250 runs, 29 batches, all in Mongo; ALL SEVEN FIGURES drafted
+from data (paper/figures/, PDF+PNG); precision manifest EMPTY; fleet down; pushed.
+
+**Next:** Chris + Jobran write around the figure set; cosmetics after form settles.
+The one intentionally-open figure question: does Fig 2b (the valley) become the
+standalone signature figure?
+
 ## 2026-08-29 (later) — Paper figures begin, and F17: the valley of partial plasticity
 
 **Done:** Writing phase opened. `paper/CLAIMS.md` (13 claims, 4 acts, figure map,

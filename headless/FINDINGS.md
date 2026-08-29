@@ -608,6 +608,40 @@ Regenerate: `node gen-settings.mjs dose2|dose3|dose4 settings/<b>.json` (+ dose4
 settings/) + coordinator/workers; table: `node agg.mjs results/dose2.jsonl` (+3/4/4b);
 figure: `paper/figures/fig2_etac.py`.
 
+## F18 — Precision completions: the lifespan ratio curve, and the refuge's three bands (2026-08-29)
+
+Batches `lifespan2` (287 runs, 21 bins) and `refuge1` (73 runs, 6 bins), both
+registered pre-run; the paper's last two manifest items.
+
+**Lifespan ratio (Fig 7).** H1 CONFIRMED — the plastic/bare ηc ratio declines
+monotonically across an order of magnitude: 110/290 ≈ **0.38** (lifespan 2.5),
+50/270 ≈ **0.19** (5), 15/240 ≈ **0.06** (10), 7.5/210 ≈ **0.04** (20). Shielding's
+relative harm runs from ~2.6× to ~28×. H2 partially wrong in the alarming direction
+(plastic ηc at lifespan 20 is 5–10, below the predicted 10–30). H3 right for dc 0.1
+and 0.05; dc 0.4's bare bracket (280–300) sat just under the predicted 300–400.
+
+**The refuge's three bands (Fig 6a).** R1 half-right: the flip holds at trend 40 and
+FAILS at 160 — the refuge is rate-bounded. Full ladder (composite a6/T500, shielded,
+both mechanisms):
+
+| trend | blind gradient | honest gradient | honest uniform |
+|---|---|---|---|
+| 40 | 0/12 | 0/12 | 12/12 (TTE 6,333) |
+| 80 | 14/14 (TTE 13,643) | 0/19 | 12/12 (2,292) |
+| 160 | 12/12 (4,875) | 13/13 (TTE 13,615) | 12/12 (1,500) |
+
+Three bands: **slow change forgives blindness** (landscape alone suffices — even the
+blindfolded sorting machine holds at 40); **middle rates require honesty**; **fast
+rates defeat information entirely** (honesty still triples TTE, 13,615 vs 4,875, but
+buys no survival). R2 right on outcomes, wrong on TTE-invariance (uniform TTE runs
+6,333 → 1,500 with trend — the cycle kills, the trend schedules). Refined C12: the
+refuge is a region in (rate × landscape × honesty) — landscape is the floor,
+information extends the ceiling, and nothing extends it past what a sorted cline can
+genetically track.
+
+Regenerate: `node gen-settings.mjs lifespan2|refuge1 settings/<b>.json` + fleet;
+figures: `paper/figures/fig7_lifespan.py`, `fig6_refuge.py`.
+
 **Registered-hypothesis ledger, all resolved:** F5 buffer-at-amp≤reach → wrong in detail,
 F6's version stronger. Load-analysis window (4,8) → partially right. F8 escalator via
 sorting → wrong (channel is demographic). F8 shielding-blocks-rescue → right in the
