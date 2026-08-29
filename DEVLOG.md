@@ -4,6 +4,39 @@ Backward-looking, append-only. Newest entry on top. Never edit past entries.
 
 <!-- append new entries below this line -->
 
+## 2026-08-29 (later) — Paper figures begin, and F17: the valley of partial plasticity
+
+**Done:** Writing phase opened. `paper/CLAIMS.md` (13 claims, 4 acts, figure map,
+precision manifest — container level, outside the public repo). `paper/figures/`
+Python pipeline (style.py with global arm colors, Domestication ethos; all 18 batch
+CSVs regenerated to one schema). Fig 3 (mechanism traces: lag/variance/response — C2
+in one row) and Fig 2 drafted, torn down (Chris: step-function overlap, clamped CIs),
+and redesigned into its final form: (a) TTE hazard curves with censoring on the
+50k ceiling; (b) ηc vs compensation strength by organism design.
+
+**F17 (dose2/3/4/4b, 1,226 runs, four registered rounds):** filling Fig 2b found the
+paper's likely signature result. Both linear-norm timing regimes carve **ηc valleys**:
+decline from 273 to minima 3–5× below bare genetics at *near-perfect* compensation
+(labile ~52 at b≈0.95; developmental ~80 at b≈0.9), recovery confined to the last ~5%
+of dose, regimes converging at b=0.99 (~120/~135) — then splitting at exactly 1:
+labile unkillable, developmental jumping ~30× to ηc≈4,000 = **persistence with zero
+evolution** (genotype frozen 50k gens, staleness-only load), dying only at 4,800.
+Mechanism of the cliff: any b<1 keeps the coupling term (1−b)(g−ε) with unbounded
+lag; 1% coupling costs 30×. Step model never escapes (bounded reach; ηc 37 at dose 1).
+Round ledger honest: D1 right→wrong (variance refund flattens the (1−b) dive), E1/E2
+half-wrong, G1 wrong (interior minimum), G2 right (discontinuity), E3/G3 right.
+**Reading: real (bounded, imperfect) plasticity lives in the valley, and the valley
+bottoms at near-perfect competence — the most buffered-looking organisms are the most
+fragile; the escape corners are not biologically reachable.**
+
+**Changed:** paper/{CLAIMS.md, figures/{style,fig2,fig3,README}}, gen-settings
+(dose2/3/4 + dose4b), FINDINGS F17, Mongo (maad_dose2/3/4/4b, 1,226 docs).
+
+**State:** F1–F17; ~5,900 runs, 26 batches; fleet down; pushed.
+
+**Next:** Figs 4–6 (data in hand); lifespan2 + C10/C12 precision (manifest); Chris +
+Jobran react to CLAIMS.md; F17 likely promotes Fig 2b to a standalone figure.
+
 ## 2026-08-29 — F15+F16: the ordering decision settled, and Chris's lifespan sweep (live fast, adapt honest)
 
 **Done:** Chris's two follow-ups to F14 — "is the newborn ordering a bug?" and "sweep

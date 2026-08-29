@@ -551,6 +551,63 @@ which is why conclusions are stated as ratios against p0 where possible.
 Regenerate: `node gen-settings.mjs lifespan1 settings/lifespan1.json` + coordinator/workers;
 table: `node agg.mjs results/lifespan1.jsonl`.
 
+## F17 — The valley of partial plasticity: both timing regimes carve ηc valleys with interior minima near-perfect compensation, and escape only at exactly-perfect (2026-08-29)
+
+Batches `dose2/3/4/4b` (1,226 runs, 74 bins; four registered-prediction rounds, each
+designed blind to the next round's data). ηc(compensation strength b) for the two
+linear-norm timing regimes, fine rate grids at every transition:
+
+| b | labile ηc | developmental ηc |
+|---|---|---|
+| 0 | 273 (shared) | 273 (shared) |
+| 0.25 | ~200 | ~245 |
+| 0.5 | ~150 | ~190 |
+| 0.75 | ~95 | ~120 |
+| 0.9 | ~70 | ~80 |
+| 0.95 | ~52 (minimum) | — |
+| 0.99 | ~120 | ~135 |
+| 1 | **none (unkillable)** | **~4,000** (3,200: 0/20; 4,000: 12.5%) |
+
+**Both curves are valleys.** Decline from bare-genetics 273 to minima 3–5× below it
+(labile ~52 at b≈0.95; developmental ~80 at b≈0.9), then a recovery confined to the
+last ~5% of dose. The labile decline follows ηc ≈ (1−b)·270 through b=0.75
+(200/150/95 vs predicted 202/135/67) and then flattens — weakly-selected arms carry
+2–3× the genetic variance (mutation accumulating under relaxed selection), partially
+refunding the signal loss.
+
+**The escapes are corners, and they differ by timing.** At b=0.99 the two regimes
+converge (~120 vs ~135 — timing stops mattering as genotype-coupling → 0). At exactly
+b=1 they split: labile is unkillable (live cue, zero staleness, zero coupling) while
+developmental jumps discontinuously ~30× to ηc ≈ 4,000 — **persistence with zero
+evolution** (genotype frozen: lag −16,000 at r3,200 over 50k generations; load =
+within-lifetime staleness only ≈ rate × mean age), ~15× beyond bare genetics, dying
+only when staleness itself exceeds tolerance (TTE 250 at 4,800 — instant demographic
+collapse). The mechanism of the cliff: for ANY b<1 the phenotype retains the coupling
+term (1−b)(g−ε) whose lag grows without bound under a trend; 1% residual coupling
+drops ηc from 4,000 to ~135.
+
+**The step model never escapes.** Bounded reach forecloses the full-compensation
+corner: its curve declines through dose 1.0 (ηc ≈ 37) below both linear curves.
+
+**Reading for the paper (C3/C4 merge):** real reaction norms are bounded and
+imperfect, so real plasticity lives in the valley — and the valley bottoms at
+*near-perfect* compensation: the most competent-looking plastic organisms are the
+most fragile under sustained change, and the escape corners (exact, unbounded
+compensation) are not biologically reachable. This is Fig 2b.
+
+**Round ledger (every prediction registered pre-round):** D1 (1−b dive) right through
+0.75, wrong at 0.9 (variance refund). E1 (interior minima) eventually right for both,
+wrong about where. E2 (chev0.9 above bare genetics) wrong — still in the valley. E3
+(chev1 ≈ 3–4k) right. G1 (labile monotone to the end) wrong — minimum at 0.95, rises
+at 0.99. G2 (developmental discontinuity at exactly 1) right. G3 (chev0.9 edge 60–140)
+right (~80). The two-step whiplash (dive → flatten → valley) is preserved here
+deliberately: it is what registered prediction looks like when the system is smarter
+than the theorist.
+
+Regenerate: `node gen-settings.mjs dose2|dose3|dose4 settings/<b>.json` (+ dose4b in
+settings/) + coordinator/workers; table: `node agg.mjs results/dose2.jsonl` (+3/4/4b);
+figure: `paper/figures/fig2_etac.py`.
+
 **Registered-hypothesis ledger, all resolved:** F5 buffer-at-amp≤reach → wrong in detail,
 F6's version stronger. Load-analysis window (4,8) → partially right. F8 escalator via
 sorting → wrong (channel is demographic). F8 shielding-blocks-rescue → right in the

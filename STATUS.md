@@ -1,9 +1,9 @@
 # STATUS — PopGenSim (MAAD)
 
-**Updated:** 2026-08-29, after F15 (ordering sensitivity) + F16 (lifespan sweep)
-**Verified:** warm, this session — smoke 21/21; ~4,400 seeded runs across 21 batches; every "works" claim carries a regeneration command in FINDINGS.md; all batches mirrored to Mongo (`populationGeneticsDB.maad_<batch>`, count-verified); browser sim + DB endpoint live on Pages. No cold `/audit` yet.
+**Updated:** 2026-08-29 (later), writing phase open — CLAIMS.md drafted, Figs 2–3 built, F17 found while filling Fig 2b
+**Verified:** warm, this session — smoke 21/21; ~5,900 seeded runs across 26 batches; every "works" claim carries a regeneration command in FINDINGS.md; all batches mirrored to Mongo (`populationGeneticsDB.maad_<batch>`, count-verified); browser sim + DB endpoint live on Pages. No cold `/audit` yet.
 
-**Stage:** experiments DONE (F1–F16) — every registered hypothesis resolved. Next phase is **writing** (paper skeleton with Jobran). Standing decisions for Chris + Jobran: canonical fitness ordering (rec: lastTick + F15 robustness appendix), where F14's labile qualifier and F16's longevity panel land in paper 1.
+**Stage:** WRITING. `paper/CLAIMS.md` (13 claims, figure map, precision manifest) + `paper/figures/` Python pipeline (Fig 2 final-form, Fig 3 drafted). Standing decisions for Chris + Jobran: canonical fitness ordering (rec: lastTick + F15 appendix), where F14/F16/F17 land, whether Fig 2b becomes a standalone figure.
 
 **State — thirteen findings, all in [headless/FINDINGS.md](headless/FINDINGS.md) with regen commands:**
 
@@ -16,7 +16,8 @@
 - F14 (timing): **cue timing is load-bearing** — the linvar "worse than nothing" trap is a *labile* trap (pure Chevin lin0.5 survives r160 where labile dies 12/12; mechanism = the honest-**newborn fecundity tax**, registration secondary); every timing variant remains worse than bare genetics under trends (ηc ordering 100–160 < ~160 < 160–240 < 273), so paper 1's claim survives with the labile qualifier. Staleness kills under cycles, is inert under trends. The sim's selection-before-adapt ordering is an **intrinsic delay-1 architecture** — live lin1 dies at a6/T4 where p0 survives (window structure, not average load). Spatial pre/post indistinguishable (half-sighted argmax choice suffices).
 - F15 (ordering): the honest-newborn window = the intrinsic delay-1's degenerate case; **paper-1's step core is ordering-robust** (identical ηc under `fitnessTiming` currentTick); delay-1 and the newborn tax causally confirmed by the ordering flip; spatially, blindfold and tax are **jointly necessary burdens — removing either fully rescues** (F11/F15 triangulation).
 - F16 (lifespan): **live fast, adapt honest** — plastic ηc falls with lifespan (dc 0.4 survives r80; dc ≤0.1 dies at r40); cycle buffering scales with reach; but at FIXED reach longevity still harms (turnover starves the honest-newborn channel, ~births/capita-tick = death rate); bare ηc falls too (generation time) yet the plastic/bare ratio still shrinks — shielding's relative harm grows with longevity. Long-lived plastic species = most vulnerable class, healthiest-looking while dying.
-- Registered-hypothesis ledger: all resolved (FINDINGS footer). realizedResp validated as the mechanism metric.
+- F17 (the valley): both linear-norm timing regimes carve **ηc valleys** bottoming 3–5× below bare genetics at *near-perfect* compensation (labile ~52 at b≈0.95, developmental ~80 at b≈0.9); escape only at exactly-perfect — labile unkillable, developmental **~4,000 = persistence with zero evolution** (30× discontinuity; 1% genotype coupling costs 30×). Real (bounded, imperfect) plasticity lives in the valley; the most buffered-looking organisms are the most fragile. Fig 2b.
+- Registered-hypothesis ledger: all resolved (FINDINGS footer + F17's round ledger). realizedResp validated as the mechanism metric.
 
 **Metrics:** ~4,400 runs, 21 batches, all deterministic-seeded and resumable; Mongo mirrors count-verified; worker ceiling 10 on this machine (Chris-authorized); mint deferred until large spatial factorials.
 
