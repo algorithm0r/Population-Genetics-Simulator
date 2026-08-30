@@ -1,5 +1,10 @@
 # CLAUDE.md — PopGenSim (MAAD) sim
 
+> **The Claude project root is one level up** (`../CLAUDE.md`), covering this repo
+> plus the private `../paper/` and `../references/`. Open sessions from there.
+> This file is the in-repo copy of the sim-scoped rules and is superseded by the
+> root file where they differ.
+
 ## Read this first, in order
 1. `STATUS.md` — where the system is right now (60 seconds)
 2. `DEVPLAN.md` — model-at-a-glance table + stages (what to build next)
