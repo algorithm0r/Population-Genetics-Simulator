@@ -4,6 +4,37 @@ Backward-looking, append-only. Newest entry on top. Never edit past entries.
 
 <!-- append new entries below this line -->
 
+## 2026-08-30 — Writing begins: README, manuscript scaffold, project-root move, session close
+
+**Done:**
+- **Public README** (repo root): the MAAD model for non-biologists — factory
+  preset / displayed value, shielding as "tuning hides the presets from quality
+  control," the headline findings in plain language, knobs table, run instructions.
+  Chris's instinct: the plain version exists before the formal one.
+- **Manuscript started** (`../paper/main.tex` + `main.bib`, compiles to 9 pp with
+  all seven figures embedded): abstract fully drafted (mismatch-currency thesis);
+  five-paragraph introduction drafted (the standoff as a disagreement about model
+  architecture; containment-not-competition positioning); model section drafted;
+  results scaffolded with topic sentences + real numbers per figure; discussion =
+  five commented moves for Chris + Jobran; appendices reserved (F15 ordering table,
+  registered-prediction ledger). Three title candidates at the top. Bib ~17 core
+  refs, two flagged TODO-verify (Polechová 2025, Vinton 2022 exact titles).
+- **Claude project root moved** to `Research/PopGenSim/` (Chris's call): root
+  CLAUDE.md now authoritative (covers sim/ + paper/ + references/, carries the
+  registered-prediction and public-repo-hygiene rules), auto-memory migrated to the
+  root key, sim/CLAUDE.md points up. Open future sessions from the container root.
+- Close-out sweep: CLAIMS.md precision manifest marked fully discharged (with the
+  F17/F18 claim updates — C3+C4 merge candidate, C12 refined, C5 pinned); figures
+  README statuses current; PA hub regenerated.
+
+**State:** F1–F18 final; ~6,250 runs, 29 batches, Mongo-mirrored; all seven data
+figures drafted; manuscript compiling; fleet down; repo pushed through this entry.
+
+**Next:** Chris + Jobran on CLAIMS.md + abstract/intro + the figure set; expand
+results prose; draft discussion; bless canonical ordering + tag the release commit
+the paper will cite; venue call (rec: Am Nat). Paper 2 (cue/adjust factorial)
+parked in the shared backlog with empirical anchors.
+
 ## 2026-08-29 (night) — The full draft figure set, and F18: the ratio curve + the refuge's three bands
 
 **Done:** Chris's iterate-with-judgment mandate executed to completion. Figures 4–7
